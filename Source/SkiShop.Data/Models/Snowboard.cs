@@ -2,6 +2,11 @@
 {
     public class Snowboard
     {
+        public Snowboard()
+        {
+            Comments = new HashSet<Comment>();
+        }
+
         public Guid Id { get; set; }
 
         public string Title { get; set; }
