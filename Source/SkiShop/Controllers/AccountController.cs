@@ -58,5 +58,14 @@
 
             return View(model);
         }
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Login()
+        {
+            var model = new LoginViewModel();
+
+            return View(model);
+        }
     }
 }
