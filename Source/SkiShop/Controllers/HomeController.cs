@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using SkiShop.Models;
-using System.Diagnostics;
-
-namespace SkiShop.Controllers
+﻿namespace SkiShop.Controllers
 {
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using SkiShop.Models;
+    using System.Diagnostics;
+
     public class HomeController : BaseController
     {
         private readonly ILogger<HomeController> _logger;
