@@ -19,5 +19,14 @@
             public const double TailWidthMinValue = 20;
             public const double TailWidthMaxValue = 40;
         }
+
+        public class Comment
+        {
+            public const int TitleMaxLength = 20;
+            public const int TitleMinLength = 5;
+
+            public const int DescriptionMaxLength = 500;
+            public const int DescriptionMinLength = 10;
+        }
     }
 }
