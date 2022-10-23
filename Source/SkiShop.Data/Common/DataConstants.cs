@@ -20,6 +20,21 @@
             public const double TailWidthMaxValue = 40;
         }
 
+        public class SnowboardBoot
+        {
+            public const int TitleMinLength = 3;
+            public const int TitleMaxLength = 20;
+
+            public const int DescriptionMinLength = 20;
+            public const int DescriptionMaxLength = 1000;
+
+            public const string PriceMinValue = "50";
+            public const string PriceMaxValue = "2000";
+
+            public const double SizeMaxValue = 15;
+            public const double SizeMinValue = 2;
+        }
+
         public class Comment
         {
             public const int TitleMaxLength = 20;
