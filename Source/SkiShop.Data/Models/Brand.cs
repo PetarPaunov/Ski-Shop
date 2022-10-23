@@ -1,7 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace SkiShop.Data.Models
+﻿namespace SkiShop.Data.Models
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class Brand
     {
         [Key]
