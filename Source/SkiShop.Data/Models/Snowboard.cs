@@ -21,6 +21,9 @@
         public string Description { get; set; }
 
         [Required]
+        public string ImageUrl { get; set; }
+
+        [Required]
         [Range(typeof(decimal), PriceMaxValue, PriceMinValue)]
         public decimal Price { get; set; }
 
@@ -41,6 +44,5 @@
         public int Quantity { get; set; }
 
         public bool IsDeleted { get; set; }
-
     }
 }
