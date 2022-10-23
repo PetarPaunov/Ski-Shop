@@ -1,7 +1,7 @@
 ﻿namespace SkiShop.Data.Models
 {
     using System.ComponentModel.DataAnnotations;
-
+    using System.ComponentModel.DataAnnotations.Schema;
     using static SkiShop.Data.Common.DataConstants.SnowboardBoot;
 
     public class SnowboardBoot
@@ -39,12 +39,15 @@
         [Required]
         public string Soles { get; set; }
 
+        [Required]
+        [ForeignKey(nameof(Brand))]
         public string BrandId { get; set; }
 
         public Brand Brand { get; set; }
 
         public ICollection<Comment> Comments { get; set; }
 
+        [Required]
         public int Quantity { get; set; }
 
         public bool IsDeleted { get; set; }
