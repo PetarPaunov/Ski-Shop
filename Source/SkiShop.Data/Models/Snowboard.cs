@@ -32,6 +32,10 @@
         public double NoseWidth { get; set; }
 
         [Required]
+        [Range(WaistWidthMinValue, WaistWidthMaxValue)]
+        public double WaistWidth { get; set; }
+
+        [Required]
         [Range(TailWidthMinValue, TailWidthMaxValue)]
         public double TailWidth { get; set; }
 

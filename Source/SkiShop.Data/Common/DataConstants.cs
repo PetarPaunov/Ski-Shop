@@ -18,6 +18,9 @@
 
             public const double TailWidthMinValue = 20;
             public const double TailWidthMaxValue = 40;
+
+            public const double WaistWidthMinValue = 20;
+            public const double WaistWidthMaxValue = 40;
         }
 
         public class SnowboardBoot
