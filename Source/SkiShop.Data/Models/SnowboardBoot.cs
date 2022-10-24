@@ -44,7 +44,7 @@
 
         [Required]
         [ForeignKey(nameof(Brand))]
-        public string BrandId { get; set; }
+        public Guid BrandId { get; set; }
 
         public Brand Brand { get; set; }
 

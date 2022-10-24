@@ -46,13 +46,13 @@
 
         [Required]
         [ForeignKey(nameof(SkiType))]
-        public string SkiTypeId { get; set; }
+        public Guid SkiTypeId { get; set; }
 
         public SkiType SkiType { get; set; }
 
         [Required]
         [ForeignKey(nameof(Brand))]
-        public string BrandId { get; set; }
+        public Guid BrandId { get; set; }
 
         public Brand Brand { get; set; }
 

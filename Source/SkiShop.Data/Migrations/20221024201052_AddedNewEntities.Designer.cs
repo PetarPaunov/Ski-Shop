@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkiShop.Data;
 
@@ -11,9 +12,10 @@ using SkiShop.Data;
 namespace SkiShop.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221024201052_AddedNewEntities")]
+    partial class AddedNewEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -250,10 +252,6 @@ namespace SkiShop.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ApplicationUserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -282,8 +280,6 @@ namespace SkiShop.Data.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("SkiId");
 
@@ -597,12 +593,6 @@ namespace SkiShop.Data.Migrations
 
             modelBuilder.Entity("SkiShop.Data.Models.Comment", b =>
                 {
-                    b.HasOne("SkiShop.Data.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany()
-                        .HasForeignKey("ApplicationUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("SkiShop.Data.Models.Ski", null)
                         .WithMany("Comments")
                         .HasForeignKey("SkiId");
@@ -618,8 +608,6 @@ namespace SkiShop.Data.Migrations
                     b.HasOne("SkiShop.Data.Models.Snowboard", null)
                         .WithMany("Comments")
                         .HasForeignKey("SnowboardId");
-
-                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("SkiShop.Data.Models.Ski", b =>
