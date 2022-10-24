@@ -20,6 +20,9 @@
         public string Title { get; set; }
 
         [Required]
+        public string Model { get; set; }
+
+        [Required]
         [StringLength(DescriptionMaxLength)]
         public string Description { get; set; }
 

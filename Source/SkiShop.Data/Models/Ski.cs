@@ -1,11 +1,12 @@
 ﻿namespace SkiShop.Data.Models
 {
-    using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using static SkiShop.Data.Common.DataConstants.Snowboard;
-    public class Snowboard
+    using System.ComponentModel.DataAnnotations;
+    using static SkiShop.Data.Common.DataConstants.Ski;
+
+    public class Ski
     {
-        public Snowboard()
+        public Ski()
         {
             Comments = new HashSet<Comment>();
         }
@@ -42,6 +43,12 @@
         [Required]
         [Range(TailWidthMinValue, TailWidthMaxValue)]
         public double TailWidth { get; set; }
+
+        [Required]
+        [ForeignKey(nameof(SkiType))]
+        public string SkiTypeId { get; set; }
+
+        public SkiType SkiType { get; set; }
 
         [Required]
         [ForeignKey(nameof(Brand))]

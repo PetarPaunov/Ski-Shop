@@ -53,6 +53,30 @@
             public const double SizeMinValue = 2;
         }
 
+        public class Ski
+        {
+            public const int TitleMinLength = 3;
+            public const int TitleMaxLength = 20;
+
+            public const int DescriptionMinLength = 20;
+            public const int DescriptionMaxLength = 1000;
+
+            public const string PriceMinValue = "50";
+            public const string PriceMaxValue = "2000";
+
+            public const double SizeMaxValue = 15;
+            public const double SizeMinValue = 2;
+
+            public const double NoseWidthMinValue = 80;
+            public const double NoseWidthMaxValue = 140;
+
+            public const double TailWidthMinValue = 80;
+            public const double TailWidthMaxValue = 140;
+
+            public const double WaistWidthMinValue = 80;
+            public const double WaistWidthMaxValue = 140;
+        }
+
         public class Comment
         {
             public const int TitleMaxLength = 20;
