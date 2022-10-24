@@ -2,13 +2,13 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class Brand
+    public class SkiType
     {
         [Key]
         public Guid Id { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string TypeName { get; set; }
 
         public bool IsDeleted { get; set; }
     }
