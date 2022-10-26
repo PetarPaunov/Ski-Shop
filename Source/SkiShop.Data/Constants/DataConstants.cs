@@ -1,4 +1,4 @@
-﻿namespace SkiShop.Data.Common
+﻿namespace SkiShop.Data.Constants
 {
     public class DataConstants
     {

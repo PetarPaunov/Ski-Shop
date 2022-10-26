@@ -3,7 +3,7 @@
     using System.ComponentModel.DataAnnotations.Schema;
     using System.ComponentModel.DataAnnotations;
 
-    using static SkiShop.Data.Common.DataConstants.Product;
+    using static SkiShop.Data.Constants.DataConstants.Product;
 
     public class Product
     {

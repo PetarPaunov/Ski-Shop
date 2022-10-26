@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using static SkiShop.Data.Common.DataConstants.Comment;
+    using static SkiShop.Data.Constants.DataConstants.Comment;
 
     public class Comment
     {
