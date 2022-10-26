@@ -2,7 +2,7 @@
 {
     public class DataConstants
     {
-        public class Snowboard
+        public class Product
         {
             public const int TitleMinLength = 3;
             public const int TitleMaxLength = 20;
@@ -14,66 +14,12 @@
             public const string PriceMaxValue = "2000";
 
             public const double NoseWidthMinValue = 20;
-            public const double NoseWidthMaxValue = 40;
-
-            public const double TailWidthMinValue = 20;
-            public const double TailWidthMaxValue = 40;
-
-            public const double WaistWidthMinValue = 20;
-            public const double WaistWidthMaxValue = 40;
-        }
-
-        public class SnowboardBoot
-        {
-            public const int TitleMinLength = 3;
-            public const int TitleMaxLength = 20;
-
-            public const int DescriptionMinLength = 20;
-            public const int DescriptionMaxLength = 1000;
-
-            public const string PriceMinValue = "50";
-            public const string PriceMaxValue = "2000";
-
-            public const double SizeMaxValue = 15;
-            public const double SizeMinValue = 2;
-        }
-
-        public class SnowboardBinding
-        {
-            public const int TitleMinLength = 3;
-            public const int TitleMaxLength = 20;
-
-            public const int DescriptionMinLength = 20;
-            public const int DescriptionMaxLength = 1000;
-
-            public const string PriceMinValue = "50";
-            public const string PriceMaxValue = "2000";
-
-            public const double SizeMaxValue = 15;
-            public const double SizeMinValue = 2;
-        }
-
-        public class Ski
-        {
-            public const int TitleMinLength = 3;
-            public const int TitleMaxLength = 20;
-
-            public const int DescriptionMinLength = 20;
-            public const int DescriptionMaxLength = 1000;
-
-            public const string PriceMinValue = "50";
-            public const string PriceMaxValue = "2000";
-
-            public const double SizeMaxValue = 15;
-            public const double SizeMinValue = 2;
-
-            public const double NoseWidthMinValue = 80;
             public const double NoseWidthMaxValue = 140;
 
-            public const double TailWidthMinValue = 80;
+            public const double TailWidthMinValue = 20;
             public const double TailWidthMaxValue = 140;
 
-            public const double WaistWidthMinValue = 80;
+            public const double WaistWidthMinValue = 20;
             public const double WaistWidthMaxValue = 140;
         }
 

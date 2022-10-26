@@ -1,25 +1,22 @@
 ﻿namespace SkiShop.Data.Models
 {
-    using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using static SkiShop.Data.Common.DataConstants.SnowboardBoot;
+    using System.ComponentModel.DataAnnotations;
 
-    public class SnowboardBoot
+    using static SkiShop.Data.Common.DataConstants.Product;
+
+    public class Product
     {
-        public SnowboardBoot()
+        public Product()
         {
-            Comments = new HashSet<Comment>();
+            this.ProductComments = new HashSet<ProductCommet>();
         }
 
-        [Key]
         public Guid Id { get; set; }
 
         [Required]
         [StringLength(TitleMaxLength)]
         public string Title { get; set; }
-
-        [Required]
-        public string Model { get; set; }
 
         [Required]
         [StringLength(DescriptionMaxLength)]
@@ -33,14 +30,16 @@
         public decimal Price { get; set; }
 
         [Required]
-        [Range(SizeMinValue, SizeMaxValue)]
-        public double Size { get; set; }
+        [Range(NoseWidthMinValue, NoseWidthMaxValue)]
+        public double NoseWidth { get; set; }
 
         [Required]
-        public string RetentionSystem { get; set; }
+        [Range(WaistWidthMinValue, WaistWidthMaxValue)]
+        public double WaistWidth { get; set; }
 
         [Required]
-        public string Soles { get; set; }
+        [Range(TailWidthMinValue, TailWidthMaxValue)]
+        public double TailWidth { get; set; }
 
         [Required]
         [ForeignKey(nameof(Brand))]
@@ -48,7 +47,19 @@
 
         public Brand Brand { get; set; }
 
-        public ICollection<Comment> Comments { get; set; }
+        [Required]
+        [ForeignKey(nameof(Type))]
+        public Guid TypeId { get; set; }
+
+        public Type Type { get; set; }
+
+        [Required]
+        [ForeignKey(nameof(Model))]
+        public Guid ModelId { get; set; }
+
+        public Model Model { get; set; }
+
+        public ICollection<ProductCommet> ProductComments { get; set; }
 
         [Required]
         public int Quantity { get; set; }

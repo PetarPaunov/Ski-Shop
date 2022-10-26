@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkiShop.Data;
 
@@ -11,9 +12,10 @@ using SkiShop.Data;
 namespace SkiShop.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221026132846_BigChanges")]
+    partial class BigChanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -264,6 +266,9 @@ namespace SkiShop.Data.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
+                    b.Property<Guid?>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -272,6 +277,8 @@ namespace SkiShop.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Comments");
                 });
@@ -356,21 +363,6 @@ namespace SkiShop.Data.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("SkiShop.Data.Models.ProductCommet", b =>
-                {
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CommentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ProductId", "CommentId");
-
-                    b.HasIndex("CommentId");
-
-                    b.ToTable("ProductCommets");
-                });
-
             modelBuilder.Entity("SkiShop.Data.Models.Type", b =>
                 {
                     b.Property<Guid>("Id")
@@ -450,6 +442,10 @@ namespace SkiShop.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SkiShop.Data.Models.Product", null)
+                        .WithMany("Comments")
+                        .HasForeignKey("ProductId");
+
                     b.Navigation("ApplicationUser");
                 });
 
@@ -480,25 +476,6 @@ namespace SkiShop.Data.Migrations
                     b.Navigation("Type");
                 });
 
-            modelBuilder.Entity("SkiShop.Data.Models.ProductCommet", b =>
-                {
-                    b.HasOne("SkiShop.Data.Models.Comment", "Comment")
-                        .WithMany()
-                        .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("SkiShop.Data.Models.Product", "Product")
-                        .WithMany("ProductComments")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Comment");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("SkiShop.Data.Models.Brand", b =>
                 {
                     b.Navigation("Products");
@@ -511,7 +488,7 @@ namespace SkiShop.Data.Migrations
 
             modelBuilder.Entity("SkiShop.Data.Models.Product", b =>
                 {
-                    b.Navigation("ProductComments");
+                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("SkiShop.Data.Models.Type", b =>

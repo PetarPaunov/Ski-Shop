@@ -13,11 +13,10 @@
 
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Comment> Comments { get; set; }
-        public DbSet<Ski> Skis { get; set; }
-        public DbSet<SkiType> SkiTypes { get; set; }
-        public DbSet<Snowboard> Snowboards { get; set; }
-        public DbSet<SnowboardBinding> SnowboardBindings { get; set; }
-        public DbSet<SnowboardBoot> SnowboardBoots { get; set; }
+        public DbSet<Model> Models { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Type> Types { get; set; }
+        public DbSet<ProductCommet> ProductCommets { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -34,25 +33,20 @@
                 .Property(x => x.IsDeleted)
                 .HasDefaultValue(false);
 
-            builder.Entity<Ski>()
+            builder.Entity<Model>()
                 .Property(x => x.IsDeleted)
                 .HasDefaultValue(false);
 
-            builder.Entity<SkiType>()
+            builder.Entity<Product>()
                 .Property(x => x.IsDeleted)
                 .HasDefaultValue(false);
 
-            builder.Entity<Snowboard>()
+            builder.Entity<Type>()
                 .Property(x => x.IsDeleted)
                 .HasDefaultValue(false);
 
-            builder.Entity<SnowboardBinding>()
-                .Property(x => x.IsDeleted)
-                .HasDefaultValue(false);
-
-            builder.Entity<SnowboardBoot>()
-                .Property(x => x.IsDeleted)
-                .HasDefaultValue(false);
+            builder.Entity<ProductCommet>()
+                .HasKey(x => new { x.ProductId, x.CommentId });
 
 
             base.OnModelCreating(builder);

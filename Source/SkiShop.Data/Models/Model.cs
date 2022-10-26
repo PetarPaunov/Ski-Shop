@@ -2,9 +2,9 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class Brand
+    public class Model
     {
-        public Brand()
+        public Model()
         {
             this.Products = new HashSet<Product>();
         }
