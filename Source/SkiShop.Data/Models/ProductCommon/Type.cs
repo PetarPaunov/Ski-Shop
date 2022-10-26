@@ -1,4 +1,4 @@
-﻿namespace SkiShop.Data.Models
+﻿namespace SkiShop.Data.Models.ProductCommon
 {
     using System.ComponentModel.DataAnnotations;
 
@@ -6,7 +6,7 @@
     {
         public Type()
         {
-            this.Products = new HashSet<Product>();
+            Products = new HashSet<Product>();
         }
 
         [Key]

@@ -1,4 +1,4 @@
-﻿namespace SkiShop.Data.Models
+﻿namespace SkiShop.Data.Models.Account
 {
     using Microsoft.AspNetCore.Identity;
 

@@ -1,11 +1,11 @@
-﻿namespace SkiShop.Data.Models
+﻿namespace SkiShop.Data.Models.ProductCommon
 {
     using System.ComponentModel.DataAnnotations.Schema;
 
     public class ProductCommet
     {
         public Guid CommentId { get; set; }
-        
+
         [ForeignKey(nameof(CommentId))]
         public Comment Comment { get; set; }
 

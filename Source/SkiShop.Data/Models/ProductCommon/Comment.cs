@@ -1,7 +1,9 @@
-﻿namespace SkiShop.Data.Models
+﻿namespace SkiShop.Data.Models.ProductCommon
 {
+    using SkiShop.Data.Models.Account;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+
     using static SkiShop.Data.Constants.DataConstants.Comment;
 
     public class Comment

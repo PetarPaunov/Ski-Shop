@@ -1,12 +1,12 @@
-﻿namespace SkiShop.Data.Models
+﻿namespace SkiShop.Data.Models.ProductCommon
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class Model
+    public class Brand
     {
-        public Model()
+        public Brand()
         {
-            this.Products = new HashSet<Product>();
+            Products = new HashSet<Product>();
         }
 
         [Key]

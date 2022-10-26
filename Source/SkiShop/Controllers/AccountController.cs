@@ -4,7 +4,7 @@
     using SkiShop.Models.AccountViewModels;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using SkiShop.Data.Models;
+    using SkiShop.Data.Models.Account;
 
     public class AccountController : BaseController
     {

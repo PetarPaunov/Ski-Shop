@@ -1,8 +1,9 @@
 ﻿namespace SkiShop.Data
 {
-    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using SkiShop.Data.Models.Account;
     using Microsoft.EntityFrameworkCore;
-    using SkiShop.Data.Models;
+    using SkiShop.Data.Models.ProductCommon;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

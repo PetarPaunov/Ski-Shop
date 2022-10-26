@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SkiShop.Data;
-using SkiShop.Data.Models;
+using SkiShop.Data.Models.Account;
 
 var builder = WebApplication.CreateBuilder(args);
 

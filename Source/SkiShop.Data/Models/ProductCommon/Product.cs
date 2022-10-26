@@ -1,4 +1,4 @@
-﻿namespace SkiShop.Data.Models
+﻿namespace SkiShop.Data.Models.ProductCommon
 {
     using System.ComponentModel.DataAnnotations.Schema;
     using System.ComponentModel.DataAnnotations;
@@ -9,7 +9,7 @@
     {
         public Product()
         {
-            this.ProductComments = new HashSet<ProductCommet>();
+            ProductComments = new HashSet<ProductCommet>();
         }
 
         public Guid Id { get; set; }
