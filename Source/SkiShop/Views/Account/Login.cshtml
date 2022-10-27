@@ -36,7 +36,7 @@
                         </div>
                         <form action="#" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                            <div class="form-group first">
+                            <div class="form-group last mb-3">
                                 <label asp-for="@Model.UserName" for="username">Username</label>
                                 <input asp-for="@Model.UserName" type="text" class="form-control" id="username">
                                 <span asp-validation-for="@Model.UserName" class="text-danger"></span>
@@ -52,7 +52,7 @@
                                     <input type="checkbox" checked="checked" />
                                     <div class="control__indicator"></div>
                                 </label>
-                                <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span>
+                                <span class="ml-auto"><a asp-action="Register" asp-controller="Account" class="forgot-pass">Don't have an account?</a></span>
                             </div>
 
                             <input type="submit" value="Log In" class="btn btn-block btn-primary">
