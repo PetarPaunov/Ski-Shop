@@ -31,6 +31,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\admin-theme\assets\demo\chart-area-demo.js" />
+    <None Include="wwwroot\admin-theme\assets\demo\chart-bar-demo.js" />
+    <None Include="wwwroot\admin-theme\assets\demo\chart-pie-demo.js" />
+    <None Include="wwwroot\admin-theme\assets\demo\datatables-demo.js" />
+    <None Include="wwwroot\admin-theme\assets\img\error-404-monochrome.svg" />
+    <None Include="wwwroot\admin-theme\js\datatables-simple-demo.js" />
+    <None Include="wwwroot\admin-theme\js\scripts.js" />
     <None Include="wwwroot\login-register-theme\css\.DS_Store" />
     <None Include="wwwroot\login-register-theme\css\bootstrap.min.css.map" />
     <None Include="wwwroot\login-register-theme\fonts\.DS_Store" />
