@@ -27,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SkiShop.Core\SkiShop.Core.csproj" />
     <ProjectReference Include="..\SkiShop.Data\SkiShop.Data.csproj" />
   </ItemGroup>
 

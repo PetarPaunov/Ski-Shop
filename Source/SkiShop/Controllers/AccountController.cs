@@ -6,16 +6,21 @@
     using Microsoft.AspNetCore.Mvc;
     using SkiShop.Data.Models.Account;
 
+    using static SkiShop.Core.Constants.RoleConstants;
+
     public class AccountController : BaseController
     {
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
         public AccountController(SignInManager<ApplicationUser> _signInManager, 
-                                    UserManager<ApplicationUser> _userManager)
+                                    UserManager<ApplicationUser> _userManager,
+                                    RoleManager<IdentityRole> _roleManager)
         {
             signInManager = _signInManager;
             userManager = _userManager;
+            roleManager = _roleManager;
         }
 
         [AllowAnonymous]
@@ -92,6 +97,33 @@
             ModelState.AddModelError(string.Empty, "Something went wrong!");
 
             return View(model);
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        // Should be moved to administrator controller
+        public async Task<IActionResult> CreateRole()
+        {
+            await roleManager.CreateAsync(new IdentityRole(Administrator));
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        // Should be moved to administrator controller
+        public async Task<IActionResult> AddToRole()
+        {
+            var email = "petar_dp.2000@abv.bg";
+
+            var user = await userManager.FindByEmailAsync(email);
+
+            await userManager.AddToRoleAsync(user, Administrator);
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }
