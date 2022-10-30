@@ -157,4 +157,8 @@
     <None Include="wwwroot\product-theme\webfonts\fa-solid-900.woff2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\product-images\" />
+  </ItemGroup>
+
 </Project>

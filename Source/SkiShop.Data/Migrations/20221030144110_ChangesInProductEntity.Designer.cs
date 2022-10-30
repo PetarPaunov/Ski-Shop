@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkiShop.Data;
 
@@ -11,9 +12,10 @@ using SkiShop.Data;
 namespace SkiShop.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221030144110_ChangesInProductEntity")]
+    partial class ChangesInProductEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,6 +226,24 @@ namespace SkiShop.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("SkiShop.Data.Models.ProductCommon.Attribute", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Attributes");
+                });
+
             modelBuilder.Entity("SkiShop.Data.Models.ProductCommon.Brand", b =>
                 {
                     b.Property<Guid>("Id")
@@ -242,62 +262,6 @@ namespace SkiShop.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Brands");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("dfbe4dc4-ce79-4eb2-a962-d3d2be272d64"),
-                            IsDeleted = false,
-                            Name = "LibTech"
-                        },
-                        new
-                        {
-                            Id = new Guid("15408988-ea25-4b1b-afad-cad51fc04e1a"),
-                            IsDeleted = false,
-                            Name = "Gnu"
-                        },
-                        new
-                        {
-                            Id = new Guid("356d5dd6-9564-49d3-8d93-b27f97452cec"),
-                            IsDeleted = false,
-                            Name = "Drake"
-                        },
-                        new
-                        {
-                            Id = new Guid("b824c2a8-6161-40bc-aa67-712eb5247010"),
-                            IsDeleted = false,
-                            Name = "BontRager"
-                        },
-                        new
-                        {
-                            Id = new Guid("caa4d197-4728-4d7a-80ef-1f31d008ba4d"),
-                            IsDeleted = false,
-                            Name = "FiveTen"
-                        },
-                        new
-                        {
-                            Id = new Guid("f1e3e696-f601-4a5b-a067-5e54bb4f639c"),
-                            IsDeleted = false,
-                            Name = "NorthWave"
-                        },
-                        new
-                        {
-                            Id = new Guid("0ebc966b-66e7-4790-bdc3-35a1697db071"),
-                            IsDeleted = false,
-                            Name = "Polaroid"
-                        },
-                        new
-                        {
-                            Id = new Guid("cd9aaf69-1f97-4598-847d-be3c5949f12a"),
-                            IsDeleted = false,
-                            Name = "Smith"
-                        },
-                        new
-                        {
-                            Id = new Guid("0b5058b3-4a2e-47f0-affe-ae4cc20d52c4"),
-                            IsDeleted = false,
-                            Name = "Trek"
-                        });
                 });
 
             modelBuilder.Entity("SkiShop.Data.Models.ProductCommon.Comment", b =>
@@ -350,56 +314,6 @@ namespace SkiShop.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Models");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("4138f243-22c4-4ed5-a7e0-d85676b7add8"),
-                            IsDeleted = false,
-                            Name = "ESSENTIAL SERVICE"
-                        },
-                        new
-                        {
-                            Id = new Guid("a5c6ad42-4a28-4c7b-ae32-8e51b6344076"),
-                            IsDeleted = false,
-                            Name = "Riders Choice"
-                        },
-                        new
-                        {
-                            Id = new Guid("e1edb175-19c6-49c0-a6f3-7c27293023c1"),
-                            IsDeleted = false,
-                            Name = "GWO"
-                        },
-                        new
-                        {
-                            Id = new Guid("10fd1d2d-7d59-440e-976b-b91b194c797f"),
-                            IsDeleted = false,
-                            Name = "ORCA"
-                        },
-                        new
-                        {
-                            Id = new Guid("6f44da8f-b042-4ff3-9e7e-13a26ddb770d"),
-                            IsDeleted = false,
-                            Name = "WUNDERSTICK"
-                        },
-                        new
-                        {
-                            Id = new Guid("df762cb0-95a2-4acf-97ea-281141dee642"),
-                            IsDeleted = false,
-                            Name = "Ufo"
-                        },
-                        new
-                        {
-                            Id = new Guid("b5e5d16e-8a91-45fe-902c-3fef88420487"),
-                            IsDeleted = false,
-                            Name = "LIBSTICK"
-                        },
-                        new
-                        {
-                            Id = new Guid("ec151db3-c524-4354-815e-d42c08d06bc7"),
-                            IsDeleted = false,
-                            Name = "WRECKCREATE"
-                        });
                 });
 
             modelBuilder.Entity("SkiShop.Data.Models.ProductCommon.Product", b =>
@@ -453,6 +367,25 @@ namespace SkiShop.Data.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("SkiShop.Data.Models.ProductCommon.ProductAttribute", b =>
+                {
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AttributeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AttributeValue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ProductId", "AttributeId");
+
+                    b.HasIndex("AttributeId");
+
+                    b.ToTable("ProductAttributes");
+                });
+
             modelBuilder.Entity("SkiShop.Data.Models.ProductCommon.ProductCommet", b =>
                 {
                     b.Property<Guid>("ProductId")
@@ -486,20 +419,6 @@ namespace SkiShop.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Types");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("3d2d17be-461b-470f-ae18-466418081743"),
-                            IsDeleted = false,
-                            Name = "Snowboard"
-                        },
-                        new
-                        {
-                            Id = new Guid("df6c701e-4cfd-481d-ac2f-f4473fdbbe5c"),
-                            IsDeleted = false,
-                            Name = "Ski"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -591,6 +510,25 @@ namespace SkiShop.Data.Migrations
                     b.Navigation("Type");
                 });
 
+            modelBuilder.Entity("SkiShop.Data.Models.ProductCommon.ProductAttribute", b =>
+                {
+                    b.HasOne("SkiShop.Data.Models.ProductCommon.Attribute", "Attribute")
+                        .WithMany()
+                        .HasForeignKey("AttributeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SkiShop.Data.Models.ProductCommon.Product", "Product")
+                        .WithMany("ProductAttributes")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Attribute");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("SkiShop.Data.Models.ProductCommon.ProductCommet", b =>
                 {
                     b.HasOne("SkiShop.Data.Models.ProductCommon.Comment", "Comment")
@@ -622,6 +560,8 @@ namespace SkiShop.Data.Migrations
 
             modelBuilder.Entity("SkiShop.Data.Models.ProductCommon.Product", b =>
                 {
+                    b.Navigation("ProductAttributes");
+
                     b.Navigation("ProductComments");
                 });
 

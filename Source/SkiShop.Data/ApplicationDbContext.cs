@@ -4,6 +4,7 @@
     using Microsoft.EntityFrameworkCore;
     using SkiShop.Data.Models.ProductCommon;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using SkiShop.Data.Configuration;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -18,8 +19,6 @@
         public DbSet<Product> Products { get; set; }
         public DbSet<Type> Types { get; set; }
         public DbSet<ProductCommet> ProductCommets { get; set; }
-        public DbSet<Attribute> Attributes { get; set; }
-        public DbSet<ProductAttribute> ProductAttributes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -51,8 +50,9 @@
             builder.Entity<ProductCommet>()
                 .HasKey(x => new { x.ProductId, x.CommentId });
 
-            builder.Entity<ProductAttribute>()
-                .HasKey(x => new { x.ProductId, x.AttributeId });
+            builder.ApplyConfiguration<Type>(new TypeConfiguration());
+            builder.ApplyConfiguration<Brand>(new BrandConfiguration());
+            builder.ApplyConfiguration<Model>(new ModelConfiguration());
 
 
             base.OnModelCreating(builder);
