@@ -5,5 +5,6 @@
     public interface IProductService
 	{
 		Task<IEnumerable<AllProductsAdminViewModel>> GetAllProductsAsync();
+		Task DeleteOneProductAsync(string id);
 	}
 }

@@ -50,7 +50,7 @@
 
             await addProductService.AddNewProductAsync(model);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(AllProducts));
         }
 
         public async Task<IActionResult> AllProducts()
@@ -58,6 +58,13 @@
             var model = await productService.GetAllProductsAsync();
 
             return View(model);
+        }
+
+        public async Task<IActionResult> DeleteSingleProduct(string id)
+        {
+            await productService.DeleteOneProductAsync(id);
+
+            return RedirectToAction(nameof(AllProducts));
         }
     }
 }

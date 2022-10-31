@@ -16,6 +16,17 @@ namespace SkiShop.Core.Services
             repository = _repository;
         }
 
+        public async Task DeleteOneProductAsync(string id)
+        {
+            var productGuid = Guid.Parse(id);
+
+            var product = await repository.GetByIdAsync<Product>(productGuid);
+
+            product.Quantity--;
+
+            await repository.SaveChangesAsync();
+        }
+
         public async Task<IEnumerable<AllProductsAdminViewModel>> GetAllProductsAsync()
 		{
             var products = await repository.All<Product>()
@@ -30,7 +41,8 @@ namespace SkiShop.Core.Services
                     Brand = x.Brand.Name,
                     Model = x.Model.Name,
                     Type = x.Type.Name,
-                    Price = x.Price.ToString()
+                    Price = x.Price.ToString(),
+                    Quantity = x.Quantity
                 })
                 .ToListAsync();
 
