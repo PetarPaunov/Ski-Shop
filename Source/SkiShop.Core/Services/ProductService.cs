@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SkiShop.Core.Contracts;
 using SkiShop.Core.Models.ProductViewModels;
 using SkiShop.Data.Common;
@@ -16,7 +15,18 @@ namespace SkiShop.Core.Services
             repository = _repository;
         }
 
-        public async Task DeleteOneProductAsync(string id)
+        public async Task DeleteProduct(string id)
+        {
+            var productGuid = Guid.Parse(id);
+
+            var product = await repository.GetByIdAsync<Product>(productGuid);
+
+            product.IsDeleted = true;
+
+            await repository.SaveChangesAsync();
+        }
+
+        public async Task DeleteSingleProductAsync(string id)
         {
             var productGuid = Guid.Parse(id);
 
@@ -30,6 +40,7 @@ namespace SkiShop.Core.Services
         public async Task<IEnumerable<AllProductsAdminViewModel>> GetAllProductsAsync()
 		{
             var products = await repository.All<Product>()
+                .Where(x => x.IsDeleted != true)
                 .Include(x => x.Model)
                 .Include(x => x.Type)
                 .Include(x => x.Brand)

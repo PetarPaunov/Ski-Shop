@@ -62,7 +62,14 @@
 
         public async Task<IActionResult> DeleteSingleProduct(string id)
         {
-            await productService.DeleteOneProductAsync(id);
+            await productService.DeleteSingleProductAsync(id);
+
+            return RedirectToAction(nameof(AllProducts));
+        }
+
+        public async Task<IActionResult> DeleteProduct(string id)
+        {
+            await productService.DeleteProduct(id);
 
             return RedirectToAction(nameof(AllProducts));
         }
