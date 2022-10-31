@@ -34,6 +34,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<IAddProductService, AddProductService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
 

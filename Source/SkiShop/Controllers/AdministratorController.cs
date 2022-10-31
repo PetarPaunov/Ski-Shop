@@ -2,18 +2,21 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.ActionConstraints;
     using SkiShop.Core.Contracts;
-    using SkiShop.Core.Models;
+    using SkiShop.Core.Models.ProductViewModels;
     using static SkiShop.Core.Constants.RoleConstants;
 
     [Authorize(Roles = Administrator)]
     public class AdministratorController : BaseController
     {
         private readonly IAddProductService addProductService;
+        private readonly IProductService productService;
 
-        public AdministratorController(IAddProductService _service)
+        public AdministratorController(IAddProductService _service, IProductService _productService)
         {
             addProductService = _service;
+            productService = _productService;
         }
 
         public IActionResult Index()
@@ -48,6 +51,13 @@
             await addProductService.AddNewProductAsync(model);
 
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> AllProducts()
+        {
+            var model = await productService.GetAllProductsAsync();
+
+            return View(model);
         }
     }
 }

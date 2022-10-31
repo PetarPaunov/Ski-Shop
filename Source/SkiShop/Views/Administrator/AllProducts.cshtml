@@ -1,0 +1,51 @@
+﻿@using SkiShop.Core.Models.ProductViewModels
+
+@model IEnumerable<AllProductsAdminViewModel>
+
+<div class="container-fluid px-4">
+	<h1 class="mt-4">Products Table</h1>
+	<ol class="breadcrumb mb-4">
+	</ol>
+	<div class="card mb-4">
+		<div class="card-header">
+			<i class="fas fa-table me-1"></i>
+			DataTable Example
+		</div>
+		<div class="card-body">
+			<table id="datatablesSimple">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Description</th>
+						<th>Brand</th>
+						<th>Type</th>
+						<th>Model</th>
+						<th>Price</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var product in Model)
+					{
+						<tr>
+							<td>@product.Title</td>
+							<td>@product.Desctriptnio</td>
+							<td>@product.Brand</td>
+							<td>@product.Type</td>
+							<td>@product.Model</td>
+							<td>@product.Price$</td>
+							<td>
+								<a class="btn btn-warning mb-2" asp-route-id="@product.Id">Edit</a>
+								<form class="mt-2" asp-route-id="@product.Id">
+									<div class="d-grid gap-2">
+										<input type="submit" value="Delete" class="btn btn-danger mb-2"
+										   onclick="return confirm('Are you shure about that !!!')" />
+									</div>
+								</form>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

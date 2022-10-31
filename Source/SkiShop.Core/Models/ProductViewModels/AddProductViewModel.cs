@@ -1,4 +1,4 @@
-﻿namespace SkiShop.Core.Models
+﻿namespace SkiShop.Core.Models.ProductViewModels
 {
     using Microsoft.AspNetCore.Http;
     using System.ComponentModel.DataAnnotations;

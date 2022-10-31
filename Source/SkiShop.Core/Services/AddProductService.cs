@@ -3,9 +3,9 @@
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.EntityFrameworkCore;
     using SkiShop.Core.Contracts;
-    using SkiShop.Core.Models;
     using SkiShop.Core.Models.BrandModels;
     using SkiShop.Core.Models.ModelViewModels;
+    using SkiShop.Core.Models.ProductViewModels;
     using SkiShop.Core.Models.TypeModels;
     using SkiShop.Data.Common;
     using SkiShop.Data.Models.ProductCommon;
