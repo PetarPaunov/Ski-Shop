@@ -28,12 +28,11 @@
             var models = await addProductService.GetAllModelsAsync();
             var brands = await addProductService.GetAllBrandsAsync();
 
-            var model = new AddProductViewModel()
-            {
-                Brands = brands,
-                Models = models,
-                Types = types
-            };
+            ViewBag.Types = types;
+            ViewBag.Models = models;
+            ViewBag.Brands = brands;
+
+            var model = new AddProductViewModel();
 
             return View(model);
         }

@@ -1,9 +1,6 @@
 ﻿namespace SkiShop.Core.Models
 {
     using Microsoft.AspNetCore.Http;
-    using SkiShop.Core.Models.BrandModels;
-    using SkiShop.Core.Models.ModelViewModels;
-    using SkiShop.Core.Models.TypeModels;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using static SkiShop.Data.Constants.DataConstants;
@@ -29,17 +26,11 @@
         [Required]
         public Guid BrandId { get; set; }
 
-        public IEnumerable<BrandViewModel> Brands { get; set; } = new List<BrandViewModel>();
-
         [Required]
         public Guid TypeId { get; set; }
 
-        public IEnumerable<TypeViewModel> Types { get; set; } = new List<TypeViewModel>();
-
         [Required]
         public Guid ModelId { get; set; }
-
-        public IEnumerable<ModelViewModel> Models { get; set; } = new List<ModelViewModel>();
 
         [Required]
         public int Quantity { get; set; }
