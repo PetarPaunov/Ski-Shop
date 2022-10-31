@@ -15,6 +15,7 @@
 			<table id="datatablesSimple">
 				<thead>
 					<tr>
+						<th>Imgage</th>
 						<th>Name</th>
 						<th>Description</th>
 						<th>Brand</th>
@@ -28,6 +29,9 @@
 					@foreach (var product in Model)
 					{
 						<tr>
+							<td>
+								<img src="~/product-images/@product.ImageUrl" width="100" height="150" />
+							</td>
 							<td>@product.Title</td>
 							<td>@product.Desctriptnio</td>
 							<td>@product.Brand</td>

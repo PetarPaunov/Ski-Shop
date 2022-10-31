@@ -19,9 +19,11 @@
             productService = _productService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var model = await productService.GetAllProductsAsync();
+
+            return View(model);
         }
 
         [HttpGet]
@@ -50,28 +52,21 @@
 
             await addProductService.AddNewProductAsync(model);
 
-            return RedirectToAction(nameof(AllProducts));
-        }
-
-        public async Task<IActionResult> AllProducts()
-        {
-            var model = await productService.GetAllProductsAsync();
-
-            return View(model);
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> DeleteSingleProduct(string id)
         {
             await productService.DeleteSingleProductAsync(id);
 
-            return RedirectToAction(nameof(AllProducts));
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> DeleteProduct(string id)
         {
             await productService.DeleteProduct(id);
 
-            return RedirectToAction(nameof(AllProducts));
+            return RedirectToAction(nameof(Index));
         }
     }
 }

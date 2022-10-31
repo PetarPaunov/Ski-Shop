@@ -49,6 +49,7 @@ namespace SkiShop.Core.Services
                     Id = x.Id.ToString(),
                     Title = x.Title,
                     Desctriptnio = x.Description,
+                    ImageUrl = x.ImageUrl,
                     Brand = x.Brand.Name,
                     Model = x.Model.Name,
                     Type = x.Type.Name,
