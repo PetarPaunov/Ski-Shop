@@ -21,6 +21,9 @@
 
             public const double WaistWidthMinValue = 20;
             public const double WaistWidthMaxValue = 140;
+
+            public const int QuantityMinValue = 0;
+            public const int QuantityMaxValue = 300;
         }
 
         public class Comment

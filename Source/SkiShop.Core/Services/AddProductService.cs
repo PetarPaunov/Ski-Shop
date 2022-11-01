@@ -1,8 +1,8 @@
 ﻿namespace SkiShop.Core.Services
 {
-    using Microsoft.AspNetCore.Hosting;
     using Microsoft.EntityFrameworkCore;
     using SkiShop.Core.Contracts;
+    using SkiShop.Core.Contracts.Common;
     using SkiShop.Core.Models.BrandModels;
     using SkiShop.Core.Models.ModelViewModels;
     using SkiShop.Core.Models.ProductViewModels;
@@ -14,18 +14,18 @@
 
     public class AddProductService : IAddProductService
     {
-        private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly ICommonService commonService;
         private readonly IRepository repository;
 
-        public AddProductService(IWebHostEnvironment _webHostEnvironment, IRepository _repository)
+        public AddProductService(ICommonService _commonService, IRepository _repository)
         {
-            webHostEnvironment = _webHostEnvironment;
+            commonService = _commonService;
             repository = _repository;
         }
 
         public async Task AddNewProductAsync(AddProductViewModel model)
         {
-            var imageUrl = UploadedFile(model);
+            var imageUrl = commonService.UploadedFile(model.FrontImage);
 
             var product = new Product()
             {
@@ -74,25 +74,6 @@
                     Name = x.Name
                 })
                 .ToListAsync();
-        }
-
-        private string UploadedFile(AddProductViewModel model)
-        {
-            string uniqueFileName = null;
-
-            if (model.FrontImage != null)
-            {
-                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "product-images");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + model.FrontImage.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    model.FrontImage.CopyTo(fileStream);
-                }
-            }
-
-            return uniqueFileName;
         }
     }
 }

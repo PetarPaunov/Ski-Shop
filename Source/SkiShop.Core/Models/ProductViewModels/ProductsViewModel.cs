@@ -1,12 +1,12 @@
 ﻿namespace SkiShop.Core.Models.ProductViewModels
 {
-	public class AllProductsAdminViewModel
+	public class ProductsViewModel
 	{
 		public string Id { get; set; }
 
 		public string Title { get; set; }
 
-		public string Desctriptnio { get; set; }
+		public string Description { get; set; }
 
 		public string Model { get; set; }
 

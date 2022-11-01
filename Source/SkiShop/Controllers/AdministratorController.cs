@@ -68,5 +68,34 @@
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string id)
+        {
+            var types = await addProductService.GetAllTypesAsync();
+            var models = await addProductService.GetAllModelsAsync();
+            var brands = await addProductService.GetAllBrandsAsync();
+
+            ViewBag.Types = types;
+            ViewBag.Models = models;
+            ViewBag.Brands = brands;
+
+            var model = await productService.GetForEditAsync(id);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(EditProductViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await productService.EditAsync(model);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

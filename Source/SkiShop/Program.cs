@@ -2,7 +2,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebSockets;
 using Microsoft.EntityFrameworkCore;
 using SkiShop.Core.Contracts;
+using SkiShop.Core.Contracts.Common;
 using SkiShop.Core.Services;
+using SkiShop.Core.Services.Common;
 using SkiShop.Data;
 using SkiShop.Data.Common;
 using SkiShop.Data.Models.Account;
@@ -35,6 +37,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<IAddProductService, AddProductService>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICommonService, CommonService>();
 
 var app = builder.Build();
 

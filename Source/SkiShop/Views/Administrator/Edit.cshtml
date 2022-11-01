@@ -1,8 +1,8 @@
 ﻿@using SkiShop.Core.Models.ProductViewModels
 
-@model AddProductViewModel
+@model EditProductViewModel
 
-<div class="card-header"><h3 class="text-center font-weight-light my-4">Create Product</h3></div>
+<div class="card-header"><h3 class="text-center font-weight-light my-4">Edit Product</h3></div>
 <div class="card-body">
 	<form enctype="multipart/form-data" method="post">
 		<div class="row mb-3">
@@ -58,7 +58,7 @@
 				</div>
 			</div>
 			<div class="col-md-6">
-				<span asp-validation-for="@Model.Price" class="text-danger"></span>
+					<span asp-validation-for="@Model.Price" class="text-danger"></span>
 				<div class="form-floating mb-3 mb-md-0">
 					<input asp-for="@Model.Price" class="form-control" />
 					<label asp-for="@Model.Price">Price</label>
@@ -66,7 +66,7 @@
 			</div>
 		</div>
 		<div class="col-md-12">
-			<span asp-validation-for="@Model.Description" class="text-danger"></span>
+				<span asp-validation-for="@Model.Description" class="text-danger"></span>
 			<div class="form-floating">
 				<textarea asp-for="@Model.Description" class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" style="height:175px;">
 						</textarea>
@@ -77,12 +77,12 @@
 			<div class="mb-3">
 				<span asp-validation-for="@Model.FrontImage" class="text-danger"></span>
 				<label for="Image" asp-for="@Model.FrontImage" class="form-label">Image</label>
-				<input asp-for="@Model.FrontImage" class="form-control" type="file" id="formFile"
+				<input asp-for="@Model.FrontImage" class="form-control" type="file" id="formFile
 					   onchange="document.getElementById('FrontImagePrv').src = window.URL.createObjectURL(this.files[0])">
 			</div>
-			<img id="FrontImagePrv" src="" class="img-fluid" />
+			<img id="FrontImagePrv" src="~/product-images/@Model.ImageUrl" class="img-fluid" />
 		</div>
-		<input type="submit" class="btn btn-block btn-primary" value="Create Product" />
+		<input type="submit" class="btn btn-block btn-primary" value="Edit Product" />
 	</form>
 </div>
 
