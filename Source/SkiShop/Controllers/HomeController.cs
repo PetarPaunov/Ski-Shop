@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using SkiShop.Core.Constants;
     using SkiShop.Models;
     using System.Diagnostics;
 
@@ -17,6 +18,11 @@
         [AllowAnonymous]
         public IActionResult Index()
         {
+            //if (User.IsInRole(RoleConstants.Administrator))
+            //{
+            //    return Redirect("~/Admin");
+            //}
+
             return View();
         }
 

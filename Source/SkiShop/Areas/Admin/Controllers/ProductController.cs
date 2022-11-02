@@ -1,23 +1,15 @@
-﻿using SkiShop.Controllers;
-
-namespace SkiShop.Areas.Admin.Controllers
+﻿namespace SkiShop.Areas.Admin.Controllers
 {
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SkiShop.Core.Contracts;
     using SkiShop.Core.Models.ProductViewModels;
-    using static SkiShop.Core.Constants.RoleConstants;
 
-    [Area("Admin")]
-    [Authorize(Roles = Administrator)]
-    public class AdministratorController : BaseController
+    public class ProductController : BaseController
     {
-        private readonly IAddProductService addProductService;
-        private readonly IProductService productService;
+        private readonly IProductServiceAdmin productService;
 
-        public AdministratorController(IAddProductService _service, IProductService _productService)
+        public ProductController(IProductServiceAdmin _productService)
         {
-            addProductService = _service;
             productService = _productService;
         }
 
@@ -31,9 +23,9 @@ namespace SkiShop.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            var types = await addProductService.GetAllTypesAsync();
-            var models = await addProductService.GetAllModelsAsync();
-            var brands = await addProductService.GetAllBrandsAsync();
+            var types = await productService.GetAllTypesAsync();
+            var models = await productService.GetAllModelsAsync();
+            var brands = await productService.GetAllBrandsAsync();
 
             ViewBag.Types = types;
             ViewBag.Models = models;
@@ -52,7 +44,7 @@ namespace SkiShop.Areas.Admin.Controllers
                 return View(model);
             }
 
-            await addProductService.AddNewProductAsync(model);
+            await productService.AddNewProductAsync(model);
 
             return RedirectToAction(nameof(Index));
         }
@@ -74,9 +66,9 @@ namespace SkiShop.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
-            var types = await addProductService.GetAllTypesAsync();
-            var models = await addProductService.GetAllModelsAsync();
-            var brands = await addProductService.GetAllBrandsAsync();
+            var types = await productService.GetAllTypesAsync();
+            var models = await productService.GetAllModelsAsync();
+            var brands = await productService.GetAllBrandsAsync();
 
             ViewBag.Types = types;
             ViewBag.Models = models;

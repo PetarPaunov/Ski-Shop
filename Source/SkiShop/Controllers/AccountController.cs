@@ -7,6 +7,7 @@
     using SkiShop.Data.Models.Account;
 
     using static SkiShop.Core.Constants.RoleConstants;
+    using SkiShop.Core.Constants;
 
     public class AccountController : BaseController
     {
@@ -90,10 +91,10 @@
 
                 if (result.Succeeded)
                 {
-                    var isInRole = await userManager.IsInRoleAsync(user, "Administrator");
+                    var isInRole = await userManager.IsInRoleAsync(user, RoleConstants.Administrator);
                     if (isInRole)
                     {
-                        return Redirect("~/admin");
+                        return Redirect("~/Admin");
                     }
                     
                     return RedirectToAction("Index", "Home");

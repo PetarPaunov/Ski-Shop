@@ -40,14 +40,14 @@
 							<td>@product.Price$</td>
 							<td>@product.Quantity</td>
 							<td>
-								<a class="btn btn-warning mb-2" asp-area="Admin" asp-action="Edit" asp-controller="Administrator" asp-route-id="@product.Id">Edit</a>
-								<form class="mt-2" asp-action="DeleteProduct" asp-controller="Administrator" asp-route-id="@product.Id">
+								<a class="btn btn-warning mb-2" asp-area="Admin" asp-action="Edit" asp-controller="Product" asp-route-id="@product.Id">Edit</a>
+								<form class="mt-2" asp-action="DeleteProduct" asp-controller="Product" asp-route-id="@product.Id">
 									<div class="d-grid gap-2">
 										<input type="submit" value="Delete" class="btn btn-danger mb-2"
 										   onclick="return confirm('Are you shure about that !!!')" />
 									</div>
 								</form>
-								<form class="mt-2" asp-action="DeleteSingleProduct" asp-controller="Administrator" asp-route-id="@product.Id">
+								<form class="mt-2" asp-action="DeleteSingleProduct" asp-controller="Product" asp-route-id="@product.Id">
 									<div class="d-grid gap-2">
 										<input type="submit" value="Delete One" class="btn btn-danger mb-2"
 										   onclick="return confirm('Are you shure about that !!!')" />

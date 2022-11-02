@@ -1,21 +1,76 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SkiShop.Core.Contracts;
-using SkiShop.Core.Contracts.Common;
-using SkiShop.Core.Models.ProductViewModels;
-using SkiShop.Data.Common;
-using SkiShop.Data.Models.ProductCommon;
-
-namespace SkiShop.Core.Services
+﻿namespace SkiShop.Core.Services
 {
-	public class ProductService : IProductService
+    using SkiShop.Data.Common;
+    using SkiShop.Core.Contracts;
+    using SkiShop.Core.Contracts.Common;
+    using Microsoft.EntityFrameworkCore;
+    using SkiShop.Core.Models.TypeModels;
+    using SkiShop.Data.Models.ProductCommon;
+    using SkiShop.Core.Models.BrandModels;
+    using SkiShop.Core.Models.ModelViewModels;
+    using SkiShop.Core.Models.ProductViewModels;
+    public class ProductServiceAdmin : IProductServiceAdmin
 	{
         private readonly IRepository repository;
         private readonly ICommonService commonService;
 
-        public ProductService(IRepository _repository, ICommonService _commonService)
+        public ProductServiceAdmin(IRepository _repository, ICommonService _commonService)
         {
             repository = _repository;
             commonService = _commonService;
+        }
+
+        public async Task AddNewProductAsync(AddProductViewModel model)
+        {
+            var imageUrl = commonService.UploadedFile(model.FrontImage);
+
+            var product = new Product()
+            {
+                Title = model.Title,
+                Description = model.Description,
+                BrandId = model.BrandId,
+                ModelId = model.ModelId,
+                Price = model.Price,
+                Quantity = model.Quantity,
+                ImageUrl = imageUrl,
+                TypeId = model.TypeId,
+            };
+
+            await repository.AddAsync(product);
+            await repository.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<BrandViewModel>> GetAllBrandsAsync()
+        {
+            return await repository.All<Brand>()
+                .Select(x => new BrandViewModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                })
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<ModelViewModel>> GetAllModelsAsync()
+        {
+            return await repository.All<Model>()
+                .Select(x => new ModelViewModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                })
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<TypeViewModel>> GetAllTypesAsync()
+        {
+            return await repository.All<Data.Models.ProductCommon.Type>()
+                .Select(x => new TypeViewModel()
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                })
+                .ToListAsync();
         }
 
         public async Task DeleteProduct(string id)
