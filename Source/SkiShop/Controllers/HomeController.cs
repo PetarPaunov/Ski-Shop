@@ -18,10 +18,10 @@
         [AllowAnonymous]
         public IActionResult Index()
         {
-            //if (User.IsInRole(RoleConstants.Administrator))
-            //{
-            //    return Redirect("~/Admin");
-            //}
+            if (User.IsInRole(RoleConstants.Administrator))
+            {
+                return Redirect("~/Admin");
+            }
 
             return View();
         }
