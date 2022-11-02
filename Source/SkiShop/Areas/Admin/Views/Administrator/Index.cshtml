@@ -40,7 +40,7 @@
 							<td>@product.Price$</td>
 							<td>@product.Quantity</td>
 							<td>
-								<a class="btn btn-warning mb-2" asp-action="Edit" asp-controller="Administrator" asp-route-id="@product.Id">Edit</a>
+								<a class="btn btn-warning mb-2" asp-area="Admin" asp-action="Edit" asp-controller="Administrator" asp-route-id="@product.Id">Edit</a>
 								<form class="mt-2" asp-action="DeleteProduct" asp-controller="Administrator" asp-route-id="@product.Id">
 									<div class="d-grid gap-2">
 										<input type="submit" value="Delete" class="btn btn-danger mb-2"

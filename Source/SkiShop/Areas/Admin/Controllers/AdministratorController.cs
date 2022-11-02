@@ -1,12 +1,14 @@
-﻿namespace SkiShop.Controllers
+﻿using SkiShop.Controllers;
+
+namespace SkiShop.Areas.Admin.Controllers
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.ActionConstraints;
     using SkiShop.Core.Contracts;
     using SkiShop.Core.Models.ProductViewModels;
     using static SkiShop.Core.Constants.RoleConstants;
 
+    [Area("Admin")]
     [Authorize(Roles = Administrator)]
     public class AdministratorController : BaseController
     {

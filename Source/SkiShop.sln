@@ -5,9 +5,9 @@ VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkiShop", "SkiShop\SkiShop.csproj", "{85132C49-3D23-46CB-B966-977EAF147F63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiShop.Data", "SkiShop.Data\SkiShop.Data.csproj", "{1F4732CB-7E16-4967-8BDC-3D21A551B7DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkiShop.Data", "SkiShop.Data\SkiShop.Data.csproj", "{1F4732CB-7E16-4967-8BDC-3D21A551B7DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiShop.Core", "SkiShop.Core\SkiShop.Core.csproj", "{498226AB-0C48-4AAA-9FFE-0EE17FDAD7D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkiShop.Core", "SkiShop.Core\SkiShop.Core.csproj", "{498226AB-0C48-4AAA-9FFE-0EE17FDAD7D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

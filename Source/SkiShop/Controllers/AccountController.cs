@@ -90,6 +90,12 @@
 
                 if (result.Succeeded)
                 {
+                    var isInRole = await userManager.IsInRoleAsync(user, "Administrator");
+                    if (isInRole)
+                    {
+                        return Redirect("~/admin");
+                    }
+                    
                     return RedirectToAction("Index", "Home");
                 }
             }

@@ -1,0 +1,10 @@
+﻿@using static SkiShop.Core.Constants.RoleConstants
+
+@if (User.Identity.IsAuthenticated && User.IsInRole(Administrator))
+{
+    Layout = "_AdminLayout";
+}
+else
+{
+    Layout = "_Layout";
+}
