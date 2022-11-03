@@ -1,0 +1,48 @@
+﻿@using SkiShop.Core.Models.UserViewModels
+
+@model IEnumerable<UserViewModel>
+
+<div class="container-fluid px-4">
+	<h1 class="mt-4">Users Table</h1>
+	<ol class="breadcrumb mb-4">
+	</ol>
+	<div class="card mb-4">
+		<div class="card-header">
+			<i class="fas fa-table me-1"></i>
+			DataTable Example
+		</div>
+		<div class="card-body">
+			<table id="datatablesSimple">
+				<thead>
+					<tr>
+						<th>Username</th>
+						<th>Email</th>
+						<th>Current Role</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach (var user in Model)
+					{
+						<tr>
+							<td>@user.UserName</td>
+							<td>@user.Email</td>
+							@foreach (var role in user.Roles)
+							{
+								<td>@role</td>
+							}
+							<td>
+								<form class="mt-2" asp-area="Admin" asp-action="AddToRole" asp-controller="Admin"
+								  asp-route-id="@user.Id">
+									<div class="d-grid gap-2">
+										<input type="submit" value="Details" class="btn btn-warning mb-2"
+										   onclick="return confirm('Are you shure about that !!!')" />
+									</div>
+								</form>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

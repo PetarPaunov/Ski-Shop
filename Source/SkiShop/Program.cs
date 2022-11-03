@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SkiShop.Core.Contracts;
+using SkiShop.Core.Contracts.Admin;
 using SkiShop.Core.Contracts.Common;
 using SkiShop.Core.Services;
+using SkiShop.Core.Services.Admin;
 using SkiShop.Core.Services.Common;
 using SkiShop.Data;
 using SkiShop.Data.Common;
@@ -36,6 +38,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<IProductServiceAdmin, ProductServiceAdmin>();
 builder.Services.AddScoped<ICommonService, CommonService>();
+builder.Services.AddScoped<IUserServiceAdmin, UserServiceAdmin>();
 
 var app = builder.Build();
 
@@ -61,7 +64,7 @@ app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllerRoute(
       name: "Admin",
-      pattern: "{area:exists}/{controller=Product}/{action=Index}/{id?}"
+      pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}"
     );
 
     endpoints.MapControllerRoute(

@@ -8,6 +8,7 @@
 
     using static SkiShop.Core.Constants.RoleConstants;
     using SkiShop.Core.Constants;
+    using Microsoft.EntityFrameworkCore;
 
     public class AccountController : BaseController
     {
@@ -109,26 +110,6 @@
         public async Task<IActionResult> Logout()
         {
             await signInManager.SignOutAsync();
-
-            return RedirectToAction("Index", "Home");
-        }
-
-        // Should be moved to administrator controller
-        public async Task<IActionResult> CreateRole()
-        {
-            await roleManager.CreateAsync(new IdentityRole(Administrator));
-
-            return RedirectToAction("Index", "Home");
-        }
-
-        // Should be moved to administrator controller
-        public async Task<IActionResult> AddToRole()
-        {
-            var email = "petar_dp.2000@abv.bg";
-
-            var user = await userManager.FindByEmailAsync(email);
-
-            await userManager.AddToRoleAsync(user, Administrator);
 
             return RedirectToAction("Index", "Home");
         }
