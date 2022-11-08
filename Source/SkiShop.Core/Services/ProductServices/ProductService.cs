@@ -34,5 +34,32 @@
 
             return products;
         }
+
+        public async Task<ProductsViewModel> GetProductByIdAsync(string productId)
+        {
+            var guid = new Guid(productId);
+
+            // var returendProduct = await repository.GetByIdAsync<Product>(guid);
+            var returendProduct = await repository.All<Product>()
+                .Include(x => x.Model)
+                .Include(x => x.Type)
+                .Include(x => x.Brand)
+                .FirstOrDefaultAsync(x => x.Id == guid);
+
+            var product = new ProductsViewModel()
+            {
+                Id = returendProduct.Id.ToString(),
+                Title = returendProduct.Title,
+                Description = returendProduct.Description,
+                Brand = returendProduct.Brand.Name,
+                Model = returendProduct.Model.Name,
+                Type = returendProduct.Type.Name,
+                Price = returendProduct.Price.ToString(),
+                Quantity = returendProduct.Quantity,
+                ImageUrl = returendProduct.ImageUrl
+            };
+
+            return product;
+        }
     }
 }

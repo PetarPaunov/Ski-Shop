@@ -5,5 +5,6 @@
     public interface IProductService
     {
         Task<IEnumerable<HomeProductViewModel>> GetFirstSixProductsAsync();
+        Task<ProductsViewModel> GetProductByIdAsync(string productId);
     }
 }

@@ -30,6 +30,13 @@
             return View(model);
         }
 
+        public async Task<IActionResult> ShowProduct(string id)
+        {
+            var model = await productService.GetProductByIdAsync(id);
+
+            return View(model);
+        }
+
         [AllowAnonymous]
         public IActionResult Privacy()
         {
