@@ -72,5 +72,12 @@
 
             return roles;
         }
+
+        public async Task DeleteRoleAsync(string name)
+        {
+            var role = await roleManager.Roles.FirstOrDefaultAsync(x => x.Name == name);
+
+            await roleManager.DeleteAsync(role);
+        }
     }
 }

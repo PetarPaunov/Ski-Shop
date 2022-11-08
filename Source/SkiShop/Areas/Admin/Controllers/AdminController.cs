@@ -34,8 +34,11 @@
 			return null;
 		}
 
-		public IActionResult RoleManaging()
+		public async Task<IActionResult> RoleManaging()
 		{
+			var roles = await userServiceAdmin.GetAllRolesAsync();
+			ViewBag.Roles = roles;
+
 			var model = new RoleViewModel();
 
 			return View(model);
@@ -44,9 +47,27 @@
 		[HttpPost]
 		public async Task<IActionResult> AddRole(RoleViewModel model)
 		{
+			if (!ModelState.IsValid)
+			{
+				return View(model);
+			}
+
 			await userServiceAdmin.CreateRoleAsync(model.Name);
 
 			return RedirectToAction(nameof(Index));
 		}
+
+		[HttpPost]
+		public async Task<IActionResult> RemoveRole(RoleViewModel model)
+		{
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+			await userServiceAdmin.DeleteRoleAsync(model.Name);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
