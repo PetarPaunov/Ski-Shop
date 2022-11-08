@@ -53,6 +53,8 @@
 
             if (result.Succeeded)
             {
+                await userManager.AddToRoleAsync(user, RoleConstants.Administrator);
+
                 await signInManager.SignInAsync(user, isPersistent: false);
 
                 return RedirectToAction("Index", "Home");
@@ -91,13 +93,7 @@
                 var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
 
                 if (result.Succeeded)
-                {
-                    var isInRole = await userManager.IsInRoleAsync(user, RoleConstants.Administrator);
-                    if (isInRole)
-                    {
-                        return Redirect("~/Admin");
-                    }
-                    
+                {                  
                     return RedirectToAction("Index", "Home");
                 }
             }

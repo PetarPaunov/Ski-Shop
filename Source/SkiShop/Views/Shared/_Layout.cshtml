@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using SkiShop.Core.Constants
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -27,6 +29,10 @@
                                 <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
                             </ul>
                         </li>
+                        @if (User.IsInRole(RoleConstants.Administrator))
+                        {
+                            <li class="nav-item"><a class="nav-link" asp-area="Admin" asp-action="Index" asp-controller="Admin">Admin Panel</a></li>
+                        }
                     </ul>
                     <form class="d-flex">
                         <button class="btn btn-outline-dark" type="submit">

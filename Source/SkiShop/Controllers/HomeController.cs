@@ -20,16 +20,12 @@
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            if (User.IsInRole(RoleConstants.Administrator))
-            {
-                return Redirect("~/Admin");
-            }
-
             var model = await productService.GetFirstSixProductsAsync();
 
             return View(model);
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> ShowProduct(string id)
         {
             var model = await productService.GetProductByIdAsync(id);
