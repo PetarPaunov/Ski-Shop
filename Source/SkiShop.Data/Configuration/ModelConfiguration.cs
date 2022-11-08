@@ -1,7 +1,7 @@
 ﻿namespace SkiShop.Data.Configuration
 {
     using Microsoft.EntityFrameworkCore;
-    using SkiShop.Data.Models.ProductCommon;
+    using SkiShop.Data.Models.Product;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
     public class ModelConfiguration : IEntityTypeConfiguration<Model>
     {

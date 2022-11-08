@@ -1,4 +1,4 @@
-﻿namespace SkiShop.Data.Models.ProductCommon
+﻿namespace SkiShop.Data.Models.Product
 {
     using SkiShop.Data.Models.Account;
     using System.ComponentModel.DataAnnotations;

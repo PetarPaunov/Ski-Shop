@@ -3,9 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using SkiShop.Core.Contracts;
 using SkiShop.Core.Contracts.Admin;
 using SkiShop.Core.Contracts.Common;
+using SkiShop.Core.Contracts.ProductContracts;
 using SkiShop.Core.Services;
 using SkiShop.Core.Services.Admin;
 using SkiShop.Core.Services.Common;
+using SkiShop.Core.Services.ProductServices;
 using SkiShop.Data;
 using SkiShop.Data.Common;
 using SkiShop.Data.Models.Account;
@@ -39,6 +41,8 @@ builder.Services.AddScoped<IRepository, Repository>();
 builder.Services.AddScoped<IProductServiceAdmin, ProductServiceAdmin>();
 builder.Services.AddScoped<ICommonService, CommonService>();
 builder.Services.AddScoped<IUserServiceAdmin, UserServiceAdmin>();
+builder.Services.AddScoped<IRoleServiceAdmin, RoleServiceAdmin>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 var app = builder.Build();
 

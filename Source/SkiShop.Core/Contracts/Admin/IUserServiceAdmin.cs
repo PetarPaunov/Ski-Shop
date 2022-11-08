@@ -6,9 +6,6 @@
     public interface IUserServiceAdmin
 	{
 		Task<IEnumerable<UserViewModel>> GetAllUsersAsync();
-        Task<IEnumerable<RoleViewModel>> GetAllRolesAsync();
-        Task CreateRoleAsync(string inputRole);
-        Task AddToRoleAsync(string email, string role);
-        Task DeleteRoleAsync(string name);
+        Task<IEnumerable<UserEmailViewModel>> GetAllUserEmailsAsync();
     }
 }

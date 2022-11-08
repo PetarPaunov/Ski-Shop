@@ -2,7 +2,7 @@
 {
     using SkiShop.Data.Models.Account;
     using Microsoft.EntityFrameworkCore;
-    using SkiShop.Data.Models.ProductCommon;
+    using SkiShop.Data.Models.Product;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using SkiShop.Data.Configuration;
 

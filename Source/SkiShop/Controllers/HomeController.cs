@@ -3,27 +3,31 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SkiShop.Core.Constants;
+    using SkiShop.Core.Contracts.ProductContracts;
     using SkiShop.Models;
     using System.Diagnostics;
 
     public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly ILogger<HomeController> logger;
+        private readonly IProductService productService;
+        public HomeController(ILogger<HomeController> _logger, IProductService _productService)
         {
-            _logger = logger;
+            this.logger = _logger;
+            productService = _productService;
         }
 
         [AllowAnonymous]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             if (User.IsInRole(RoleConstants.Administrator))
             {
                 return Redirect("~/Admin");
             }
 
-            return View();
+            var model = await productService.GetFirstSixProductsAsync();
+
+            return View(model);
         }
 
         [AllowAnonymous]

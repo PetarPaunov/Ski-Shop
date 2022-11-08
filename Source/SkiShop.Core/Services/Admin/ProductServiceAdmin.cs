@@ -5,7 +5,7 @@
     using SkiShop.Core.Contracts.Common;
     using Microsoft.EntityFrameworkCore;
     using SkiShop.Core.Models.TypeModels;
-    using SkiShop.Data.Models.ProductCommon;
+    using SkiShop.Data.Models.Product;
     using SkiShop.Core.Models.BrandModels;
     using SkiShop.Core.Models.ModelViewModels;
     using SkiShop.Core.Models.ProductViewModels;
@@ -64,7 +64,7 @@
 
         public async Task<IEnumerable<TypeViewModel>> GetAllTypesAsync()
         {
-            return await repository.All<Data.Models.ProductCommon.Type>()
+            return await repository.All<Data.Models.Product.Type>()
                 .Select(x => new TypeViewModel()
                 {
                     Id = x.Id,

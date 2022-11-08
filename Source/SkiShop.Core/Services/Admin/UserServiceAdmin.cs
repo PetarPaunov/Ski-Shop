@@ -13,17 +13,10 @@
     public class UserServiceAdmin : IUserServiceAdmin
     {
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
-        private readonly IRepository repository;
 
-
-        public UserServiceAdmin(UserManager<ApplicationUser> _userManager,
-                                RoleManager<IdentityRole> _roleManager,
-                                IRepository _repository)
+        public UserServiceAdmin(UserManager<ApplicationUser> _userManager)
         {
             userManager = _userManager;
-            roleManager = _roleManager;
-            repository = _repository;
         }
 
         public async Task<IEnumerable<UserViewModel>> GetAllUsersAsync()
@@ -47,37 +40,22 @@
             return users;
         }
 
-        public async Task CreateRoleAsync(string inputRole)
+        public async Task<IEnumerable<UserEmailViewModel>> GetAllUserEmailsAsync()
         {
-            var role = new IdentityRole(inputRole);
-            await roleManager.CreateAsync(role);
-        }
+            var dataUsers = await userManager.Users.ToListAsync();
 
-        public async Task AddToRoleAsync(string email, string role)
-        {
-            var user = await userManager.FindByEmailAsync(email);
+            var users = new List<UserEmailViewModel>();
 
-            await userManager.AddToRoleAsync(user, role);
-        }
+            foreach (var user in dataUsers)
+            {
+                var userRole = await userManager.GetRolesAsync(user);
 
-        public async Task<IEnumerable<RoleViewModel>> GetAllRolesAsync()
-        {
-            var roles = await repository.All<IdentityRole>()
-                .Select(x => new RoleViewModel()
+                users.Add(new UserEmailViewModel()
                 {
-                    Id = x.Id,
-                    Name = x.Name,
-                })
-                .ToListAsync();
-
-            return roles;
-        }
-
-        public async Task DeleteRoleAsync(string name)
-        {
-            var role = await roleManager.Roles.FirstOrDefaultAsync(x => x.Name == name);
-
-            await roleManager.DeleteAsync(role);
+                    Email = user.Email,
+                });
+            }
+            return users;
         }
     }
 }

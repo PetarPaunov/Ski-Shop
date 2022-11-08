@@ -31,25 +31,6 @@
 		</form>
 	</div>
 </div>
-<div class="col-md-6">
-	<h2>Add user To Role</h2>
-	<div class="input-group mb-3">
-		<form asp-area="Admin" asp-action="RemoveRole" asp-controller="Admin">
-			<div class="input-group mb-3">
-				<input asp-for="@Model.Name" type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
-				<select asp-for="@Model.Name" class="form-control">
-					@foreach (var role in ViewBag.Roles)
-					{
-						<option value="@role.Name">@role.Name</option>
-					}
-				</select>
-				<div class="input-group-append">
-					<button class="btn btn-outline-secondary" type="submit">Button</button>
-				</div>
-			</div>
-		</form>
-	</div>
-</div>
 
 
 
