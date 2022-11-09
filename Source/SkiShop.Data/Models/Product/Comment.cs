@@ -12,12 +12,6 @@
         public Guid Id { get; set; }
 
         [Required]
-        [ForeignKey(nameof(ApplicationUser))]
-        public string ApplicationUserId { get; set; }
-
-        public ApplicationUser ApplicationUser { get; set; }
-
-        [Required]
         [StringLength(TitleMaxLength)]
         public string Title { get; set; }
 

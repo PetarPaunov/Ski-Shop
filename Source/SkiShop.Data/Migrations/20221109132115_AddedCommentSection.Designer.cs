@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkiShop.Data;
 
@@ -11,9 +12,10 @@ using SkiShop.Data;
 namespace SkiShop.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221109132115_AddedCommentSection")]
+    partial class AddedCommentSection
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -306,6 +308,10 @@ namespace SkiShop.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -322,6 +328,8 @@ namespace SkiShop.Data.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("Comments");
                 });
@@ -562,6 +570,17 @@ namespace SkiShop.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SkiShop.Data.Models.Product.Comment", b =>
+                {
+                    b.HasOne("SkiShop.Data.Models.Account.ApplicationUser", "ApplicationUser")
+                        .WithMany("Comments")
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+                });
+
             modelBuilder.Entity("SkiShop.Data.Models.Product.Product", b =>
                 {
                     b.HasOne("SkiShop.Data.Models.Product.Brand", "Brand")
@@ -611,7 +630,7 @@ namespace SkiShop.Data.Migrations
             modelBuilder.Entity("SkiShop.Data.Models.Product.UserComment", b =>
                 {
                     b.HasOne("SkiShop.Data.Models.Account.ApplicationUser", "ApplicationUser")
-                        .WithMany("Comments")
+                        .WithMany()
                         .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

@@ -18,7 +18,8 @@
         public DbSet<Model> Models { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Type> Types { get; set; }
-        public DbSet<ProductCommet> ProductCommets { get; set; }
+        public DbSet<ProductComment> ProductComments { get; set; }
+        public DbSet<UserComment> UserComments { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -47,8 +48,12 @@
                 .Property(x => x.IsDeleted)
                 .HasDefaultValue(false);
 
-            builder.Entity<ProductCommet>()
+            builder.Entity<ProductComment>()
                 .HasKey(x => new { x.ProductId, x.CommentId });
+
+            builder.Entity<UserComment>()
+                .HasKey(x => new { x.ApplicationUserId, x.CommentId });
+
 
             builder.ApplyConfiguration<Type>(new TypeConfiguration());
             builder.ApplyConfiguration<Brand>(new BrandConfiguration());

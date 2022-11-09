@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public class ProductCommet
+    public class ProductComment
     {
         public Guid CommentId { get; set; }
 

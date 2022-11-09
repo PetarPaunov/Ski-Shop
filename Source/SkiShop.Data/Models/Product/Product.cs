@@ -9,7 +9,7 @@
     {
         public Product()
         {
-            ProductComments = new HashSet<ProductCommet>();
+            ProductComments = new HashSet<ProductComment>();
         }
 
         public Guid Id { get; set; }
@@ -47,7 +47,7 @@
 
         public Model Model { get; set; }
 
-        public ICollection<ProductCommet> ProductComments { get; set; }
+        public ICollection<ProductComment> ProductComments { get; set; }
 
         [Required]
         public int Quantity { get; set; }
