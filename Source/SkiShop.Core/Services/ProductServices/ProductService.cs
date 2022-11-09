@@ -5,6 +5,7 @@
     using SkiShop.Core.Models.CommentViewModels;
     using SkiShop.Core.Models.ProductViewModels;
     using SkiShop.Data.Common;
+    using SkiShop.Data.Models.Account;
     using SkiShop.Data.Models.Product;
 
     public class ProductService : IProductService
@@ -16,7 +17,7 @@
             repository = _repository;
         }
 
-        public async Task AddNewComment(string comment, string productId)
+        public async Task AddNewComment(string comment, string productId, string userId)
         {
             var guidProductId = new Guid(productId);
 
@@ -33,7 +34,16 @@
                 Product = product,
             };
 
+            var user = await repository.GetByIdAsync<ApplicationUser>(userId);
+
+            var userComment = new UserComment()
+            {
+                Comment = newComment,
+                ApplicationUser = user
+            };
+
             await repository.AddAsync<ProductComment>(productComment);
+            await repository.AddAsync<UserComment>(userComment);
 
             await repository.SaveChangesAsync();
         }

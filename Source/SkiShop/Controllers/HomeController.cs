@@ -6,6 +6,7 @@
     using SkiShop.Core.Contracts.ProductContracts;
     using SkiShop.Core.Models.CommentViewModels;
     using SkiShop.Core.Models.ProductViewModels;
+    using SkiShop.Extension;
     using SkiShop.Models;
     using System.Diagnostics;
 
@@ -37,7 +38,14 @@
 
         public async Task<IActionResult> AddComment(ProductViewModel model, string id)
         {
-            await productService.AddNewComment(model.Comment.Description, id);
+            if (!ModelState.IsValid)
+            {
+                return Redirect($"/Home/ShowProduct/{id}");
+            }
+
+            var userId = User.Id();
+
+            await productService.AddNewComment(model.Comment.Description, id, userId);
 
             return Redirect($"/Home/ShowProduct/{id}");
         }

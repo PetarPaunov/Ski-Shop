@@ -5,8 +5,7 @@
 
     public class AddCommentViewModel
     {
-        [Required]
         [StringLength(DescriptionMaxLength)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
     }
 }

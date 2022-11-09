@@ -7,6 +7,6 @@
     {
         Task<IEnumerable<HomeProductViewModel>> GetFirstSixProductsAsync();
         Task<ProductViewModel> GetProductByIdAsync(string productId);
-        Task AddNewComment(string comment, string productId);
+        Task AddNewComment(string comment, string productId, string userId);
     }
 }
