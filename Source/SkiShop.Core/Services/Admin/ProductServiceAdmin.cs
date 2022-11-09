@@ -113,14 +113,14 @@
             await repository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<ProductsViewModel>> GetAllProductsAsync()
+        public async Task<IEnumerable<AllProductsViewModel>> GetAllProductsAsync()
 		{
             var products = await repository.All<Product>()
                 .Where(x => x.IsDeleted != true)
                 .Include(x => x.Model)
                 .Include(x => x.Type)
                 .Include(x => x.Brand)
-                .Select(x => new ProductsViewModel()
+                .Select(x => new AllProductsViewModel()
                 {
                     Id = x.Id.ToString(),
                     Title = x.Title,

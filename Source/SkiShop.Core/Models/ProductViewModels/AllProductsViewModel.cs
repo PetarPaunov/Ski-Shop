@@ -1,6 +1,6 @@
 ﻿namespace SkiShop.Core.Models.ProductViewModels
 {
-	public class ProductsViewModel
+	public class AllProductsViewModel
 	{
 		public string Id { get; set; }
 
@@ -16,7 +16,7 @@
 
 		public string Price { get; set; }
 
-		public int Quantity { get; set; }
+		public int? Quantity { get; set; }
 
 		public string ImageUrl { get; set; }
 	}

@@ -1,10 +1,12 @@
 ﻿namespace SkiShop.Core.Contracts.ProductContracts
 {
     using SkiShop.Core.Models.ProductViewModels;
+    using SkiShop.Data.Models.Product;
 
     public interface IProductService
     {
         Task<IEnumerable<HomeProductViewModel>> GetFirstSixProductsAsync();
-        Task<ProductsViewModel> GetProductByIdAsync(string productId);
+        Task<ProductViewModel> GetProductByIdAsync(string productId);
+        Task AddNewComment(string comment, string productId);
     }
 }

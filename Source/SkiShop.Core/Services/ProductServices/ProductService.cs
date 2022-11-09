@@ -2,6 +2,7 @@
 {
     using Microsoft.EntityFrameworkCore;
     using SkiShop.Core.Contracts.ProductContracts;
+    using SkiShop.Core.Models.CommentViewModels;
     using SkiShop.Core.Models.ProductViewModels;
     using SkiShop.Data.Common;
     using SkiShop.Data.Models.Product;
@@ -13,6 +14,28 @@
         public ProductService(IRepository _repository)
         {
             repository = _repository;
+        }
+
+        public async Task AddNewComment(string comment, string productId)
+        {
+            var guidProductId = new Guid(productId);
+
+            var newComment = new Comment()
+            {
+                Description = comment
+            };
+
+            var product = await repository.GetByIdAsync<Product>(guidProductId);
+
+            var productComment = new ProductComment()
+            {
+                Comment = newComment,
+                Product = product,
+            };
+
+            await repository.AddAsync<ProductComment>(productComment);
+
+            await repository.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<HomeProductViewModel>> GetFirstSixProductsAsync()
@@ -35,18 +58,26 @@
             return products;
         }
 
-        public async Task<ProductsViewModel> GetProductByIdAsync(string productId)
+        public async Task<ProductViewModel> GetProductByIdAsync(string productId)
         {
             var guid = new Guid(productId);
 
-            // var returendProduct = await repository.GetByIdAsync<Product>(guid);
             var returendProduct = await repository.All<Product>()
                 .Include(x => x.Model)
                 .Include(x => x.Type)
                 .Include(x => x.Brand)
                 .FirstOrDefaultAsync(x => x.Id == guid);
 
-            var product = new ProductsViewModel()
+            var comments = await repository.All<ProductComment>()
+                .Where(x => x.ProductId == returendProduct.Id)
+                .Select(x => new CommentViewModel()
+                {
+                    Id = x.Comment.Id,
+                    Description = x.Comment.Description
+                })
+                .ToListAsync();
+
+            var product = new ProductViewModel()
             {
                 Id = returendProduct.Id.ToString(),
                 Title = returendProduct.Title,
@@ -56,7 +87,8 @@
                 Type = returendProduct.Type.Name,
                 Price = returendProduct.Price.ToString(),
                 Quantity = returendProduct.Quantity,
-                ImageUrl = returendProduct.ImageUrl
+                ImageUrl = returendProduct.ImageUrl,
+                Comments = comments
             };
 
             return product;

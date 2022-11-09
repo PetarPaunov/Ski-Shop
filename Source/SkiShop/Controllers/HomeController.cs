@@ -4,6 +4,8 @@
     using Microsoft.AspNetCore.Mvc;
     using SkiShop.Core.Constants;
     using SkiShop.Core.Contracts.ProductContracts;
+    using SkiShop.Core.Models.CommentViewModels;
+    using SkiShop.Core.Models.ProductViewModels;
     using SkiShop.Models;
     using System.Diagnostics;
 
@@ -31,6 +33,13 @@
             var model = await productService.GetProductByIdAsync(id);
 
             return View(model);
+        }
+
+        public async Task<IActionResult> AddComment(ProductViewModel model, string id)
+        {
+            await productService.AddNewComment(model.Comment.Description, id);
+
+            return Redirect($"/Home/ShowProduct/{id}");
         }
 
         [AllowAnonymous]

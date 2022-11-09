@@ -1,18 +1,12 @@
-﻿namespace SkiShop.Data.Models.Product
+﻿namespace SkiShop.Core.Models.CommentViewModels
 {
     using System.ComponentModel.DataAnnotations;
-
     using static SkiShop.Data.Constants.DataConstants.Comment;
 
-    public class Comment
+    public class AddCommentViewModel
     {
-        [Key]
-        public Guid Id { get; set; }
-
         [Required]
         [StringLength(DescriptionMaxLength)]
         public string Description { get; set; }
-
-        public bool IsDeleted { get; set; }
     }
 }
