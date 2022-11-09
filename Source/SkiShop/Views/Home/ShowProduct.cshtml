@@ -31,7 +31,7 @@
     foreach (var comment in Model.Comments)
     {
         <section>
-            <div class="container my-5 py-5 text-dark">
+            <div class="container text-dark">
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-11 col-lg-9 col-xl-7">
                         <div class="d-flex flex-start mb-4">
@@ -63,9 +63,9 @@ else
 }
 
 <section>
-    <div class="container my-5 py-5 text-dark">
+    <div class="container py-5 text-dark">
         <div class="row d-flex justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-6">
+            <div class="col-md-11 col-lg-9 col-xl-7">
                 <div class="card">
                     <div class="card-body p-4">
                         <div class="d-flex flex-start w-100">
@@ -76,7 +76,7 @@ else
                             <div class="w-100">
                                 <h5>Add a comment</h5>
                                 <div class="form-outline">
-                                    <textarea asp-for="Comment.Description" class="form-control" id="textAreaExample" rows="4"></textarea>
+                                        <textarea asp-for="Comment.Description" class="form-control" id="textAreaExample" rows="6" style="width:675px"></textarea>
                                     <label class="form-label" for="textAreaExample">What is your view?</label>
                                 </div>
                                 <div class="d-flex justify-content-between mt-3">
