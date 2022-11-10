@@ -13,5 +13,7 @@
 
         [ForeignKey(nameof(ProductId))]
         public Product Product { get; set; }
+
+        public string UserName { get; set; }
     }
 }

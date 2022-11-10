@@ -27,14 +27,14 @@
             };
 
             var product = await repository.GetByIdAsync<Product>(guidProductId);
+            var user = await repository.GetByIdAsync<ApplicationUser>(userId);
 
             var productComment = new ProductComment()
             {
                 Comment = newComment,
                 Product = product,
+                UserName = user.UserName
             };
-
-            var user = await repository.GetByIdAsync<ApplicationUser>(userId);
 
             var userComment = new UserComment()
             {
@@ -83,7 +83,8 @@
                 .Select(x => new CommentViewModel()
                 {
                     Id = x.Comment.Id,
-                    Description = x.Comment.Description
+                    Description = x.Comment.Description,
+                    User = x.UserName
                 })
                 .ToListAsync();
 
@@ -102,6 +103,16 @@
             };
 
             return product;
+        }
+
+        private async Task<string> GetUserName(Guid commentId)
+        {
+            var userName = await repository.All<UserComment>()
+                    .Where(x => x.CommentId == commentId)
+                    .Select(x => x.ApplicationUser.UserName)
+                    .FirstOrDefaultAsync();
+
+            return userName.ToString();
         }
     }
 }
