@@ -1,3 +1,4 @@
+using CloudinaryDotNet;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SkiShop.Core.Contracts;
@@ -37,12 +38,18 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IRepository, Repository>();
-builder.Services.AddScoped<IProductServiceAdmin, ProductServiceAdmin>();
-builder.Services.AddScoped<ICommonService, CommonService>();
-builder.Services.AddScoped<IUserServiceAdmin, UserServiceAdmin>();
-builder.Services.AddScoped<IRoleServiceAdmin, RoleServiceAdmin>();
-builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddApplicationServices();
+
+var cloudName = builder.Configuration.GetValue<string>("AccountSettings:ColudName");
+var apiKey = builder.Configuration.GetValue<string>("AccountSettings:ApiKey");
+var apiSecret = builder.Configuration.GetValue<string>("AccountSettings:ApiSecret");
+
+if (new[] { cloudName, apiKey, apiSecret }.Any(string.IsNullOrEmpty))
+{
+    throw new ArgumentException("Please specify Cloudinary accont details");
+}
+
+builder.Services.AddSingleton(new Cloudinary(new Account(cloudName, apiKey, apiSecret)));
 
 var app = builder.Build();
 

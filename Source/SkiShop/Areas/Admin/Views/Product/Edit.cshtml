@@ -80,7 +80,7 @@
 				<input asp-for="@Model.FrontImage" class="form-control" type="file" id="formFile"
 					   onchange="document.getElementById('FrontImagePrv').src = window.URL.createObjectURL(this.files[0])">
 			</div>
-			<img id="FrontImagePrv" src="~/product-images/@Model.ImageUrl" class="img-fluid" />
+			<img id="FrontImagePrv" src="@Model.ImageUrl" class="img-fluid" />
 		</div>
 		<input type="submit" class="btn btn-block btn-primary" value="Edit Product" />
 	</form>

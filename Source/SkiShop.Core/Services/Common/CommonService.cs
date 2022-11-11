@@ -1,35 +1,34 @@
 ﻿namespace SkiShop.Core.Services.Common
 {
+    using CloudinaryDotNet;
+    using CloudinaryDotNet.Actions;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
     using SkiShop.Core.Contracts.Common;
 
     public class CommonService : ICommonService
     {
-        private readonly IWebHostEnvironment webHostEnvironment;
+        private readonly Cloudinary cloudinary;
 
-        public CommonService(IWebHostEnvironment _webHostEnvironment)
+        public CommonService(IWebHostEnvironment _webHostEnvironment, Cloudinary _cloudinary)
         {
-            webHostEnvironment = _webHostEnvironment;
+            cloudinary = _cloudinary;
         }
 
-        public string UploadedFile(IFormFile frontImage)
+        public async Task<string> UploadeImage(IFormFile imageFile)
         {
-            string uniqueFileName = null;
+            using var stream = imageFile.OpenReadStream();
 
-            if (frontImage != null)
+            var uploadParams = new ImageUploadParams()
             {
-                string uploadsFolder = Path.Combine(webHostEnvironment.WebRootPath, "product-images");
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + frontImage.FileName;
-                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                File = new FileDescription(imageFile.FileName, stream)
+            };
 
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    frontImage.CopyTo(fileStream);
-                }
-            }
+            var result = await cloudinary.UploadAsync(uploadParams);
 
-            return uniqueFileName;
+            var imageUrl = result.Url.ToString();
+
+            return imageUrl;
         }
     }
 }

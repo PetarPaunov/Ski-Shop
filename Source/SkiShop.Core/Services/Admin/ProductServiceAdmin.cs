@@ -22,7 +22,7 @@
 
         public async Task AddNewProductAsync(AddProductViewModel model)
         {
-            var imageUrl = commonService.UploadedFile(model.FrontImage);
+            var imageUrl = await commonService.UploadeImage(model.FrontImage);
 
             var product = new Product()
             {
@@ -99,7 +99,7 @@
         {
             var product = await repository.GetByIdAsync<Product>(model.Id);
 
-            var imageUrl = commonService.UploadedFile(model.FrontImage);
+            var imageUrl = await commonService.UploadeImage(model.FrontImage);
 
             product.Title = model.Title;
             product.Description = model.Description;

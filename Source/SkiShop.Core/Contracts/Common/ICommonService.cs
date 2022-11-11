@@ -4,7 +4,6 @@
 
     public interface ICommonService
 	{
-        string UploadedFile(IFormFile frontImage);
-
+        Task<string> UploadeImage(IFormFile imageFile);
     }
 }
