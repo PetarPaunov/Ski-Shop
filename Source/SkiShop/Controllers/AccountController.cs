@@ -53,7 +53,13 @@
 
             if (result.Succeeded)
             {
-                await userManager.AddToRoleAsync(user, RoleConstants.Administrator);
+                var roleExist = await roleManager.RoleExistsAsync(RoleConstants.User);
+                if (!roleExist)
+                {
+                    await roleManager.CreateAsync(new IdentityRole(RoleConstants.User));
+                }
+
+                await userManager.AddToRoleAsync(user, RoleConstants.User);
 
                 await signInManager.SignInAsync(user, isPersistent: false);
 

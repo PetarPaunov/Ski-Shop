@@ -5,7 +5,6 @@
     using SkiShop.Data.Models.Product;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using SkiShop.Data.Configuration;
-    using SkiShop.Data.Models.ShoppingCart;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

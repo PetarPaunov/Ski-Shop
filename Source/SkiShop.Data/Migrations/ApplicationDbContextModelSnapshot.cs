@@ -241,7 +241,7 @@ namespace SkiShop.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Brands");
+                    b.ToTable("Brands", (string)null);
 
                     b.HasData(
                         new
@@ -321,7 +321,7 @@ namespace SkiShop.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("SkiShop.Data.Models.Product.Model", b =>
@@ -341,7 +341,7 @@ namespace SkiShop.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Models");
+                    b.ToTable("Models", (string)null);
 
                     b.HasData(
                         new
@@ -445,7 +445,7 @@ namespace SkiShop.Data.Migrations
 
                     b.HasIndex("TypeId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("SkiShop.Data.Models.Product.ProductComment", b =>
@@ -464,7 +464,7 @@ namespace SkiShop.Data.Migrations
 
                     b.HasIndex("CommentId");
 
-                    b.ToTable("ProductComments");
+                    b.ToTable("ProductComments", (string)null);
                 });
 
             modelBuilder.Entity("SkiShop.Data.Models.Product.Type", b =>
@@ -484,7 +484,7 @@ namespace SkiShop.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Types");
+                    b.ToTable("Types", (string)null);
 
                     b.HasData(
                         new
@@ -513,7 +513,7 @@ namespace SkiShop.Data.Migrations
 
                     b.HasIndex("CommentId");
 
-                    b.ToTable("UserComments");
+                    b.ToTable("UserComments", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
