@@ -52,6 +52,9 @@
         [Required]
         public int Quantity { get; set; }
 
+        [Required]
+        public DateTime CreateOn { get; set; }
+
         public bool IsDeleted { get; set; }
     }
 }

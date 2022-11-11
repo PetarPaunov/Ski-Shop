@@ -34,6 +34,7 @@
                 Quantity = model.Quantity,
                 ImageUrl = imageUrl,
                 TypeId = model.TypeId,
+                CreateOn = DateTime.UtcNow
             };
 
             await repository.AddAsync(product);
@@ -117,6 +118,7 @@
 		{
             var products = await repository.All<Product>()
                 .Where(x => x.IsDeleted != true)
+                .OrderByDescending(x => x.CreateOn)
                 .Include(x => x.Model)
                 .Include(x => x.Type)
                 .Include(x => x.Brand)

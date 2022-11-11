@@ -53,6 +53,7 @@
         {
             var products = await repository.All<Product>()
                 .Where(x => x.IsDeleted != true)
+                .OrderByDescending(x => x.CreateOn)
                 .Include(x => x.Model)
                 .Include(x => x.Type)
                 .Include(x => x.Brand)
@@ -63,7 +64,7 @@
                     Price = x.Price.ToString(),
                     ImageUrl = x.ImageUrl
                 })
-                .Take(6)
+                .Take(8)
                 .ToListAsync();
 
             return products;
