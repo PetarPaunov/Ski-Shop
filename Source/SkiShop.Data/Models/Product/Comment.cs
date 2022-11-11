@@ -1,5 +1,6 @@
 ﻿namespace SkiShop.Data.Models.Product
 {
+    using System;
     using System.ComponentModel.DataAnnotations;
 
     using static SkiShop.Data.Constants.DataConstants.Comment;
@@ -12,6 +13,8 @@
         [Required]
         [StringLength(DescriptionMaxLength)]
         public string Description { get; set; }
+
+        public DateTime CreatedOn { get; set; }
 
         public bool IsDeleted { get; set; }
     }

@@ -8,6 +8,8 @@
 
         public string Description { get; set; }
 
+        public string CreateOn { get; set; }
+
         public string User { get; set; }
     }
 }

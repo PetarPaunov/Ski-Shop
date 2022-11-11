@@ -23,7 +23,8 @@
 
             var newComment = new Comment()
             {
-                Description = comment
+                Description = comment,
+                CreatedOn = DateTime.UtcNow
             };
 
             var product = await repository.GetByIdAsync<Product>(guidProductId);
@@ -80,11 +81,13 @@
 
             var comments = await repository.All<ProductComment>()
                 .Where(x => x.ProductId == returendProduct.Id)
+                .OrderByDescending(x => x.Comment.CreatedOn)
                 .Select(x => new CommentViewModel()
                 {
                     Id = x.Comment.Id,
                     Description = x.Comment.Description,
-                    User = x.UserName
+                    User = x.UserName,
+                    CreateOn = x.Comment.CreatedOn.Date.ToString()
                 })
                 .ToListAsync();
 

@@ -44,10 +44,10 @@ var cloudName = builder.Configuration.GetValue<string>("AccountSettings:ColudNam
 var apiKey = builder.Configuration.GetValue<string>("AccountSettings:ApiKey");
 var apiSecret = builder.Configuration.GetValue<string>("AccountSettings:ApiSecret");
 
-if (new[] { cloudName, apiKey, apiSecret }.Any(string.IsNullOrEmpty))
-{
-    throw new ArgumentException("Please specify Cloudinary accont details");
-}
+//if (new[] { cloudName, apiKey, apiSecret }.Any(string.IsNullOrEmpty))
+//{
+//    throw new ArgumentException("Please specify Cloudinary accont details");
+//}
 
 builder.Services.AddSingleton(new Cloudinary(new Account(cloudName, apiKey, apiSecret)));
 
