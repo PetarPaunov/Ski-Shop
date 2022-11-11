@@ -21,8 +21,6 @@
         public DbSet<Type> Types { get; set; }
         public DbSet<ProductComment> ProductComments { get; set; }
         public DbSet<UserComment> UserComments { get; set; }
-        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
-        public DbSet<ShoppingCartProduct> ShoppingCartProducts { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
