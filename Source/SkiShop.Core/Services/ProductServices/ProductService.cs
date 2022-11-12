@@ -108,15 +108,5 @@
 
             return product;
         }
-
-        private async Task<string> GetUserName(Guid commentId)
-        {
-            var userName = await repository.All<UserComment>()
-                    .Where(x => x.CommentId == commentId)
-                    .Select(x => x.ApplicationUser.UserName)
-                    .FirstOrDefaultAsync();
-
-            return userName.ToString();
-        }
     }
 }
