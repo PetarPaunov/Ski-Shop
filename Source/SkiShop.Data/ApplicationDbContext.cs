@@ -5,6 +5,8 @@
     using SkiShop.Data.Models.Product;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using SkiShop.Data.Configuration;
+    using SkiShop.Data.Models.ShoppingCart;
+    using Microsoft.AspNetCore.Identity;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -20,6 +22,8 @@
         public DbSet<Type> Types { get; set; }
         public DbSet<ProductComment> ProductComments { get; set; }
         public DbSet<UserComment> UserComments { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<ShoppingCartProduct> ShoppingCartProducts { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -54,10 +58,23 @@
             builder.Entity<UserComment>()
                 .HasKey(x => new { x.ApplicationUserId, x.CommentId });
 
+            builder.Entity<ShoppingCartProduct>()
+                .HasKey(x => new { x.ProductId, x.ShoppingCartId });
+
+            builder.Entity<ShoppingCart>()
+                .HasOne(x => x.User)
+                .WithOne(x => x.ShoppingCart)
+                .HasForeignKey<ApplicationUser>(x => x.ShoppingCartId)
+                .OnDelete(DeleteBehavior.Restrict);
+
 
             builder.ApplyConfiguration<Type>(new TypeConfiguration());
             builder.ApplyConfiguration<Brand>(new BrandConfiguration());
             builder.ApplyConfiguration<Model>(new ModelConfiguration());
+            builder.ApplyConfiguration<ShoppingCart>(new ShoppingCartConfiguration());
+            builder.ApplyConfiguration<ApplicationUser>(new UserConfiguration());
+            builder.ApplyConfiguration<IdentityRole>(new RoleConfiguration());
+            builder.ApplyConfiguration<IdentityUserRole<string>>(new UserToRoleConfiguration());
 
 
             base.OnModelCreating(builder);

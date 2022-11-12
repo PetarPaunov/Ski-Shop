@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkiShop.Data;
 
@@ -11,9 +12,10 @@ using SkiShop.Data;
 namespace SkiShop.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221112142243_AddedShoppingCart")]
+    partial class AddedShoppingCart
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,22 +49,6 @@ namespace SkiShop.Data.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "6ae05bb5-2a6f-418d-b860-5b912480f1bc",
-                            ConcurrencyStamp = "037a686e-cf2a-4612-acaa-0452b80bdf6e",
-                            Name = "Administrator",
-                            NormalizedName = "ADMINISTRATOR"
-                        },
-                        new
-                        {
-                            Id = "030b13b9-535c-48f4-9da9-6799f590dcff",
-                            ConcurrencyStamp = "70fb635a-b79a-4b22-bcf8-967ea79aee74",
-                            Name = "User",
-                            NormalizedName = "USER"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -152,13 +138,6 @@ namespace SkiShop.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = "dea12856-c198-4129-b3f3-b893d8395082",
-                            RoleId = "6ae05bb5-2a6f-418d-b860-5b912480f1bc"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -251,25 +230,6 @@ namespace SkiShop.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "dea12856-c198-4129-b3f3-b893d8395082",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "852573fc-7e3f-4960-8d39-2ede711f34b3",
-                            Email = "admin@gmail.com",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "admin@gmail.com",
-                            NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEG9Xt6GWHG8ubJwdifsfAJDI7K2F5FwVCthwaQlKGuWIMIeX15m9xpiD2hs3hv8p6w==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "3402fc61-3fd3-411f-b564-f24d09dae466",
-                            ShoppingCartId = new Guid("a8802be8-743e-45b7-963d-bc4bc494afa7"),
-                            TwoFactorEnabled = false,
-                            UserName = "Admin"
-                        });
                 });
 
             modelBuilder.Entity("SkiShop.Data.Models.Product.Brand", b =>
@@ -573,12 +533,6 @@ namespace SkiShop.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ShoppingCarts");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("a8802be8-743e-45b7-963d-bc4bc494afa7")
-                        });
                 });
 
             modelBuilder.Entity("SkiShop.Data.Models.ShoppingCart.ShoppingCartProduct", b =>

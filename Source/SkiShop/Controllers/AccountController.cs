@@ -9,6 +9,7 @@
     using static SkiShop.Core.Constants.RoleConstants;
     using SkiShop.Core.Constants;
     using Microsoft.EntityFrameworkCore;
+    using SkiShop.Data.Models.ShoppingCart;
 
     public class AccountController : BaseController
     {
@@ -47,6 +48,7 @@
             {
                 UserName = model.UserName,
                 Email = model.Email,
+                ShoppingCart = new ShoppingCart()
             };
 
             var result = await userManager.CreateAsync(user, model.Password);
