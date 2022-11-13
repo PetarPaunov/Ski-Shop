@@ -42,7 +42,7 @@
                                     <h5 class="mb-0">@product.TotalPrice$</h5>
                                 </div>
                                 <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                                     <a href="" class="btn btn-danger" data-abc="true"> Remove</a>
+                                     <a asp-action="RemoveFromCart" asp-controller="ShoppingCart" asp-route-productId="@product.Id" class="btn btn-danger" data-abc="true"> Remove</a>
                                 </div>
                             </div>
                         </div>

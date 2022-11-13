@@ -30,5 +30,14 @@
 
             return Redirect($"/Home/ShowProduct/{productId}");
         }
+
+        public async Task<IActionResult> RemoveFromCart(string productId)
+        {
+            var userId = User.Id();
+
+            await shoppingCartService.RemoveFromCart(productId, userId);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

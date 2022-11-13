@@ -3,6 +3,7 @@
     using Microsoft.EntityFrameworkCore;
     using SkiShop.Core.Contracts.ShoppingCart;
     using SkiShop.Core.Models.ShoppingCartViewModels;
+    using SkiShop.Data;
     using SkiShop.Data.Common;
     using SkiShop.Data.Models.Account;
     using SkiShop.Data.Models.Product;
@@ -12,10 +13,12 @@
     public class ShoppingCartService : IShoppingCartService
     {
         private readonly IRepository repository;
+        private readonly ApplicationDbContext context;
 
-        public ShoppingCartService(IRepository _repository)
+        public ShoppingCartService(IRepository _repository, ApplicationDbContext _context)
         {
             repository = _repository;
+            context = _context;
         }
 
         public async Task AddProductInShoppingCartAsync(string productId, string userId, int quantity)
@@ -72,6 +75,17 @@
                 .ToListAsync();
 
             return allProducts;
+        }
+
+        public async Task RemoveFromCart(string productId, string userId)
+        {
+            var productGuidId = new Guid(productId);
+            var user = await repository.GetByIdAsync<ApplicationUser>(userId);
+
+            var shoppingCart = await GetShoppingCartProduct(productGuidId, user.ShoppingCartId);
+
+            context.ShoppingCartProducts.Remove(shoppingCart);
+            await repository.SaveChangesAsync();
         }
 
         private async Task<ShoppingCartProduct> GetShoppingCartProduct(Guid productId, Guid shoppingCartId)
