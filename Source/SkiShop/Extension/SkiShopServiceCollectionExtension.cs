@@ -8,6 +8,8 @@ using SkiShop.Core.Services.ProductServices;
 using SkiShop.Core.Services;
 using SkiShop.Data.Common;
 using CloudinaryDotNet;
+using SkiShop.Core.Contracts.ShoppingCart;
+using SkiShop.Core.Services.ShoppingCart;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -21,6 +23,7 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped<IUserServiceAdmin, UserServiceAdmin>();
             services.AddScoped<IRoleServiceAdmin, RoleServiceAdmin>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IShoppingCartService, ShoppingCartService>();
 
             return services;
         }

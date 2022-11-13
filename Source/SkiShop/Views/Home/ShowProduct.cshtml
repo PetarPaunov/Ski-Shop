@@ -14,13 +14,15 @@
                     <span>@Model.Price$</span>
                 </div>
                 <p class="lead">@Model.Description</p>
+                <form asp-action="AddToCart" asp-controller="ShoppingCart" asp-route-productId="@Model.Id">
                 <div class="d-flex">
-                    <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
-                    <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                    <input class="form-control text-center me-3" name="quantity" id="inputQuantity" type="number" value="1" style="max-width: 3rem" />
+                    <button class="btn btn-outline-dark flex-shrink-0" type="submit">
                         <i class="bi-cart-fill me-1"></i>
                         Add to cart
                     </button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
@@ -46,7 +48,6 @@
                                         <p>
                                             @comment.Description
                                         </p>
-
                                     </div>
                                 </div>
                             </div>
@@ -62,7 +63,9 @@ else
     <h3 style="text-align: center;">No comments have been added yet!</h3>
 }
 
-<section>
+@if (User.Identity.IsAuthenticated)
+{
+    <section>
     <div class="container py-5 text-dark">
         <div class="row d-flex justify-content-center">
             <div class="col-md-11 col-lg-9 col-xl-7">
@@ -90,3 +93,4 @@ else
         </div>
     </div>
 </section>
+}
