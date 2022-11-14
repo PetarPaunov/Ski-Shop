@@ -53,7 +53,7 @@
 
 			await roleServiceAdmin.CreateRoleAsync(model.Name);
 
-			return RedirectToAction(nameof(Index));
+			return RedirectToAction(nameof(RoleManaging));
 		}
 
 		[HttpPost]
@@ -66,7 +66,7 @@
 
 			await roleServiceAdmin.DeleteRoleAsync(model.Name);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(RoleManaging));
         }
     }
 }

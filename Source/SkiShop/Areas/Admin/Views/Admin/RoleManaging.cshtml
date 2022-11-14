@@ -2,30 +2,35 @@
 
 @model RoleViewModel
 
-<div class="col-md-6">
-	<h2>Add new Role</h2>
+<div class="d-flex justify-content-center">
+	<h1>Role management</h1>
+</div>
+
+<div class="d-flex justify-content-center">
 	<form asp-area="Admin" asp-action="AddRole" asp-controller="Admin">
+		<label asp-for="@Model.Name">Add new Role</label>
+
 		<div class="input-group mb-3">
 			<input asp-for="@Model.Name" type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
 			<div class="input-group-append">
-				<button class="btn btn-outline-secondary" type="submit">Button</button>
+				<button class="btn btn-outline-secondary" type="submit">Submit</button>
 			</div>
 		</div>
 	</form>
 </div>
-<div class="col-md-6">
-	<h2>Remove Role</h2>
-	<div class="input-group mb-3">
+<div class="d-flex justify-content-center">
+	<div class="d-flex justify-content-center">
 		<form asp-area="Admin" asp-action="RemoveRole" asp-controller="Admin">
+			<label asp-for="@Model.Name">Remove an Existing Role</label>
 			<div class="input-group mb-3">
-				<select asp-for="@Model.Name" class="form-control">
+				<select asp-for="@Model.Name" class="form-control" style="width:215px;">
 					@foreach (var role in ViewBag.Roles)
 					{
 						<option value="@role.Name">@role.Name</option>
 					}
 				</select>
 				<div class="input-group-append">
-					<button class="btn btn-outline-secondary" type="submit">Button</button>
+					<button class="btn btn-outline-secondary" type="submit">Submit</button>
 				</div>
 			</div>
 		</form>
