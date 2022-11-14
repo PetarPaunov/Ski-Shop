@@ -91,5 +91,20 @@
 
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Deleted()
+        {
+            var model = await productService.GetAllDeletedProductsAsync();
+
+            return View(model);
+        }
+
+        public async Task<IActionResult> ReturnProduct(string id, int quantity)
+        {
+            await productService.ReturnDeletedProduct(id, quantity);
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

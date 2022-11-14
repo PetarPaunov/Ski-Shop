@@ -81,6 +81,7 @@
             var product = await repository.GetByIdAsync<Product>(productGuid);
 
             product.IsDeleted = true;
+            product.Quantity = 0;
 
             await repository.SaveChangesAsync();
         }
@@ -92,6 +93,11 @@
             var product = await repository.GetByIdAsync<Product>(productGuid);
 
             product.Quantity--;
+
+            if (product.Quantity == 0)
+            {
+                product.IsDeleted = true;
+            }
 
             await repository.SaveChangesAsync();
         }
@@ -161,6 +167,43 @@
                 Price = product.Price,
                 Quantity = product.Quantity,
             };
+        }
+
+        public async Task<IEnumerable<AllProductsViewModel>> GetAllDeletedProductsAsync()
+        {
+            var products = await repository.All<Product>()
+               .Where(x => x.IsDeleted == true)
+               .OrderByDescending(x => x.CreateOn)
+               .Include(x => x.Model)
+               .Include(x => x.Type)
+               .Include(x => x.Brand)
+               .Select(x => new AllProductsViewModel()
+               {
+                   Id = x.Id.ToString(),
+                   Title = x.Title,
+                   Description = x.Description,
+                   ImageUrl = x.ImageUrl,
+                   Brand = x.Brand.Name,
+                   Model = x.Model.Name,
+                   Type = x.Type.Name,
+                   Price = x.Price.ToString(),
+                   Quantity = x.Quantity
+               })
+               .ToListAsync();
+
+            return products;
+        }
+
+        public async Task ReturnDeletedProduct(string productId, int quantity)
+        {
+            var productGuid = Guid.Parse(productId);
+
+            var product = await repository.GetByIdAsync<Product>(productGuid);
+
+            product.IsDeleted = false;
+            product.Quantity = quantity;
+
+            await repository.SaveChangesAsync();
         }
     }
 }
