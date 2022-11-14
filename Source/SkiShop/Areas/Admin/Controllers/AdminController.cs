@@ -25,24 +25,17 @@
 			return View(model);
 		}
 
-		public async Task<IActionResult> Details(string id)
-		{
-			throw new NotImplementedException(); //TODO: User Details
-		}
-
 		public async Task<IActionResult> AddToRole(string email, string role)
 		{
 			await roleServiceAdmin.AddToRoleAsync(email, role);
-			// TODO: Impelemt. ..
-			return null;
+
+			return RedirectToAction(nameof(Index));
 		}
 
 		public async Task<IActionResult> RoleManaging()
 		{
 			var roles = await roleServiceAdmin.GetAllRolesAsync();
-			var userEmails = await userServiceAdmin.GetAllUserEmailsAsync();
 
-			ViewBag.UserEmails = userEmails;
 			ViewBag.Roles = roles;
 
 			var model = new RoleViewModel();

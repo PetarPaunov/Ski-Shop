@@ -18,6 +18,7 @@
 						<th>Username</th>
 						<th>Email</th>
 						<th>Current Role</th>
+						<th width="200">Add User To Role</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -32,13 +33,20 @@
 							}
 							<td>
 								<form class="mt-2" asp-area="Admin" asp-action="AddToRole" asp-controller="Admin"
-								  asp-route-id="@user.Id">
+								  asp-route-email="@user.Email">
+									<select name="role" class="form-control">
+										@foreach (var role in ViewBag.Roles)
+										{
+											<option value="@role.Name">@role.Name</option>
+										}
+									</select>
 									<div class="d-grid gap-2">
 										<input type="submit" value="Details" class="btn btn-warning mb-2"
 										   onclick="return confirm('Are you shure about that !!!')" />
 									</div>
 								</form>
 							</td>
+
 						</tr>
 					}
 				</tbody>

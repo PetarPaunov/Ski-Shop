@@ -32,7 +32,16 @@ namespace SkiShop.Core.Services.Admin
         {
             var user = await userManager.FindByEmailAsync(email);
 
-            await userManager.AddToRoleAsync(user, role);
+            var isInRole = await userManager.IsInRoleAsync(user, role);
+
+            if (!isInRole)
+            {
+                var currentRoles = await userManager.GetRolesAsync(user);
+
+                await userManager.RemoveFromRolesAsync(user, currentRoles);
+
+                await userManager.AddToRoleAsync(user, role);
+            }
         }
 
         public async Task<IEnumerable<RoleViewModel>> GetAllRolesAsync()
