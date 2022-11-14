@@ -16,8 +16,7 @@
         [StringLength(Product.DescriptionMaxLength, MinimumLength = Product.DescriptionMinLength)]
         public string Description { get; set; }
 
-        [Required(ErrorMessage = "Please choose front image")]
-        public IFormFile FrontImage { get; set; }
+        public IFormFile? FrontImage { get; set; }
 
         [Required]
         public Guid ModelId { get; set; }

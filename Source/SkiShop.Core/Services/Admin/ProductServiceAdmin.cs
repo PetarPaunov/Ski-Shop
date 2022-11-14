@@ -100,7 +100,12 @@
         {
             var product = await repository.GetByIdAsync<Product>(model.Id);
 
-            var imageUrl = await commonService.UploadeImage(model.FrontImage);
+            if (model.FrontImage != null)
+            {
+                var imageUrl = await commonService.UploadeImage(model.FrontImage);
+
+                product.ImageUrl = imageUrl;
+            }
 
             product.Title = model.Title;
             product.Description = model.Description;
@@ -109,7 +114,6 @@
             product.BrandId = model.BrandId;
             product.TypeId = model.TypeId;
             product.ModelId = model.ModelId;
-            product.ImageUrl = imageUrl;
 
             await repository.SaveChangesAsync();
         }

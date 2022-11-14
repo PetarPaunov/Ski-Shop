@@ -75,9 +75,8 @@
 		</div>
 		<div class="container col-md-6">
 			<div class="mb-3">
-				<span asp-validation-for="@Model.FrontImage" class="text-danger"></span>
 				<label for="Image" asp-for="@Model.FrontImage" class="form-label">Image</label>
-				<input asp-for="@Model.FrontImage" class="form-control" type="file" id="formFile"
+				<input data-val="false" asp-for="@Model.FrontImage" class="form-control" type="file" id="formFile"
 					   onchange="document.getElementById('FrontImagePrv').src = window.URL.createObjectURL(this.files[0])">
 			</div>
 			<img id="FrontImagePrv" src="@Model.ImageUrl" class="img-fluid" />
