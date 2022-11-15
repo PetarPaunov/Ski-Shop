@@ -1,17 +1,7 @@
 using CloudinaryDotNet;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using SkiShop.Core.Contracts;
-using SkiShop.Core.Contracts.Admin;
-using SkiShop.Core.Contracts.Common;
-using SkiShop.Core.Contracts.ProductContracts;
-using SkiShop.Core.Services;
-using SkiShop.Core.Services.Admin;
-using SkiShop.Core.Services.Common;
-using SkiShop.Core.Services.ProductServices;
 using SkiShop.Data;
-using SkiShop.Data.Common;
 using SkiShop.Data.Models.Account;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -41,9 +31,9 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddApplicationServices();
 
-var cloudName = builder.Configuration.GetValue<string>("AccountSettings:ColudName");
-var apiKey = builder.Configuration.GetValue<string>("AccountSettings:ApiKey");
-var apiSecret = builder.Configuration.GetValue<string>("AccountSettings:ApiSecret");
+var cloudName = builder.Configuration.GetValue<string>("CloudAccountSettings:ColudName");
+var apiKey = builder.Configuration.GetValue<string>("CloudAccountSettings:ApiKey");
+var apiSecret = builder.Configuration.GetValue<string>("CloudAccountSettings:ApiSecret");
 
 //if (new[] { cloudName, apiKey, apiSecret }.Any(string.IsNullOrEmpty))
 //{
@@ -55,8 +45,8 @@ builder.Services.AddSingleton(new Cloudinary(new Account(cloudName, apiKey, apiS
 builder.Services.AddAuthentication()
     .AddFacebook(options =>
     {
-        options.AppId = "793582705075323";
-        options.AppSecret = "0bf5265e61ddc6e2cf5007a5390b0f9b";
+        options.AppId = builder.Configuration.GetValue<string>("ExternalLoginCridentials:FacebookAppId");
+        options.AppSecret = builder.Configuration.GetValue<string>("ExternalLoginCridentials:FacebookAppSecret");
     })
     .AddTwitter(options =>
     {
@@ -65,8 +55,8 @@ builder.Services.AddAuthentication()
     })
     .AddGoogle(options =>
     {
-        options.ClientId = "647563805482-o8j443o76u2ktshsok3v6ainrq792234.apps.googleusercontent.com";
-        options.ClientSecret = "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";
+        options.ClientId = builder.Configuration.GetValue<string>("ExternalLoginCridentials:GoogleClientId");
+        options.ClientSecret = builder.Configuration.GetValue<string>("ExternalLoginCridentials:GoogleClientSecret");
     });
 
 var app = builder.Build();
