@@ -18,5 +18,6 @@
 		Task<EditProductViewModel> GetForEditAsync(string id);
 		Task DeleteSingleProductAsync(string id);
 		Task DeleteProduct(string id);
-	}
+        Task AddOthers(string keyWord, string name);
+    }
 }

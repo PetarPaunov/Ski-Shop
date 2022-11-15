@@ -1,0 +1,60 @@
+﻿@using SkiShop.Core.Models.CommonViewModels
+@model AddOthersViewModel
+
+<div class="container-fluid px-4">
+	<h1 class="mt-4"></h1>
+	<ol class="breadcrumb mb-4">
+	</ol>
+	<div class="card mb-4">
+		<div class="card-body">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Types</th>
+						<th>Brands</th>
+						<th>Models</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							@foreach (var title in ViewBag.Types)
+							{
+								<strong>@title.Name<br></strong>
+							}
+						</td>
+						<td>
+							@foreach (var brand in ViewBag.Brands)
+							{
+								<strong>@brand.Name<br></strong>
+							}
+						</td>
+						<td>
+							@foreach (var productModel in ViewBag.Models)
+							{
+								<strong>@productModel.Name<br></strong>
+							}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<div class="d-flex justify-content-center">
+	<form asp-area="Admin" asp-action="AddOthers" asp-controller="Product">
+		<div class="input-group mb-3">
+			<label asp-for="@Model.KeyWord">Type, Brand or Model </label>
+			<select asp-for="@Model.KeyWord" class="form-control">
+				<option value="Type">Type</option>
+				<option value="Brand">Brand</option>
+				<option value="Model">Model</option>
+			</select>
+			<label asp-for="@Model.Name">Name </label>
+			<input asp-for="@Model.Name" type="text" class="form-control" aria-label="Recipient's username" aria-describedby="basic-addon2">
+			<div class="input-group-append">
+				<button class="btn btn-outline-secondary" type="submit">Submit</button>
+			</div>
+		</div>
+	</form>
+</div>

@@ -205,5 +205,32 @@
 
             await repository.SaveChangesAsync();
         }
+
+        public async Task AddOthers(string keyWord, string name)
+        {
+            if (keyWord == nameof(Type))
+            {
+                await repository.AddAsync(new Type()
+                {
+                    Name = name,
+                });
+            }
+            else if (keyWord == nameof(Brand))
+            {
+                await repository.AddAsync(new Brand()
+                {
+                    Name = name,
+                });
+            }
+            else if (keyWord == nameof(Model))
+            {
+                await repository.AddAsync(new Model()
+                {
+                    Name = name,
+                });
+            }
+
+            await repository.SaveChangesAsync();
+        }
     }
 }

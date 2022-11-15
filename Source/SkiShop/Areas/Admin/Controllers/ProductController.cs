@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Mvc;
     using SkiShop.Core.Contracts;
+    using SkiShop.Core.Models.CommonViewModels;
     using SkiShop.Core.Models.ProductViewModels;
 
     public class ProductController : BaseController
@@ -105,6 +106,35 @@
             await productService.ReturnDeletedProduct(id, quantity);
 
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AddOthers()
+        {
+            var types = await productService.GetAllTypesAsync();
+            var models = await productService.GetAllModelsAsync();
+            var brands = await productService.GetAllBrandsAsync();
+
+            ViewBag.Types = types;
+            ViewBag.Models = models;
+            ViewBag.Brands = brands;
+
+            var model = new AddOthersViewModel();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddOthers(AddOthersViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await productService.AddOthers(model.KeyWord, model.Name);
+
+            return RedirectToAction(nameof(AddOthers));
         }
     }
 }
