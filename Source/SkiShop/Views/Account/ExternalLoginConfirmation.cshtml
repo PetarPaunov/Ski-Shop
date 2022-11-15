@@ -2,9 +2,7 @@
 @using SkiShop.Data.Models.Account
 @using SkiShop.Models.AccountViewModels
 
-@inject SignInManager<ApplicationUser> signInManager
-
-@model LoginViewModel
+@model ExternalLoginViewModel
 
 @{
     Layout = null;
@@ -38,17 +36,17 @@
                             <h3>Sign In</h3>
                             <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>
                         </div>
-                        <form action="#" method="post">
+                        <form asp-action="ExternalLoginConfirmation" asp-controller="Account" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group last mb-3">
+                                <label asp-for="@Model.Email" for="username">Username</label>
+                                <input asp-for="@Model.Email" type="text" class="form-control" id="username">
+                                <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                            </div>
                             <div class="form-group last mb-3">
                                 <label asp-for="@Model.UserName" for="username">Username</label>
                                 <input asp-for="@Model.UserName" type="text" class="form-control" id="username">
                                 <span asp-validation-for="@Model.UserName" class="text-danger"></span>
-                            </div>
-                            <div class="form-group last mb-3">
-                                <label asp-for="@Model.Password" for="password">Password</label>
-                                <input asp-for="@Model.Password" type="password" class="form-control" id="password">
-                                <span asp-validation-for="@Model.Password" class="text-danger"></span>
                             </div>
                             <div class="d-flex mb-5 align-items-center">
                                 <label class="control control--checkbox mb-0">
@@ -63,25 +61,6 @@
 
                             <span class="d-block text-center my-4 text-muted">&mdash; or &mdash;</span>
                         </form>
-                        @{
-                            var schemes = await signInManager.GetExternalAuthenticationSchemesAsync();
-                            var loginProviders = schemes.ToList();
-                        }
-
-                        @if (loginProviders.Count > 0)
-                        {
-                            <form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post" role="form">
-                                <div class="social-login">
-
-                                    @foreach (var provider in loginProviders)
-                                    {
-                                        <button type="submit" class="@provider.Name.ToLower() btn d-flex justify-content-center align-items-center" name="provider" value="@provider.Name">
-                                            <span class="icon-@provider.Name.ToLower() mr-3"></span> Login with @provider.Name
-                                        </button>
-                                    }
-                                </div>
-                            </form>
-                        }
                     </div>
                 </div>
             </div>
@@ -95,5 +74,5 @@
 </html>
 
 @section Scripts {
-        <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial" />
 }

@@ -1,6 +1,7 @@
 using CloudinaryDotNet;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using SkiShop.Core.Contracts;
 using SkiShop.Core.Contracts.Admin;
 using SkiShop.Core.Contracts.Common;
@@ -50,6 +51,23 @@ var apiSecret = builder.Configuration.GetValue<string>("AccountSettings:ApiSecre
 //}
 
 builder.Services.AddSingleton(new Cloudinary(new Account(cloudName, apiKey, apiSecret)));
+
+builder.Services.AddAuthentication()
+    .AddFacebook(options =>
+    {
+        options.AppId = "793582705075323";
+        options.AppSecret = "0bf5265e61ddc6e2cf5007a5390b0f9b";
+    })
+    .AddTwitter(options =>
+    {
+        options.ConsumerKey = "Test";
+        options.ConsumerSecret = "Test";
+    })
+    .AddGoogle(options =>
+    {
+        options.ClientId = "647563805482-o8j443o76u2ktshsok3v6ainrq792234.apps.googleusercontent.com";
+        options.ClientSecret = "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";
+    });
 
 var app = builder.Build();
 

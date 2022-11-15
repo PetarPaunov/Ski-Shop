@@ -10,6 +10,7 @@
     using SkiShop.Core.Constants;
     using Microsoft.EntityFrameworkCore;
     using SkiShop.Data.Models.ShoppingCart;
+    using System.Security.Claims;
 
     public class AccountController : BaseController
     {
@@ -24,6 +25,99 @@
             signInManager = _signInManager;
             userManager = _userManager;
             roleManager = _roleManager;
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public IActionResult ExternalLogin(string provider, string returnUrl = null)
+        {
+            var redirect = Url.Action("ExternalLoginCallback", "Account", new { returnUrl });
+            var properties = signInManager.ConfigureExternalAuthenticationProperties(provider, redirect);
+            return new ChallengeResult(provider, properties);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
+        {
+            returnUrl = returnUrl ?? Url.Content("~/");
+            if (remoteError != null)
+            {
+                ModelState.AddModelError(string.Empty, $"Error from external provider: {remoteError}");
+
+                return RedirectToAction("Login", new { ReturnUrl = returnUrl });
+            }
+            var info = await signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+            {
+                ModelState.AddModelError(string.Empty, "Error loading external login information.");
+
+                return RedirectToAction("Login", new { ReturnUrl = returnUrl });
+            }
+
+            // Sign in the user with this external login provider if the user already has a login.
+            var result = await signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false);
+            if (result.Succeeded)
+            {
+                await signInManager.UpdateExternalAuthenticationTokensAsync(info);
+                return LocalRedirect(returnUrl);
+            }
+            else
+            {
+                ViewData["ReturnUrl"] = returnUrl;
+                ViewData["ProviderDisplayName"] = info.ProviderDisplayName;
+
+                var email = info.Principal.FindFirstValue(ClaimTypes.Email);
+                return View(nameof(ExternalLoginConfirmation), new ExternalLoginViewModel { Email = email });
+            }
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ExternalLoginConfirmation(ExternalLoginViewModel model, string? returnUrl = null)
+        {
+            returnUrl = returnUrl ?? Url.Content("~/");
+
+            if (ModelState.IsValid)
+            {
+                var info = await signInManager.GetExternalLoginInfoAsync();
+
+                if (info == null)
+                {
+                    return View("Error");
+                }
+
+                var user = new ApplicationUser()
+                {
+                    Email = model.Email,
+                    UserName = model.UserName,
+                    ShoppingCart = new ShoppingCart()
+                };
+
+                var result = await userManager.CreateAsync(user);
+
+                if (result.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(user, RoleConstants.User);
+                    result = await userManager.AddLoginAsync(user, info);
+
+                    if (result.Succeeded)
+                    {
+                        await signInManager.SignInAsync(user, isPersistent: false);
+                        await signInManager.UpdateExternalAuthenticationTokensAsync(info);
+
+                        return LocalRedirect(returnUrl);
+                    }
+                }
+
+                ModelState.AddModelError("Email", "User already exists");
+            }
+
+
+            ViewData["ReturnUrl"] = returnUrl;
+            return View(model);
         }
 
         [AllowAnonymous]
