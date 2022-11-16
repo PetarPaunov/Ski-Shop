@@ -32,7 +32,7 @@
         [ValidateAntiForgeryToken]
         public IActionResult ExternalLogin(string provider, string returnUrl = null)
         {
-            var redirect = Url.Action("ExternalLoginCallback", "Account", new { returnUrl });
+            var redirect = Url.Action(nameof(ExternalLoginCallback), "Account", new { returnUrl });
             var properties = signInManager.ConfigureExternalAuthenticationProperties(provider, redirect);
             return new ChallengeResult(provider, properties);
         }

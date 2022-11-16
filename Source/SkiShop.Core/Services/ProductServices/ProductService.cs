@@ -43,21 +43,61 @@
                 ApplicationUser = user
             };
 
-            await repository.AddAsync<ProductComment>(productComment);
-            await repository.AddAsync<UserComment>(userComment);
+            await repository.AddAsync(productComment);
+            await repository.AddAsync(userComment);
 
             await repository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<HomeProductViewModel>> GetFirstSixProductsAsync()
+        public async Task<IEnumerable<AllProductsViewModel>> GetAllProductsAsync()
+        {
+            var products = await repository.AllReadonly<Product>()
+                .Where(x => x.IsDeleted == false)
+                .Select(x => new AllProductsViewModel()
+                {
+                    Id = x.Id.ToString(),
+                    Title = x.Title,
+                    ImageUrl = x.ImageUrl,
+                    Price = x.Price.ToString()
+                })
+                .ToListAsync();
+
+            return products;
+        }
+
+        public async Task<IEnumerable<AllProductsViewModel>> GetAllProductsByTypeAsync(string type)
+        {
+            var typeExist = await repository.AllReadonly<Type>().AnyAsync(x => x.Name == type);
+
+            if (!typeExist)
+            {
+                throw new ArgumentException("The Type does not exsit in the database");
+            }
+
+            var products = await repository.AllReadonly<Product>()
+                .Include(x => x.Type)
+                .Where(x => x.IsDeleted == false && x.Type.Name == type)
+                .Select(x => new AllProductsViewModel()
+                {
+                    Id = x.Id.ToString(),
+                    Title = x.Title,
+                    Price = x.Price.ToString(),
+                    ImageUrl = x.ImageUrl
+                })
+                .ToListAsync();
+
+            return products;
+        }
+
+        public async Task<IEnumerable<AllProductsViewModel>> GetFirstSixProductsAsync()
         {
             var products = await repository.All<Product>()
-                .Where(x => x.IsDeleted != true)
+                .Where(x => x.IsDeleted == false)
                 .OrderByDescending(x => x.CreateOn)
                 .Include(x => x.Model)
                 .Include(x => x.Type)
                 .Include(x => x.Brand)
-                .Select(x => new HomeProductViewModel()
+                .Select(x => new AllProductsViewModel()
                 {
                     Id = x.Id.ToString(),
                     Title = x.Title,

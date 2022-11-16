@@ -124,7 +124,7 @@
             await repository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<AllProductsViewModel>> GetAllProductsAsync()
+        public async Task<IEnumerable<AllProductsAdminViewModel>> GetAllProductsAsync()
 		{
             var products = await repository.All<Product>()
                 .Where(x => x.IsDeleted != true)
@@ -132,7 +132,7 @@
                 .Include(x => x.Model)
                 .Include(x => x.Type)
                 .Include(x => x.Brand)
-                .Select(x => new AllProductsViewModel()
+                .Select(x => new AllProductsAdminViewModel()
                 {
                     Id = x.Id.ToString(),
                     Title = x.Title,
@@ -169,7 +169,7 @@
             };
         }
 
-        public async Task<IEnumerable<AllProductsViewModel>> GetAllDeletedProductsAsync()
+        public async Task<IEnumerable<AllProductsAdminViewModel>> GetAllDeletedProductsAsync()
         {
             var products = await repository.All<Product>()
                .Where(x => x.IsDeleted == true)
@@ -177,7 +177,7 @@
                .Include(x => x.Model)
                .Include(x => x.Type)
                .Include(x => x.Brand)
-               .Select(x => new AllProductsViewModel()
+               .Select(x => new AllProductsAdminViewModel()
                {
                    Id = x.Id.ToString(),
                    Title = x.Title,

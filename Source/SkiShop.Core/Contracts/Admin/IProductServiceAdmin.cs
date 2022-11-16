@@ -11,8 +11,8 @@
         Task<IEnumerable<ModelViewModel>> GetAllModelsAsync();
         Task<IEnumerable<BrandViewModel>> GetAllBrandsAsync();
         Task AddNewProductAsync(AddProductViewModel model);
-        Task<IEnumerable<AllProductsViewModel>> GetAllProductsAsync();
-        Task<IEnumerable<AllProductsViewModel>> GetAllDeletedProductsAsync();
+        Task<IEnumerable<AllProductsAdminViewModel>> GetAllProductsAsync();
+        Task<IEnumerable<AllProductsAdminViewModel>> GetAllDeletedProductsAsync();
         Task ReturnDeletedProduct(string productId, int quantity);
         Task EditAsync(EditProductViewModel model);
 		Task<EditProductViewModel> GetForEditAsync(string id);

@@ -28,14 +28,6 @@
             return View(model);
         }
 
-        [AllowAnonymous]
-        public async Task<IActionResult> ShowProduct(string id)
-        {
-            var model = await productService.GetProductByIdAsync(id);
-
-            return View(model);
-        }
-
         public async Task<IActionResult> AddComment(ProductViewModel model, string id)
         {
             if (!ModelState.IsValid)
