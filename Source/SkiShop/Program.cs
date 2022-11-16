@@ -59,6 +59,13 @@ builder.Services.AddAuthentication()
         options.ClientSecret = builder.Configuration.GetValue<string>("ExternalLoginCridentials:GoogleClientSecret");
     });
 
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromDays(2);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -78,6 +85,8 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseSession();
 
 app.UseEndpoints(endpoints =>
 {

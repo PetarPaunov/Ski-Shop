@@ -77,7 +77,17 @@
             return allProducts;
         }
 
-        public async Task RemoveFromCart(string productId, string userId)
+        public async Task<int> CartProductsCoutAsync(string userId)
+        {
+            var user = await repository.GetByIdAsync<ApplicationUser>(userId);
+
+            var allProducts = await repository.AllReadonly<ShoppingCartProduct>()
+                .Where(x => x.ShoppingCartId == user.ShoppingCartId).ToListAsync();
+
+            return allProducts.Count();
+        }
+
+        public async Task RemoveFromCartAsync(string productId, string userId)
         {
             var productGuidId = new Guid(productId);
             var user = await repository.GetByIdAsync<ApplicationUser>(userId);

@@ -28,14 +28,22 @@
 
             await shoppingCartService.AddProductInShoppingCartAsync(productId, userId, quantity);
 
-            return Redirect($"/Home/ShowProduct/{productId}");
+            var productsCout = await shoppingCartService.CartProductsCoutAsync(userId);
+
+            HttpContext.Session.SetInt32("ProductsCout", productsCout);
+
+            return Redirect($"/Product/ShowProduct/{productId}");
         }
 
         public async Task<IActionResult> RemoveFromCart(string productId)
         {
             var userId = User.Id();
 
-            await shoppingCartService.RemoveFromCart(productId, userId);
+            await shoppingCartService.RemoveFromCartAsync(productId, userId);
+
+            var productsCout = await shoppingCartService.CartProductsCoutAsync(userId);
+
+            HttpContext.Session.SetInt32("ProductsCout", productsCout);
 
             return RedirectToAction(nameof(Index));
         }

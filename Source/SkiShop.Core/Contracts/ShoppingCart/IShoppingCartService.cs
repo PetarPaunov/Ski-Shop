@@ -6,6 +6,7 @@ namespace SkiShop.Core.Contracts.ShoppingCart
     {
         Task AddProductInShoppingCartAsync(string productId, string userId, int quantity);
         Task<IEnumerable<ShoppingCartProductViewModel>> AllShoppingCartProductsAsync(string userId);
-        Task RemoveFromCart(string productId, string userId);
+        Task<int> CartProductsCoutAsync(string userId);
+        Task RemoveFromCartAsync(string productId, string userId);
     }
 }
