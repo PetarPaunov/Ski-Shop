@@ -36,13 +36,6 @@
             return View(model);
         }
 
-        public async Task<IActionResult> ByType(string type, int currentPage = 1)
-        {
-            var model = await productService.GetAllProductsByTypeAsync(type, currentPage);
-
-            return View(model);
-        }
-
         public async Task<IActionResult> AddComment(ProductViewModel model, string id)
         {
             if (!ModelState.IsValid)

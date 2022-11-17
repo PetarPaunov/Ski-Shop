@@ -99,44 +99,6 @@
             return model;
         }
 
-        public async Task<ProductPagingViewModel> GetAllProductsByTypeAsync(string type, int currentPage)
-        {
-            var typeExist = await repository.AllReadonly<Type>().AnyAsync(x => x.Name == type);
-
-            if (!typeExist)
-            {
-                throw new ArgumentException("The Type does not exsit in the database");
-            }
-
-            var model = new ProductPagingViewModel();
-
-            model.Products = await repository.AllReadonly<Product>()
-                .Include(x => x.Type)
-                .Where(x => x.IsDeleted == false && x.Type.Name == type)
-                .OrderBy(x => x.CreateOn)
-                .Skip((currentPage - 1) * MAX_PRODUCTS_PER_PAGE)
-                .Select(x => new AllProductsViewModel()
-                {
-                    Id = x.Id.ToString(),
-                    Title = x.Title,
-                    Price = x.Price.ToString(),
-                    ImageUrl = x.ImageUrl
-                })
-                .Take(MAX_PRODUCTS_PER_PAGE)
-                .ToListAsync();
-
-            var allProducts = await repository.AllReadonly<Product>()
-                .Include(x => x.Type)
-                .Where(x => x.IsDeleted == false &&x.Type.Name == type).ToListAsync();
-
-            var pageCount = (decimal)allProducts.Count() / Convert.ToDecimal(MAX_PRODUCTS_PER_PAGE);
-
-            model.PageCount = (int)Math.Ceiling(pageCount);
-            model.CurrentPageIndex = currentPage;
-
-            return model;
-        }
-
         public async Task<IEnumerable<AllProductsViewModel>> GetFirstSixProductsAsync()
         {
             var products = await repository.All<Product>()
