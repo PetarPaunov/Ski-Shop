@@ -3,10 +3,10 @@
 @model ProductPagingViewModel
 
 <form method="get">
-	<div class="row">
+	<div class="row col justify-content-center">
 		<div class="form-group col-md-3 d-flex justify-content-between">
 			<div class="form-group">
-				<label asp-for="Type"></label>
+				<label asp-for="Type">Product Type</label>
 				<select asp-for="Type" class="form-control">
 					<option value="">All</option>
 					@foreach (var type in ViewBag.Types)
@@ -18,56 +18,48 @@
 		</div>
 
 		<div class="form-group col-md-3">
-			<label asp-for="SearchTerm"></label>
+			<label asp-for="SearchTerm">Search Term</label>
 			<input asp-for="SearchTerm" class="form-control" placeholder="...">
 		</div>
 
 		<div class="col-md-3">
-			<div class="form-group mt-4 p-2">
-				<input type="submit" value="Search" class="btn btn-primary" />
+			<div class="form-group mt-4">
+				<input type="submit" value="Search" class="btn btn-dark btn-outline-dark text-white" />
 			</div>
 		</div>
 	</div>
 </form>
 
-<section class="py-5">
-	<div class="container px-4 px-lg-5 mt-5">
-		<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-			@foreach (var product in Model.Products)
-			{
-				<div class="col mb-5">
-					<div class="card h-100">
-						<img class="card-img-top" src="@product.ImageUrl" alt="..." />
-						<div class="card-body p-4">
-							<div class="text-center">
-								<h5 class="fw-bolder">@product.Title</h5>
-								@product.Price$
-							</div>
-						</div>
-						<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-							<div class="text-center">
-								<a class="btn btn-outline-dark mt-auto" asp-action="ShowProduct"
-									asp-controller="Product" asp-route-id="@product.Id">View Product</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			}
-		</div>
-	</div>
-</section>
+<partial name="_ProductsPartial" model="@Model.Products" />
+
+@if (!Model.Products.Any())
+{
+	<h2 class="text-center">No products found by the given criteria!</h2>
+}
+
+@{
+	var maxPage = Math.Ceiling((double)Model.TotalProductsCount /
+		Model.ProductsPerPage);
+}
 
 <nav aria-label="Page navigation example">
 	<ul class="pagination justify-content-center">
-		@for (int i = 1; i <= Model.PageCount; i++)
+		@for (int i = 1; i <= maxPage; i++)
 		{
-			@if (i != Model.CurrentPageIndex)
+			@if (i != Model.CurrentPage)
 			{
-				<li class="page-item"><a class="page-link" asp-action="Index" asp-controller="Product" asp-route-currentPage="@i">@i</a></li>
+				<li class="page-item"><a class="page-link text-black" asp-action="Index" asp-controller="Product"
+					asp-route-currentPage="@i"
+					asp-route-type="@Model.Type"
+					asp-route-searchTerm="@Model.SearchTerm">@i</a></li>
 			}
 			else
 			{
-				<li class="page-item"><a asp-action="Index" asp-controller="Product" asp-route-currentPage="@i" class="page-link">@i</a></li>
+				<li class="page-item"><a class="page-link text-black" asp-action="Index" asp-controller="Product"
+					asp-route-currentPage="@i"
+					asp-route-type="@Model.Type"
+					asp-route-searchTerm="@Model.SearchTerm">@i</a>
+				</li>
 			}
 		}
 	</ul>

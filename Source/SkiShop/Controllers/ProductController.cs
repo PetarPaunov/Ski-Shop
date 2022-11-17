@@ -19,13 +19,22 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(int currentPage = 1, string? type = null, string? searchTerm = null)
+        public async Task<IActionResult> Index([FromQuery] ProductPagingViewModel query)
         {
             ViewBag.Types = await productServiceAdmin.GetAllTypesAsync();
 
-            var model = await productService.GetAllProductsAsync(currentPage, type, searchTerm);  
+            var result = await productService.GetAllProductsAsync
+                 (
+                    query.CurrentPage,
+                    query.ProductsPerPage,
+                    query.Type,
+                    query.SearchTerm
+                 );
 
-            return View(model);
+            query.TotalProductsCount = result.TotalProductsCount;
+            query.Products = result.Products;
+
+            return View(query);
         }
 
         [AllowAnonymous]

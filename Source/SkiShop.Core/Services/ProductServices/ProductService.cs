@@ -10,7 +10,7 @@
 
     public class ProductService : IProductService
     {
-        private const int MAX_PRODUCTS_PER_PAGE = 12;
+        private const int MAX_PRODUCTS_PER_PAGE = 2;
 
         private readonly IRepository repository;
 
@@ -51,13 +51,14 @@
             await repository.SaveChangesAsync();
         }
 
-        public async Task<ProductPagingViewModel> GetAllProductsAsync(int currentPage, string? type = null, string? searchTerm = null)
+        public async Task<ProductQueryViewModel> GetAllProductsAsync
+            (int currentPage, int productPerPage = 1, string? type = null, string? searchTerm = null)
         {
             var products =  repository.AllReadonly<Product>()
                 .Include(x => x.Type)
                 .Where(x => x.IsDeleted == false);
 
-            var model = new ProductPagingViewModel();
+            var model = new ProductQueryViewModel();
 
             if (string.IsNullOrEmpty(type) == false)
             {
@@ -77,7 +78,7 @@
 
             model.Products = await products
                 .OrderBy(x => x.CreateOn)
-                .Skip((currentPage - 1) * MAX_PRODUCTS_PER_PAGE)
+                .Skip((currentPage - 1) * productPerPage)
                 .Select(x => new AllProductsViewModel()
                 {
                     Id = x.Id.ToString(),
@@ -85,16 +86,10 @@
                     ImageUrl = x.ImageUrl,
                     Price = x.Price.ToString()
                 })
-                .Take(MAX_PRODUCTS_PER_PAGE)
+                .Take(productPerPage)
                 .ToListAsync();
 
-            var allProducts = await repository.AllReadonly<Product>()
-                .Where(x => x.IsDeleted == false).ToListAsync();
-
-            var pageCount = (decimal)allProducts.Count() /Convert.ToDecimal(MAX_PRODUCTS_PER_PAGE);
-
-            model.PageCount = (int)Math.Ceiling(pageCount);
-            model.CurrentPageIndex = currentPage;
+            model.TotalProductsCount = await products.CountAsync();
 
             return model;
         }

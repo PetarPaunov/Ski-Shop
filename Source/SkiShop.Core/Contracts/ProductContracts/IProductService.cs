@@ -6,7 +6,8 @@
     {
         Task<IEnumerable<AllProductsViewModel>> GetFirstSixProductsAsync();
         Task<ProductViewModel> GetProductByIdAsync(string productId);
-        Task<ProductPagingViewModel> GetAllProductsAsync(int currentPage, string? type = null, string? searchTerm = null);
+        Task<ProductQueryViewModel> GetAllProductsAsync
+            (int currentPage, int housesPerPage = 1, string? type = null, string? searchTerm = null);
         Task AddNewComment(string comment, string productId, string userId);
     }
 }
