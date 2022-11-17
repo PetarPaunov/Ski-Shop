@@ -1,11 +1,39 @@
 ﻿@using SkiShop.Core.Models.ProductViewModels
 
-@model IEnumerable<AllProductsViewModel>
+@model ProductPagingViewModel
+
+<form method="get">
+	<div class="row">
+		<div class="form-group col-md-3 d-flex justify-content-between">
+			<div class="form-group">
+				<label asp-for="Type"></label>
+				<select asp-for="Type" class="form-control">
+					<option value="">All</option>
+					@foreach (var type in ViewBag.Types)
+					{
+						<option value="@type.Name">@type.Name</option>
+					}
+				</select>
+			</div>
+		</div>
+
+		<div class="form-group col-md-3">
+			<label asp-for="SearchTerm"></label>
+			<input asp-for="SearchTerm" class="form-control" placeholder="...">
+		</div>
+
+		<div class="col-md-3">
+			<div class="form-group mt-4 p-2">
+				<input type="submit" value="Search" class="btn btn-primary" />
+			</div>
+		</div>
+	</div>
+</form>
 
 <section class="py-5">
 	<div class="container px-4 px-lg-5 mt-5">
 		<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-			@foreach (var product in Model)
+			@foreach (var product in Model.Products)
 			{
 				<div class="col mb-5">
 					<div class="card h-100">
@@ -28,3 +56,19 @@
 		</div>
 	</div>
 </section>
+
+<nav aria-label="Page navigation example">
+	<ul class="pagination justify-content-center">
+		@for (int i = 1; i <= Model.PageCount; i++)
+		{
+			@if (i != Model.CurrentPageIndex)
+			{
+				<li class="page-item"><a class="page-link" asp-action="Index" asp-controller="Product" asp-route-currentPage="@i">@i</a></li>
+			}
+			else
+			{
+				<li class="page-item"><a asp-action="Index" asp-controller="Product" asp-route-currentPage="@i" class="page-link">@i</a></li>
+			}
+		}
+	</ul>
+</nav>

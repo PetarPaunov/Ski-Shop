@@ -10,6 +10,8 @@
 
     public class ProductService : IProductService
     {
+        private const int MAX_PRODUCTS_PER_PAGE = 12;
+
         private readonly IRepository repository;
 
         public ProductService(IRepository _repository)
@@ -49,10 +51,33 @@
             await repository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<AllProductsViewModel>> GetAllProductsAsync()
+        public async Task<ProductPagingViewModel> GetAllProductsAsync(int currentPage, string? type = null, string? searchTerm = null)
         {
-            var products = await repository.AllReadonly<Product>()
-                .Where(x => x.IsDeleted == false)
+            var products =  repository.AllReadonly<Product>()
+                .Include(x => x.Type)
+                .Where(x => x.IsDeleted == false);
+
+            var model = new ProductPagingViewModel();
+
+            if (string.IsNullOrEmpty(type) == false)
+            {
+                products = products
+                    .Where(x => x.Type.Name == type);
+            }
+
+            if (string.IsNullOrEmpty(searchTerm) == false)
+            {
+                searchTerm = $"%{searchTerm.ToLower()}%";
+
+                products = products
+                    .Where(h => EF.Functions.Like(h.Title.ToLower(), searchTerm) ||
+                        EF.Functions.Like(h.Type.Name.ToLower(), searchTerm) ||
+                        EF.Functions.Like(h.Description.ToLower(), searchTerm));
+            }
+
+            model.Products = await products
+                .OrderBy(x => x.CreateOn)
+                .Skip((currentPage - 1) * MAX_PRODUCTS_PER_PAGE)
                 .Select(x => new AllProductsViewModel()
                 {
                     Id = x.Id.ToString(),
@@ -60,12 +85,21 @@
                     ImageUrl = x.ImageUrl,
                     Price = x.Price.ToString()
                 })
+                .Take(MAX_PRODUCTS_PER_PAGE)
                 .ToListAsync();
 
-            return products;
+            var allProducts = await repository.AllReadonly<Product>()
+                .Where(x => x.IsDeleted == false).ToListAsync();
+
+            var pageCount = (decimal)allProducts.Count() /Convert.ToDecimal(MAX_PRODUCTS_PER_PAGE);
+
+            model.PageCount = (int)Math.Ceiling(pageCount);
+            model.CurrentPageIndex = currentPage;
+
+            return model;
         }
 
-        public async Task<IEnumerable<AllProductsViewModel>> GetAllProductsByTypeAsync(string type)
+        public async Task<ProductPagingViewModel> GetAllProductsByTypeAsync(string type, int currentPage)
         {
             var typeExist = await repository.AllReadonly<Type>().AnyAsync(x => x.Name == type);
 
@@ -74,9 +108,13 @@
                 throw new ArgumentException("The Type does not exsit in the database");
             }
 
-            var products = await repository.AllReadonly<Product>()
+            var model = new ProductPagingViewModel();
+
+            model.Products = await repository.AllReadonly<Product>()
                 .Include(x => x.Type)
                 .Where(x => x.IsDeleted == false && x.Type.Name == type)
+                .OrderBy(x => x.CreateOn)
+                .Skip((currentPage - 1) * MAX_PRODUCTS_PER_PAGE)
                 .Select(x => new AllProductsViewModel()
                 {
                     Id = x.Id.ToString(),
@@ -84,9 +122,19 @@
                     Price = x.Price.ToString(),
                     ImageUrl = x.ImageUrl
                 })
+                .Take(MAX_PRODUCTS_PER_PAGE)
                 .ToListAsync();
 
-            return products;
+            var allProducts = await repository.AllReadonly<Product>()
+                .Include(x => x.Type)
+                .Where(x => x.IsDeleted == false &&x.Type.Name == type).ToListAsync();
+
+            var pageCount = (decimal)allProducts.Count() / Convert.ToDecimal(MAX_PRODUCTS_PER_PAGE);
+
+            model.PageCount = (int)Math.Ceiling(pageCount);
+            model.CurrentPageIndex = currentPage;
+
+            return model;
         }
 
         public async Task<IEnumerable<AllProductsViewModel>> GetFirstSixProductsAsync()

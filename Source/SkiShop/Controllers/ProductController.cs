@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using SkiShop.Core.Contracts;
     using SkiShop.Core.Contracts.ProductContracts;
     using SkiShop.Core.Models.ProductViewModels;
 
@@ -10,15 +11,19 @@
     public class ProductController : BaseController
     {
         private readonly IProductService productService;
-
-        public ProductController(IProductService _productService)
+        private readonly IProductServiceAdmin productServiceAdmin;
+        public ProductController(IProductService _productService, IProductServiceAdmin _productServiceAdmin)
         {
             productService = _productService;
+            productServiceAdmin = _productServiceAdmin;
         }
 
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> Index(int currentPage = 1, string? type = null, string? searchTerm = null)
         {
-            var model = await productService.GetAllProductsAsync();
+            ViewBag.Types = await productServiceAdmin.GetAllTypesAsync();
+
+            var model = await productService.GetAllProductsAsync(currentPage, type, searchTerm);  
 
             return View(model);
         }
@@ -31,9 +36,9 @@
             return View(model);
         }
 
-        public async Task<IActionResult> ByType(string type)
+        public async Task<IActionResult> ByType(string type, int currentPage = 1)
         {
-            var model = await productService.GetAllProductsByTypeAsync(type);
+            var model = await productService.GetAllProductsByTypeAsync(type, currentPage);
 
             return View(model);
         }
