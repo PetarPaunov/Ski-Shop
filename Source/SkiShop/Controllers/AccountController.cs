@@ -11,20 +11,25 @@
     using Microsoft.EntityFrameworkCore;
     using SkiShop.Data.Models.ShoppingCart;
     using System.Security.Claims;
+    using SkiShop.Core.Contracts.Email;
+    using SkiShop.Core.Models.EmailViewModels;
 
     public class AccountController : BaseController
     {
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IEmailService emailService;
 
         public AccountController(SignInManager<ApplicationUser> _signInManager, 
                                     UserManager<ApplicationUser> _userManager,
-                                    RoleManager<IdentityRole> _roleManager)
+                                    RoleManager<IdentityRole> _roleManager,
+                                    IEmailService _emailService)
         {
             signInManager = _signInManager;
             userManager = _userManager;
             roleManager = _roleManager;
+            emailService = _emailService;
         }
 
         [HttpPost]
@@ -157,9 +162,15 @@
 
                 await userManager.AddToRoleAsync(user, RoleConstants.User);
 
-                await signInManager.SignInAsync(user, isPersistent: false);
+                var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                var confirmationlink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = user.Email }, Request.Scheme);
+                var message = new Message(new string[] { user.Email }, "Confirmation email link", confirmationlink!);
 
-                return RedirectToAction("Index", "Home");
+                emailService.SendEmail(message);
+
+                ModelState.AddModelError(string.Empty, "You should confirm your email address!");
+
+                return RedirectToAction(nameof(Login));
             }
 
             foreach (var error in result.Errors)
@@ -210,6 +221,26 @@
             await signInManager.SignOutAsync();
 
             return RedirectToAction("Index", "Home");
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail(string token, string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+
+            if (user != null)
+            {
+                var result = await userManager.ConfirmEmailAsync(user, token);
+
+                if (result.Succeeded)
+                {
+                    ModelState.AddModelError(String.Empty, "Your email is confirmt!");
+                    return RedirectToAction(nameof(Login));
+                }
+            }
+
+            ModelState.AddModelError(string.Empty, "This user does not exist!");
+            return RedirectToAction(nameof(Register));
         }
     }
 }
