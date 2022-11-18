@@ -28,18 +28,10 @@
             return View(model);
         }
 
-        public async Task<IActionResult> AddComment(ProductViewModel model, string id)
+        [AllowAnonymous]
+        public IActionResult About()
         {
-            if (!ModelState.IsValid)
-            {
-                return Redirect($"/Home/ShowProduct/{id}");
-            }
-
-            var userId = User.Id();
-
-            await productService.AddNewComment(model.Comment.Description, id, userId);
-
-            return Redirect($"/Home/ShowProduct/{id}");
+            return View();
         }
 
         [AllowAnonymous]

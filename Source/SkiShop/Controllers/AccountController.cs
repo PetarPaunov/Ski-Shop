@@ -13,6 +13,8 @@
     using System.Security.Claims;
     using SkiShop.Core.Contracts.Email;
     using SkiShop.Core.Models.EmailViewModels;
+    using SkiShop.Core.Services.ShoppingCart;
+    using SkiShop.Core.Contracts.ShoppingCart;
 
     public class AccountController : BaseController
     {
@@ -20,16 +22,19 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IEmailService emailService;
+        private readonly IShoppingCartService shoppingCartService;
 
         public AccountController(SignInManager<ApplicationUser> _signInManager, 
                                     UserManager<ApplicationUser> _userManager,
                                     RoleManager<IdentityRole> _roleManager,
-                                    IEmailService _emailService)
+                                    IEmailService _emailService,
+                                    IShoppingCartService _shoppingCartService)
         {
             signInManager = _signInManager;
             userManager = _userManager;
             roleManager = _roleManager;
             emailService = _emailService;
+            shoppingCartService = _shoppingCartService;
         }
 
         [HttpPost]
@@ -206,7 +211,10 @@
                 var result = await signInManager.PasswordSignInAsync(user, model.Password, model.IsPersistent, false);
 
                 if (result.Succeeded)
-                {                  
+                {
+                    var productsCout = await shoppingCartService.CartProductsCoutAsync(user.Id);
+                    HttpContext.Session.SetInt32("ProductsCout", productsCout);
+
                     return RedirectToAction("Index", "Home");
                 }
             }

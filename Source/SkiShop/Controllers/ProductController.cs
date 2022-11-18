@@ -19,6 +19,7 @@
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> Index([FromQuery] ProductPagingViewModel query)
         {
             ViewBag.Types = await productServiceAdmin.GetAllTypesAsync();
