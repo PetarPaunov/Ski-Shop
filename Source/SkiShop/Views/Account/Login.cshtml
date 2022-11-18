@@ -40,20 +40,20 @@
                         </div>
                         <form action="#" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <span asp-validation-for="@Model.Email" class="text-danger"></span>
                             <div class="form-group last mb-3">
-                                <label asp-for="@Model.UserName" for="username">Username</label>
-                                <input asp-for="@Model.UserName" type="text" class="form-control" id="username">
-                                <span asp-validation-for="@Model.UserName" class="text-danger"></span>
+                                <label asp-for="@Model.Email" for="username">Email</label>
+                                <input asp-for="@Model.Email" type="text" class="form-control" id="username">
                             </div>
+                                <span asp-validation-for="@Model.Password" class="text-danger"></span>
                             <div class="form-group last mb-3">
                                 <label asp-for="@Model.Password" for="password">Password</label>
                                 <input asp-for="@Model.Password" type="password" class="form-control" id="password">
-                                <span asp-validation-for="@Model.Password" class="text-danger"></span>
                             </div>
                             <div class="d-flex mb-5 align-items-center">
                                 <label class="control control--checkbox mb-0">
                                     <span class="caption">Remember me</span>
-                                    <input type="checkbox" checked="checked" />
+                                    <input asp-for="@Model.IsPersistent" type="checkbox" checked="checked" />
                                     <div class="control__indicator"></div>
                                 </label>
                                 <span class="ml-auto"><a asp-action="Register" asp-controller="Account" class="forgot-pass">Don't have an account?</a></span>

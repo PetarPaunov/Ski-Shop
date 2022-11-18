@@ -4,9 +4,13 @@ namespace SkiShop.Models.AccountViewModels
 {
     public class LoginViewModel
     {
-        public string UserName { get; set; }
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
 
         [DataType(DataType.Password)]
         public string Password { get; set; }
+
+        public bool IsPersistent { get; set; } = false;
     }
 }

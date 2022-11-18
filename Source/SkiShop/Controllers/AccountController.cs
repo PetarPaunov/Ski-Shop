@@ -199,11 +199,11 @@
                 return View(model);
             }
 
-            var user = await userManager.FindByNameAsync(model.UserName);
+            var user = await userManager.FindByEmailAsync(model.Email);
 
             if (user != null)
             {
-                var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
+                var result = await signInManager.PasswordSignInAsync(user, model.Password, model.IsPersistent, false);
 
                 if (result.Succeeded)
                 {                  
