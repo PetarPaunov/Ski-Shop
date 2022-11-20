@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using SkiShop.Core.Constants;
     using SkiShop.Core.Contracts;
     using SkiShop.Core.Contracts.ProductContracts;
     using SkiShop.Core.Models.ProductViewModels;

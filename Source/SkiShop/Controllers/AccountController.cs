@@ -173,7 +173,7 @@
 
                 emailService.SendEmail(message);
 
-                ModelState.AddModelError(string.Empty, "You should confirm your email address!");
+                TempData[MessageConstant.WarningMessage] = "You should confirm your email address!";
 
                 return RedirectToAction(nameof(Login));
             }
@@ -242,7 +242,8 @@
 
                 if (result.Succeeded)
                 {
-                    ModelState.AddModelError(String.Empty, "Your email is confirmt!");
+                    TempData.Clear();
+                    TempData[MessageConstant.SuccessMessage] = "Your email is confirmt!";
                     return RedirectToAction(nameof(Login));
                 }
             }
