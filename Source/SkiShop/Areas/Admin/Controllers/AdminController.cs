@@ -68,5 +68,19 @@
 
             return RedirectToAction(nameof(RoleManaging));
         }
+
+		public async Task<IActionResult> UserOrders()
+		{
+			var orders = await userServiceAdmin.GetAllUserOrdersAsync();
+
+			return View(orders);
+		}
+
+		public async Task<IActionResult> FinishOrder(string id)
+		{
+			await userServiceAdmin.FinishUserOrderAsync(id);
+
+			return RedirectToAction(nameof(UserOrders));
+		}
     }
 }
