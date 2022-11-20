@@ -1,6 +1,7 @@
 ﻿namespace SkiShop.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
+    using SkiShop.Core.Constants;
     using SkiShop.Core.Contracts.ShoppingCart;
     using SkiShop.Extension;
 
@@ -44,6 +45,20 @@
             var productsCout = await shoppingCartService.CartProductsCoutAsync(userId);
 
             HttpContext.Session.SetInt32("ProductsCout", productsCout);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> PlaceOrder()
+        {
+            var userId = User.Id();
+
+            await shoppingCartService.PlaceUserOrderAsync(userId);
+
+            var productsCout = await shoppingCartService.CartProductsCoutAsync(userId);
+            HttpContext.Session.SetInt32("ProductsCout", productsCout);
+
+            TempData[MessageConstant.SuccessMessage] = "Thank you for your order! Our administrators will contact you soon!";
 
             return RedirectToAction(nameof(Index));
         }

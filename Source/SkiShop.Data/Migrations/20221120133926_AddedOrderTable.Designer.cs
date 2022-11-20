@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SkiShop.Data;
 
@@ -11,9 +12,10 @@ using SkiShop.Data;
 namespace SkiShop.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221120133926_AddedOrderTable")]
+    partial class AddedOrderTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -257,15 +259,15 @@ namespace SkiShop.Data.Migrations
                         {
                             Id = "dea12856-c198-4129-b3f3-b893d8395082",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "36129b2d-7b52-4249-a27d-e542b46de4ca",
+                            ConcurrencyStamp = "98daf1ef-0113-4260-a447-93c36eb0f83f",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "admin@gmail.com",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAEPw8oHtA8SUak4wCs1Q12qmDwmLzCYN4IX737nKDX2aQPlGcAyMXfhceDKI80o303Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJOpTZxPP4FhNVOO12Y2xaUSt3EoEylv1XQY7odCwrAvPusT+l1rcNolonSdQqlXJA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "182a5680-0e03-42d4-a3b8-654212df333c",
+                            SecurityStamp = "45c5d8d2-b79e-4ed7-ac76-7ef249cf6e60",
                             ShoppingCartId = new Guid("a8802be8-743e-45b7-963d-bc4bc494afa7"),
                             TwoFactorEnabled = false,
                             UserName = "Admin"
@@ -595,10 +597,6 @@ namespace SkiShop.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("ShoppingCarts");
@@ -606,29 +604,22 @@ namespace SkiShop.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a8802be8-743e-45b7-963d-bc4bc494afa7"),
-                            UserId = "dea12856-c198-4129-b3f3-b893d8395082"
+                            Id = new Guid("a8802be8-743e-45b7-963d-bc4bc494afa7")
                         });
                 });
 
             modelBuilder.Entity("SkiShop.Data.Models.ShoppingCart.ShoppingCartProduct", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ProductId")
+                    b.Property<Guid>("ShoppingCartId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ShoppingCartId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
+                    b.HasKey("ProductId", "ShoppingCartId");
 
                     b.HasIndex("ShoppingCartId");
 

@@ -24,6 +24,7 @@
         public DbSet<UserComment> UserComments { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<ShoppingCartProduct> ShoppingCartProducts { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -57,9 +58,6 @@
 
             builder.Entity<UserComment>()
                 .HasKey(x => new { x.ApplicationUserId, x.CommentId });
-
-            builder.Entity<ShoppingCartProduct>()
-                .HasKey(x => new { x.ProductId, x.ShoppingCartId });
 
             builder.Entity<ShoppingCart>()
                 .HasOne(x => x.User)

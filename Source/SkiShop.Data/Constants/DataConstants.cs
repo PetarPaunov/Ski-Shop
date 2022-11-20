@@ -5,7 +5,7 @@
         public class Product
         {
             public const int TitleMinLength = 3;
-            public const int TitleMaxLength = 20;
+            public const int TitleMaxLength = 60;
 
             public const int DescriptionMinLength = 20;
             public const int DescriptionMaxLength = 1000;
