@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SkiShop.Data.Models.Account;
-using SkiShop.Data.Models.ShoppingCart;
-using System.Data;
-
-namespace SkiShop.Data.Configuration
+﻿namespace SkiShop.Data.Configuration
 {
+    using SkiShop.Data.Models.Account;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+    /// <summary>
+    /// Configuration for admin user
+    /// </summary>
     public class UserConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)

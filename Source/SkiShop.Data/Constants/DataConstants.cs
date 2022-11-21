@@ -1,8 +1,14 @@
 ﻿namespace SkiShop.Data.Constants
 {
-    public class DataConstants
+    /// <summary>
+    /// Constants for database models
+    /// </summary>
+    public static class DataConstants
     {
-        public class Product
+        /// <summary>
+        /// Constants for product model
+        /// </summary>
+        public static class Product
         {
             public const int TitleMinLength = 3;
             public const int TitleMaxLength = 60;
@@ -26,7 +32,10 @@
             public const int QuantityMaxValue = 300;
         }
 
-        public class Comment
+        /// <summary>
+        /// Constants for comment
+        /// </summary>
+        public static class Comment
         {
             public const int TitleMaxLength = 20;
             public const int TitleMinLength = 5;

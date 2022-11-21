@@ -1,9 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SkiShop.Data.Models.ShoppingCart;
-
-namespace SkiShop.Data.Configuration
+﻿namespace SkiShop.Data.Configuration
 {
+    using Microsoft.EntityFrameworkCore;
+    using SkiShop.Data.Models.ShoppingCart;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+    /// <summary>
+    /// Configuration for shopping cart
+    /// </summary>
     public class ShoppingCartConfiguration : IEntityTypeConfiguration<ShoppingCart>
     {
         public void Configure(EntityTypeBuilder<ShoppingCart> builder)

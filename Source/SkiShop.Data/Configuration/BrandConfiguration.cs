@@ -1,9 +1,12 @@
 ﻿namespace SkiShop.Data.Configuration
 {
-    using Microsoft.EntityFrameworkCore;
     using SkiShop.Data.Models.Product;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
+    /// <summary>
+    /// Configuration for brands
+    /// </summary>
     public class BrandConfiguration : IEntityTypeConfiguration<Brand>
     {
         public void Configure(EntityTypeBuilder<Brand> builder)

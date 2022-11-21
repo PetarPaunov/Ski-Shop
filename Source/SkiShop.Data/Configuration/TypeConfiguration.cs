@@ -3,6 +3,9 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
+    /// <summary>
+    /// Configuration for types
+    /// </summary>
     public class TypeConfiguration : IEntityTypeConfiguration<Models.Product.Type>
     {
         public void Configure(EntityTypeBuilder<Models.Product.Type> builder)

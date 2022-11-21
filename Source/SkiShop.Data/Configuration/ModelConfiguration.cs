@@ -1,8 +1,12 @@
 ﻿namespace SkiShop.Data.Configuration
 {
-    using Microsoft.EntityFrameworkCore;
     using SkiShop.Data.Models.Product;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+    /// <summary>
+    /// Configuration for models
+    /// </summary>
     public class ModelConfiguration : IEntityTypeConfiguration<Model>
     {
         public void Configure(EntityTypeBuilder<Model> builder)

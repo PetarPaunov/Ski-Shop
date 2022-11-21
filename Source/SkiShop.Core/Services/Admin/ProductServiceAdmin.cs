@@ -74,7 +74,7 @@
                 .ToListAsync();
         }
 
-        public async Task DeleteProduct(string id)
+        public async Task DeleteProductAsync(string id)
         {
             var productGuid = Guid.Parse(id);
 
@@ -194,7 +194,7 @@
             return products;
         }
 
-        public async Task ReturnDeletedProduct(string productId, int quantity)
+        public async Task ReturnDeletedProductAsync(string productId, int quantity)
         {
             var productGuid = Guid.Parse(productId);
 
@@ -206,7 +206,7 @@
             await repository.SaveChangesAsync();
         }
 
-        public async Task AddOthers(string keyWord, string name)
+        public async Task AddOthersAsync(string keyWord, string name)
         {
             if (keyWord == nameof(Type))
             {

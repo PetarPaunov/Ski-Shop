@@ -59,7 +59,7 @@
 
         public async Task<IActionResult> DeleteProduct(string id)
         {
-            await productService.DeleteProduct(id);
+            await productService.DeleteProductAsync(id);
 
             return RedirectToAction(nameof(Index));
         }
@@ -103,7 +103,7 @@
 
         public async Task<IActionResult> ReturnProduct(string id, int quantity)
         {
-            await productService.ReturnDeletedProduct(id, quantity);
+            await productService.ReturnDeletedProductAsync(id, quantity);
 
             return RedirectToAction(nameof(Index));
         }
@@ -132,7 +132,7 @@
                 return View(model);
             }
 
-            await productService.AddOthers(model.KeyWord, model.Name);
+            await productService.AddOthersAsync(model.KeyWord, model.Name);
 
             return RedirectToAction(nameof(AddOthers));
         }
