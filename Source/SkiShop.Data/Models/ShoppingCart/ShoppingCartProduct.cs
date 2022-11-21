@@ -1,19 +1,37 @@
 ﻿namespace SkiShop.Data.Models.ShoppingCart
 {
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
     using SkiShop.Data.Models.Product;
 
     public class ShoppingCartProduct
     {
+        /// <summary>
+        /// Unique identifier
+        /// </summary>
         public Guid Id { get; set; }
 
+        /// <summary>
+        /// Id of the shopping cart 
+        /// </summary>
         public Guid ShoppingCartId { get; set; }
-        public ShoppingCart ShoppingCart { get; set; }
 
+        /// <summary>
+        /// Reference to the actual shopping cart
+        /// </summary>
+        public ShoppingCart ShoppingCart { get; set; } = null!;
+
+        /// <summary>
+        /// Id of the product 
+        /// </summary>
         public Guid ProductId { get; set; }
-        public Product Product { get; set; }
 
+        /// <summary>
+        /// Reference to the actual product
+        /// </summary>
+        public Product Product { get; set; } = null!;
+
+        /// <summary>
+        /// Quantity of a product
+        /// </summary>
         public int Quantity { get; set; }
     }
 }
