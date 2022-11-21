@@ -103,8 +103,11 @@
                 {
                     Email = model.Email,
                     UserName = model.UserName,
-                    ShoppingCart = new ShoppingCart()
+                    PhoneNumber = model.PhoneNumber,
+                    EmailConfirmed = true
                 };
+
+                user.ShoppingCart = new ShoppingCart() { UserId = user.Id };
 
                 var result = await userManager.CreateAsync(user);
 
@@ -152,8 +155,10 @@
             {
                 UserName = model.UserName,
                 Email = model.Email,
-                ShoppingCart = new ShoppingCart()
+                PhoneNumber = model.PhoneNumber,
             };
+
+            user.ShoppingCart = new ShoppingCart() { UserId = user.Id };
 
             var result = await userManager.CreateAsync(user, model.Password);
 
@@ -243,7 +248,7 @@
                 if (result.Succeeded)
                 {
                     TempData.Clear();
-                    TempData[MessageConstant.SuccessMessage] = "Your email is confirmt!";
+                    TempData[MessageConstant.SuccessMessage] = "Your email is confirm!";
                     return RedirectToAction(nameof(Login));
                 }
             }

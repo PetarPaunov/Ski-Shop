@@ -27,7 +27,7 @@
 </head>
 <body>
     <div class="d-lg-flex half">
-        <div class="bg order-1 order-md-2" style="background-image: url('/login-register-theme/images/bg_4.webp');"></div>
+        <div class="bg order-md-1" style="background-image: url('/login-register-theme/images/bg_4.webp');"></div>
         <div class="contents order-2 order-md-1">
             <div class="container">
                 <div class="row align-items-center justify-content-center">
@@ -38,25 +38,21 @@
                         </div>
                         <form asp-action="ExternalLoginConfirmation" asp-controller="Account" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <span asp-validation-for="@Model.Email" class="text-danger"></span>
                             <div class="form-group last mb-3">
-                                <label asp-for="@Model.Email" for="username">Username</label>
+                                <label asp-for="@Model.Email" for="username">Email</label>
                                 <input asp-for="@Model.Email" type="text" class="form-control" id="username">
-                                <span asp-validation-for="@Model.Email" class="text-danger"></span>
                             </div>
+                            <span asp-validation-for="@Model.UserName" class="text-danger"></span>
                             <div class="form-group last mb-3">
                                 <label asp-for="@Model.UserName" for="username">Username</label>
                                 <input asp-for="@Model.UserName" type="text" class="form-control" id="username">
-                                <span asp-validation-for="@Model.UserName" class="text-danger"></span>
                             </div>
-                            <div class="d-flex mb-5 align-items-center">
-                                <label class="control control--checkbox mb-0">
-                                    <span class="caption">Remember me</span>
-                                    <input type="checkbox" checked="checked" />
-                                    <div class="control__indicator"></div>
-                                </label>
-                                <span class="ml-auto"><a asp-action="Register" asp-controller="Account" class="forgot-pass">Don't have an account?</a></span>
+                            <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+                            <div class="form-group last mb-3">
+                                <label asp-for="@Model.PhoneNumber" for="username">Phone Number</label>
+                                <input asp-for="@Model.PhoneNumber" type="text" class="form-control" id="username">
                             </div>
-
                             <input type="submit" value="Log In" class="btn btn-block btn-primary">
 
                             <span class="d-block text-center my-4 text-muted">&mdash; or &mdash;</span>

@@ -45,6 +45,11 @@
                                 <label asp-for="@Model.Email" for="email">Email</label>
                                 <input asp-for="@Model.Email" type="text" class="form-control" id="password">
                             </div>
+                            <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+                            <div class="form-group last mb-3">
+                                <label asp-for="@Model.PhoneNumber" for="phone">Phone Number</label>
+                                <input asp-for="@Model.PhoneNumber" type="text" class="form-control" id="password">
+                            </div>
                                 <span asp-validation-for="@Model.Password" class="text-danger"></span>
                             <div class="form-group last mb-3">
                                 <label asp-for="@Model.Password" for="password">Password</label>
