@@ -1,7 +1,7 @@
-﻿using System.Security.Claims;
-
-namespace SkiShop.Extension
+﻿namespace SkiShop.Extension
 {
+    using System.Security.Claims;
+
     public static class ClaimsPrincipalExtension
     {
         public static string Id(this ClaimsPrincipal user)

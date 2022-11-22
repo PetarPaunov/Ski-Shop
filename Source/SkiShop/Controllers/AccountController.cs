@@ -1,34 +1,33 @@
 ﻿namespace SkiShop.Controllers
 {
-    using Microsoft.AspNetCore.Authorization;
-    using SkiShop.Models.AccountViewModels;
-    using Microsoft.AspNetCore.Identity;
+    using System.Security.Claims;
+    using SkiShop.Core.Constants;
     using Microsoft.AspNetCore.Mvc;
     using SkiShop.Data.Models.Account;
-
-    using static SkiShop.Core.Constants.RoleConstants;
-    using SkiShop.Core.Constants;
-    using Microsoft.EntityFrameworkCore;
-    using SkiShop.Data.Models.ShoppingCart;
-    using System.Security.Claims;
     using SkiShop.Core.Contracts.Email;
+    using Microsoft.AspNetCore.Identity;
+    using SkiShop.Data.Models.ShoppingCart;
+    using SkiShop.Models.AccountViewModels;
+    using Microsoft.AspNetCore.Authorization;
     using SkiShop.Core.Models.EmailViewModels;
-    using SkiShop.Core.Services.ShoppingCart;
     using SkiShop.Core.Contracts.ShoppingCart;
+
+    using static SkiShop.Core.Constants.ToastrMessagesConstants;
+    using static SkiShop.Core.Constants.ErrorMessagesConstants;
 
     public class AccountController : BaseController
     {
-        private readonly SignInManager<ApplicationUser> signInManager;
-        private readonly UserManager<ApplicationUser> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
         private readonly IEmailService emailService;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly IShoppingCartService shoppingCartService;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
 
         public AccountController(SignInManager<ApplicationUser> _signInManager, 
-                                    UserManager<ApplicationUser> _userManager,
-                                    RoleManager<IdentityRole> _roleManager,
-                                    IEmailService _emailService,
-                                    IShoppingCartService _shoppingCartService)
+                                 UserManager<ApplicationUser> _userManager,
+                                 RoleManager<IdentityRole> _roleManager,
+                                 IEmailService _emailService,
+                                 IShoppingCartService _shoppingCartService)
         {
             signInManager = _signInManager;
             userManager = _userManager;
@@ -54,14 +53,15 @@
             returnUrl = returnUrl ?? Url.Content("~/");
             if (remoteError != null)
             {
-                ModelState.AddModelError(string.Empty, $"Error from external provider: {remoteError}");
+                ModelState.AddModelError(string.Empty, $"{ErrorFromExternalProvider} {remoteError}");
 
                 return RedirectToAction("Login", new { ReturnUrl = returnUrl });
             }
+
             var info = await signInManager.GetExternalLoginInfoAsync();
             if (info == null)
             {
-                ModelState.AddModelError(string.Empty, "Error loading external login information.");
+                ModelState.AddModelError(string.Empty, ExternalLoginInformationLost);
 
                 return RedirectToAction("Login", new { ReturnUrl = returnUrl });
             }
@@ -125,7 +125,7 @@
                     }
                 }
 
-                ModelState.AddModelError("Email", "User already exists");
+                ModelState.AddModelError("Email", UserExist);
             }
 
 
@@ -178,7 +178,7 @@
 
                 emailService.SendEmail(message);
 
-                TempData[MessageConstant.WarningMessage] = "You should confirm your email address!";
+                TempData[MessageConstant.WarningMessage] = ConfirmYourEmail;
 
                 return RedirectToAction(nameof(Login));
             }
@@ -224,7 +224,7 @@
                 }
             }
 
-            ModelState.AddModelError(string.Empty, "Something went wrong!");
+            ModelState.AddModelError(string.Empty, SomthingWentWrong);
 
             return View(model);
         }
@@ -248,12 +248,12 @@
                 if (result.Succeeded)
                 {
                     TempData.Clear();
-                    TempData[MessageConstant.SuccessMessage] = "Your email is confirm!";
+                    TempData[MessageConstant.SuccessMessage] = EmailConfirmt;
                     return RedirectToAction(nameof(Login));
                 }
             }
 
-            ModelState.AddModelError(string.Empty, "This user does not exist!");
+            ModelState.AddModelError(string.Empty, UserDoesNotExist);
             return RedirectToAction(nameof(Register));
         }
     }

@@ -1,22 +1,24 @@
 ﻿namespace SkiShop.Controllers
 {
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using SkiShop.Core.Constants;
-    using SkiShop.Core.Contracts;
-    using SkiShop.Core.Contracts.ProductContracts;
-    using SkiShop.Core.Models.ProductViewModels;
-
     using SkiShop.Extension;
+    using SkiShop.Core.Contracts;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
+    using SkiShop.Core.Models.ProductViewModels;
+    using SkiShop.Core.Contracts.ProductContracts;
 
     public class ProductController : BaseController
     {
         private readonly IProductService productService;
         private readonly IProductServiceAdmin productServiceAdmin;
-        public ProductController(IProductService _productService, IProductServiceAdmin _productServiceAdmin)
+        private readonly ILogger<ProductController> logger;
+        public ProductController(IProductService _productService, 
+                                 IProductServiceAdmin _productServiceAdmin,
+                                 ILogger<ProductController> _logger)
         {
             productService = _productService;
             productServiceAdmin = _productServiceAdmin;
+            logger = _logger;
         }
 
         [HttpGet]
@@ -42,9 +44,17 @@
         [AllowAnonymous]
         public async Task<IActionResult> ShowProduct(string id)
         {
-            var model = await productService.GetProductByIdAsync(id);
+            try
+            {
+                var model = await productService.GetProductByIdAsync(id);
 
-            return View(model);
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message);
+                return RedirectToAction("Error404", "Home");
+            }
         }
 
         public async Task<IActionResult> AddComment(ProductViewModel model, string id)
@@ -56,9 +66,17 @@
 
             var userId = User.Id();
 
-            await productService.AddNewComment(model.Comment.Description, id, userId);
+            try
+            {
+                await productService.AddNewComment(model.Comment.Description, id, userId);
 
-            return Redirect($"/Product/ShowProduct/{id}");
+                return Redirect($"/Product/ShowProduct/{id}");
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex.Message);
+                return RedirectToAction("Error404", "Home");
+            }
         }
     }
 }

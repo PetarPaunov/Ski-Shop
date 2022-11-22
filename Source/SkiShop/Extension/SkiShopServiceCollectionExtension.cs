@@ -1,18 +1,18 @@
 ﻿namespace Microsoft.Extensions.DependencyInjection
 {
+    using SkiShop.Data.Common;
+    using SkiShop.Core.Services;
     using SkiShop.Core.Contracts;
+    using SkiShop.Core.Services.Email;
+    using SkiShop.Core.Services.Admin;
+    using SkiShop.Core.Contracts.Email;
+    using SkiShop.Core.Services.Common;
     using SkiShop.Core.Contracts.Admin;
     using SkiShop.Core.Contracts.Common;
-    using SkiShop.Core.Contracts.Email;
-    using SkiShop.Core.Contracts.ProductContracts;
-    using SkiShop.Core.Contracts.ShoppingCart;
-    using SkiShop.Core.Services;
-    using SkiShop.Core.Services.Admin;
-    using SkiShop.Core.Services.Common;
-    using SkiShop.Core.Services.Email;
-    using SkiShop.Core.Services.ProductServices;
     using SkiShop.Core.Services.ShoppingCart;
-    using SkiShop.Data.Common;
+    using SkiShop.Core.Contracts.ShoppingCart;
+    using SkiShop.Core.Services.ProductServices;
+    using SkiShop.Core.Contracts.ProductContracts;
 
     public static class SkiShopServiceCollectionExtension
     {

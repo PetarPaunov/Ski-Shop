@@ -1,22 +1,16 @@
 ﻿namespace SkiShop.Controllers
 {
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Mvc;
-    using SkiShop.Core.Constants;
-    using SkiShop.Core.Contracts.ProductContracts;
-    using SkiShop.Core.Models.CommentViewModels;
-    using SkiShop.Core.Models.ProductViewModels;
-    using SkiShop.Extension;
     using SkiShop.Models;
     using System.Diagnostics;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authorization;
+    using SkiShop.Core.Contracts.ProductContracts;
 
     public class HomeController : BaseController
     {
-        private readonly ILogger<HomeController> logger;
         private readonly IProductService productService;
-        public HomeController(ILogger<HomeController> _logger, IProductService _productService)
+        public HomeController(IProductService _productService)
         {
-            this.logger = _logger;
             productService = _productService;
         }
 
@@ -30,6 +24,12 @@
 
         [AllowAnonymous]
         public IActionResult About()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        public IActionResult Error404()
         {
             return View();
         }

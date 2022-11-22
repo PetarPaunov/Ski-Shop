@@ -175,7 +175,7 @@
         private async Task<ShoppingCartProduct> GetShoppingCartProduct(Guid productId, Guid shoppingCartId)
         {
             return await repository.All<ShoppingCartProduct>()
-                .FirstAsync(x => x.ShoppingCartId == shoppingCartId && x.ProductId == productId);
+                .FirstOrDefaultAsync(x => x.ShoppingCartId == shoppingCartId && x.ProductId == productId);
         }
     }
 }

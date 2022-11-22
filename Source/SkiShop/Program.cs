@@ -1,13 +1,12 @@
+using SkiShop.Data;
 using CloudinaryDotNet;
+using SkiShop.Data.Models.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SkiShop.Core.Models.EmailViewModels;
-using SkiShop.Data;
-using SkiShop.Data.Models.Account;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
@@ -23,7 +22,6 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options =>
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-//Add Email Config
 var emailConfig = builder.Configuration
     .GetSection("EmailConfiguration")
     .Get<EmailConfiguration>();
@@ -42,11 +40,6 @@ builder.Services.AddApplicationServices();
 var cloudName = builder.Configuration.GetValue<string>("CloudAccountSettings:ColudName");
 var apiKey = builder.Configuration.GetValue<string>("CloudAccountSettings:ApiKey");
 var apiSecret = builder.Configuration.GetValue<string>("CloudAccountSettings:ApiSecret");
-
-//if (new[] { cloudName, apiKey, apiSecret }.Any(string.IsNullOrEmpty))
-//{
-//    throw new ArgumentException("Please specify Cloudinary accont details");
-//}
 
 builder.Services.AddSingleton(new Cloudinary(new Account(cloudName, apiKey, apiSecret)));
 
