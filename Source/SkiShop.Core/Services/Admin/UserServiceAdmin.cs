@@ -1,28 +1,35 @@
 ﻿namespace SkiShop.Core.Services.Admin
 {
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.EntityFrameworkCore;
-    using SkiShop.Core.Contracts.Admin;
-    using SkiShop.Core.Models.CommonViewModels;
-    using SkiShop.Core.Models.RoleViewModels;
-    using SkiShop.Core.Models.UserViewModels;
     using SkiShop.Data.Common;
-    using SkiShop.Data.Models.Account;
-    using SkiShop.Data.Models.ShoppingCart;
-    using System.Collections.Generic;
     using System.Threading.Tasks;
+    using System.Collections.Generic;
+    using SkiShop.Data.Models.Account;
+    using SkiShop.Core.Contracts.Admin;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Identity;
+    using SkiShop.Data.Models.ShoppingCart;
+    using SkiShop.Core.Models.UserViewModels;
+    using SkiShop.Core.Models.CommonViewModels;
 
+    /// <summary>
+    /// Administration service for user management
+    /// </summary>
     public class UserServiceAdmin : IUserServiceAdmin
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IRepository repository;
 
-        public UserServiceAdmin(UserManager<ApplicationUser> _userManager, IRepository _repository)
+        public UserServiceAdmin(UserManager<ApplicationUser> _userManager, 
+                                IRepository _repository)
         {
             userManager = _userManager;
             repository = _repository;
         }
 
+        /// <summary>
+        /// Gets all users from the database
+        /// </summary>
+        /// <returns>A collection of users mapped to view model</returns>
         public async Task<IEnumerable<UserViewModel>> GetAllUsersAsync()
         {
             var dataUsers = await userManager.Users.ToListAsync();
@@ -44,24 +51,33 @@
             return users;
         }
 
+        /// <summary>
+        /// Gets all user email addresses from the database
+        /// </summary>
+        /// <returns>A collection of email addresses mapped to view model</returns>
         public async Task<IEnumerable<UserEmailViewModel>> GetAllUserEmailsAsync()
         {
             var dataUsers = await userManager.Users.ToListAsync();
 
-            var users = new List<UserEmailViewModel>();
+            var emails = new List<UserEmailViewModel>();
 
             foreach (var user in dataUsers)
             {
                 var userRole = await userManager.GetRolesAsync(user);
 
-                users.Add(new UserEmailViewModel()
+                emails.Add(new UserEmailViewModel()
                 {
                     Email = user.Email,
                 });
             }
-            return users;
+
+            return emails;
         }
 
+        /// <summary>
+        /// Gets all user orders from the database
+        /// </summary>
+        /// <returns>A collection of user orders mapped to a view model</returns>
         public async Task<IEnumerable<UserOrdersViewModel>> GetAllUserOrdersAsync()
         {
             var orders = await repository.All<Order>()
@@ -81,6 +97,10 @@
             return orders;
         }
 
+        /// <summary>
+        /// Finishes user order
+        /// </summary>
+        /// <param name="orderId">Identifier of the order</param>
         public async Task FinishUserOrderAsync(string orderId)
         {
             var orderGuidId = new Guid(orderId);

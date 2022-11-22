@@ -20,7 +20,7 @@
         Task CreateRoleAsync(string inputRole);
 
         /// <summary>
-        /// Add user to a role
+        /// Changes user role
         /// </summary>
         /// <param name="email">Email of the user</param>
         /// <param name="role">Name of the role</param>

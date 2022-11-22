@@ -11,7 +11,7 @@
         /// Uploads image to a cloud service
         /// </summary>
         /// <param name="imageFile">Uploaded image</param>
-        /// <returns></returns>
+        /// <returns>Image URL</returns>
         Task<string> UploadeImage(IFormFile imageFile);
     }
 }

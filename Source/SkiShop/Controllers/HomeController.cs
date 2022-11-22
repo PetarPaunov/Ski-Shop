@@ -23,7 +23,7 @@
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            var model = await productService.GetFirstSixProductsAsync();
+            var model = await productService.GetFirstEightProductsAsync();
 
             return View(model);
         }

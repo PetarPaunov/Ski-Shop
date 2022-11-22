@@ -2,19 +2,26 @@
 {
     using CloudinaryDotNet;
     using CloudinaryDotNet.Actions;
-    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
     using SkiShop.Core.Contracts.Common;
 
+    /// <summary>
+    /// Common services
+    /// </summary>
     public class CommonService : ICommonService
     {
         private readonly Cloudinary cloudinary;
 
-        public CommonService(IWebHostEnvironment _webHostEnvironment, Cloudinary _cloudinary)
+        public CommonService(Cloudinary _cloudinary)
         {
             cloudinary = _cloudinary;
         }
 
+        /// <summary>
+        /// Uploads image to a cloud service
+        /// </summary>
+        /// <param name="imageFile">Uploaded image</param>
+        /// <returns>Image URL</returns>
         public async Task<string> UploadeImage(IFormFile imageFile)
         {
             using var stream = imageFile.OpenReadStream();

@@ -1,26 +1,34 @@
 ﻿namespace SkiShop.Core.Services.ShoppingCart
 {
+    using SkiShop.Data.Common;
+    using System.Collections.Generic;
+    using SkiShop.Data.Models.Product;
+    using SkiShop.Data.Models.Account;
     using Microsoft.EntityFrameworkCore;
+    using SkiShop.Data.Models.ShoppingCart;
     using SkiShop.Core.Contracts.ShoppingCart;
     using SkiShop.Core.Models.ShoppingCartViewModels;
-    using SkiShop.Data;
-    using SkiShop.Data.Common;
-    using SkiShop.Data.Models.Account;
-    using SkiShop.Data.Models.Product;
-    using SkiShop.Data.Models.ShoppingCart;
-    using System.Collections.Generic;
 
+    using static SkiShop.Core.Constants.ExeptionMessagesConstants;
+
+    /// <summary>
+    /// Services for managing shopping cart
+    /// </summary>
     public class ShoppingCartService : IShoppingCartService
     {
         private readonly IRepository repository;
-        private readonly ApplicationDbContext context;
 
-        public ShoppingCartService(IRepository _repository, ApplicationDbContext _context)
+        public ShoppingCartService(IRepository _repository)
         {
             repository = _repository;
-            context = _context;
         }
 
+        /// <summary>
+        /// Adds a product to the user's shopping cart
+        /// </summary>
+        /// <param name="productId">Identifier of the product</param>
+        /// <param name="userId">Identifier of the user</param>
+        /// <param name="quantity">Quantity of the product</param>
         public async Task AddProductInShoppingCartAsync(string productId, string userId, int quantity)
         {
             var productGuidId = new Guid(productId);
@@ -30,19 +38,19 @@
 
             if (product == null)
             {
-                return; //TODO..
+                throw new ArgumentNullException(ProductNotFound);
             }
 
             if (user == null)
             {
-                return; //TODO.. 
+                throw new ArgumentNullException(UserNotFound);
             }
 
             var shoppingCartProduct = await GetShoppingCartProduct(productGuidId, user.ShoppingCartId);
 
             if (shoppingCartProduct != null)
             {
-                return; //TODO..
+                throw new ArgumentNullException(ShoppingCartNotFound);
             }
 
             shoppingCartProduct = new ShoppingCartProduct()
@@ -57,7 +65,13 @@
             await repository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<ShoppingCartProductViewModel>> AllShoppingCartProductsAsync(string userId)
+        /// <summary>
+        /// Gets all products in the user's shopping cart
+        /// </summary>
+        /// <param name="userId">Identifier of the user</param>
+        /// <returns>A collection of products in the cart</returns>
+        public async Task<IEnumerable<ShoppingCartProductViewModel>> AllShoppingCartProductsAsync
+            (string userId)
         {
             var user = await repository.GetByIdAsync<ApplicationUser>(userId);
 
@@ -77,9 +91,19 @@
             return allProducts;
         }
 
+        /// <summary>
+        /// Gets the count of all products in the cart
+        /// </summary>
+        /// <param name="userId">Identifier of the user</param>
+        /// <returns>Count of all products</returns>
         public async Task<int> CartProductsCoutAsync(string userId)
         {
             var user = await repository.GetByIdAsync<ApplicationUser>(userId);
+
+            if (user == null)
+            {
+                throw new ArgumentNullException(UserNotFound);
+            }
 
             var allProducts = await repository.AllReadonly<ShoppingCartProduct>()
                 .Where(x => x.ShoppingCartId == user.ShoppingCartId).ToListAsync();
@@ -87,9 +111,18 @@
             return allProducts.Count();
         }
 
+        /// <summary>
+        /// Creates a user order
+        /// </summary>
+        /// <param name="userId">Identifier of the user</param>
         public async Task PlaceUserOrderAsync(string userId)
         {
             var user = await repository.GetByIdAsync<ApplicationUser>(userId);
+
+            if (user == null)
+            {
+                throw new ArgumentNullException(UserNotFound);
+            }
 
             var allProducts = await repository.All<ShoppingCartProduct>()
                 .Where(x => x.ShoppingCartId == user.ShoppingCartId)
@@ -111,10 +144,21 @@
             await repository.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Removes a product from the user's shopping cart
+        /// </summary>
+        /// <param name="productId">Identifier of the product</param>
+        /// <param name="userId">Identifier of the user</param>
         public async Task RemoveFromCartAsync(string productId, string userId)
         {
             var productGuidId = new Guid(productId);
+
             var user = await repository.GetByIdAsync<ApplicationUser>(userId);
+
+            if (user == null)
+            {
+                throw new ArgumentNullException(UserNotFound);
+            }
 
             var shoppingCart = await GetShoppingCartProduct(productGuidId, user.ShoppingCartId);
 
@@ -122,10 +166,16 @@
             await repository.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Gets a shopping cart of a user
+        /// </summary>
+        /// <param name="productId">Identifier of the product</param>
+        /// <param name="shoppingCartId">Identifier of the user's shopping cart</param>
+        /// <returns></returns>
         private async Task<ShoppingCartProduct> GetShoppingCartProduct(Guid productId, Guid shoppingCartId)
         {
             return await repository.All<ShoppingCartProduct>()
-                .FirstOrDefaultAsync(x => x.ShoppingCartId == shoppingCartId && x.ProductId == productId);
+                .FirstAsync(x => x.ShoppingCartId == shoppingCartId && x.ProductId == productId);
         }
     }
 }

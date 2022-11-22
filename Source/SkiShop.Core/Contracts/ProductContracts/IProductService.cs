@@ -11,7 +11,7 @@
         /// Gets first six products in the databse
         /// </summary>
         /// <returns>A collection of products mapped to a view model</returns>
-        Task<IEnumerable<AllProductsViewModel>> GetFirstSixProductsAsync();
+        Task<IEnumerable<AllProductsViewModel>> GetFirstEightProductsAsync();
 
         /// <summary>
         /// Gets a product from the database

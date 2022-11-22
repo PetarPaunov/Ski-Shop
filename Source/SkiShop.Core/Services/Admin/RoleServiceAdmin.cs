@@ -1,33 +1,47 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using SkiShop.Core.Contracts.Admin;
-using SkiShop.Core.Models.RoleViewModels;
-using SkiShop.Data.Common;
-using SkiShop.Data.Models.Account;
-
-namespace SkiShop.Core.Services.Admin
+﻿namespace SkiShop.Core.Services.Admin
 {
-	public class RoleServiceAdmin : IRoleServiceAdmin
+    using SkiShop.Data.Common;
+    using SkiShop.Data.Models.Account;
+    using SkiShop.Core.Contracts.Admin;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Identity;
+    using SkiShop.Core.Models.RoleViewModels;
+
+    using static SkiShop.Core.Constants.ExeptionMessagesConstants;
+
+    /// <summary>
+    /// Administrator services for managing roles
+    /// </summary>
+    public class RoleServiceAdmin : IRoleServiceAdmin
 	{
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly IRepository repository;
         private readonly UserManager<ApplicationUser> userManager;
 
         public RoleServiceAdmin(RoleManager<IdentityRole> _roleManager, 
-               IRepository _repository, 
-               UserManager<ApplicationUser> _userManager)
+                                IRepository _repository, 
+                                UserManager<ApplicationUser> _userManager)
         {
             this.roleManager = _roleManager;
             this.repository = _repository;
             this.userManager = _userManager;
         }
 
+        /// <summary>
+        /// Creates a new role 
+        /// </summary>
+        /// <param name="inputRole">Name of the role</param>
         public async Task CreateRoleAsync(string inputRole)
         {
             var role = new IdentityRole(inputRole);
             await roleManager.CreateAsync(role);
         }
 
+        /// <summary>
+        /// Changes user role
+        /// </summary>
+        /// <param name="email">Email of the user</param>
+        /// <param name="role">Name of the role</param>
         public async Task AddToRoleAsync(string email, string role)
         {
             var user = await userManager.FindByEmailAsync(email);
@@ -44,6 +58,10 @@ namespace SkiShop.Core.Services.Admin
             }
         }
 
+        /// <summary>
+        /// Gets all existing roles from the database
+        /// </summary>
+        /// <returns>A collection of roles mapped to a view model</returns>
         public async Task<IEnumerable<RoleViewModel>> GetAllRolesAsync()
         {
             var roles = await repository.All<IdentityRole>()
@@ -53,12 +71,22 @@ namespace SkiShop.Core.Services.Admin
                     Name = x.Name,
                 })
                 .ToListAsync();
+
             return roles;
         }
 
+        /// <summary>
+        /// Deletes a role from the database
+        /// </summary>
+        /// <param name="name">Name of the role</param>
         public async Task DeleteRoleAsync(string name)
         {
             var role = await roleManager.Roles.FirstOrDefaultAsync(x => x.Name == name);
+
+            if (role == null)
+            {
+                throw new ArgumentException(RoleNotFound);
+            }
 
             await roleManager.DeleteAsync(role);
         }

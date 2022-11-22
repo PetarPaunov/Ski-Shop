@@ -1,17 +1,17 @@
 ﻿namespace SkiShop.Core.Services.ProductServices
 {
-    using Microsoft.EntityFrameworkCore;
-    using SkiShop.Core.Contracts.ProductContracts;
-    using SkiShop.Core.Models.CommentViewModels;
-    using SkiShop.Core.Models.ProductViewModels;
     using SkiShop.Data.Common;
     using SkiShop.Data.Models.Account;
     using SkiShop.Data.Models.Product;
+    using Microsoft.EntityFrameworkCore;
+    using SkiShop.Core.Models.CommentViewModels;
+    using SkiShop.Core.Models.ProductViewModels;
+    using SkiShop.Core.Contracts.ProductContracts;
+
+    using static SkiShop.Core.Constants.ExeptionMessagesConstants;
 
     public class ProductService : IProductService
     {
-        private const int MAX_PRODUCTS_PER_PAGE = 2;
-
         private readonly IRepository repository;
 
         public ProductService(IRepository _repository)
@@ -19,6 +19,12 @@
             repository = _repository;
         }
 
+        /// <summary>
+        /// Add a comment to product
+        /// </summary>
+        /// <param name="comment">Comment description</param>
+        /// <param name="productId">Identifier of the product</param>
+        /// <param name="userId">Identifier of the user</param>
         public async Task AddNewComment(string comment, string productId, string userId)
         {
             var guidProductId = new Guid(productId);
@@ -30,7 +36,17 @@
             };
 
             var product = await repository.GetByIdAsync<Product>(guidProductId);
+
+            if (product == null)
+            {
+                throw new ArgumentNullException(ProductNotFound);
+            }
             var user = await repository.GetByIdAsync<ApplicationUser>(userId);
+
+            if (user == null)
+            {
+                throw new ArgumentNullException(UserNotFound);
+            }
 
             var productComment = new ProductComment()
             {
@@ -51,6 +67,14 @@
             await repository.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Gets all products from the database base on conditions
+        /// </summary>
+        /// <param name="currentPage">Current page of the view</param>
+        /// <param name="productsPerPage">Maximum products per page</param>
+        /// <param name="type">Type of the product</param>
+        /// <param name="searchTerm">Search term</param>
+        /// <returns>View model holding the data get depending on conditions</returns>
         public async Task<ProductQueryViewModel> GetAllProductsAsync
             (int currentPage, int productPerPage = 1, string? type = null, string? searchTerm = null)
         {
@@ -94,7 +118,11 @@
             return model;
         }
 
-        public async Task<IEnumerable<AllProductsViewModel>> GetFirstSixProductsAsync()
+        /// <summary>
+        /// Gets first six products in the databse
+        /// </summary>
+        /// <returns>A collection of products mapped to a view model</returns>
+        public async Task<IEnumerable<AllProductsViewModel>> GetFirstEightProductsAsync()
         {
             var products = await repository.All<Product>()
                 .Where(x => x.IsDeleted == false)
@@ -115,6 +143,11 @@
             return products;
         }
 
+        /// <summary>
+        /// Gets a product from the database
+        /// </summary>
+        /// <param name="productId">Identifier of the product</param>
+        /// <returns>A single product mapped to a view model</returns>
         public async Task<ProductViewModel> GetProductByIdAsync(string productId)
         {
             var guid = new Guid(productId);
@@ -124,6 +157,11 @@
                 .Include(x => x.Type)
                 .Include(x => x.Brand)
                 .FirstOrDefaultAsync(x => x.Id == guid);
+
+            if (returendProduct == null)
+            {
+                throw new ArgumentNullException(ProductNotFound);
+            }
 
             var comments = await repository.All<ProductComment>()
                 .Where(x => x.ProductId == returendProduct.Id)
