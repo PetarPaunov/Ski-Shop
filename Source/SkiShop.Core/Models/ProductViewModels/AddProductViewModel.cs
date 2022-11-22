@@ -2,21 +2,23 @@
 {
     using Microsoft.AspNetCore.Http;
     using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
     using static SkiShop.Data.Constants.DataConstants;
 
+    /// <summary>
+    /// View model for adding a product to the database
+    /// </summary>
     public class AddProductViewModel
     {
         [Required]
         [StringLength(Product.TitleMaxLength, MinimumLength = Product.TitleMinLength)]
-        public string Title { get; set; }
+        public string Title { get; set; } = null!;
 
         [Required]
         [StringLength(Product.DescriptionMaxLength, MinimumLength = Product.DescriptionMinLength)]
-        public string Description { get; set; }
+        public string Description { get; set; } = null!;
 
         [Required(ErrorMessage = "Please choose front image")]
-        public IFormFile FrontImage { get; set; }
+        public IFormFile FrontImage { get; set; } = null!;
 
         [Required]
         [Range(typeof(decimal), Product.PriceMinValue, Product.PriceMaxValue)]

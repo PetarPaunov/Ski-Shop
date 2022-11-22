@@ -1,14 +1,17 @@
 ﻿namespace SkiShop.Core.Models.CommonViewModels
 {
+    /// <summary>
+    /// View model for extracting user orders from the database
+    /// </summary>
     public class UserOrdersViewModel
     {
-        public string OrderId { get; set; }
-        public string UserName { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Email { get; set; }
-        public string ProductTitle { get; set; }
-        public string ProductPrice { get; set; }
-        public string ImageUrl { get; set; }
+        public string OrderId { get; set; } = null!;
+        public string UserName { get; set; } = null!;
+        public string PhoneNumber { get; set; } = null!;
+        public string Email { get; set; } = null!;
+        public string ProductTitle { get; set; } = null!;   
+        public string ProductPrice { get; set; } = null!;
+        public string ImageUrl { get; set; } = null!;
         public int Quantity { get; set; }
 
     }

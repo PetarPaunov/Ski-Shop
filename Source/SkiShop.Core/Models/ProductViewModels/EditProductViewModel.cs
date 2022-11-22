@@ -4,17 +4,20 @@
     using System.ComponentModel.DataAnnotations;
     using static SkiShop.Data.Constants.DataConstants;
 
+    /// <summary>
+    /// View model for extracting product for edit
+    /// </summary>
     public class EditProductViewModel
     {
         public Guid Id { get; set; }
 
         [Required]
         [StringLength(Product.TitleMaxLength, MinimumLength = Product.TitleMinLength)]
-        public string Title { get; set; }
+        public string Title { get; set; } = null!;
 
         [Required]
         [StringLength(Product.DescriptionMaxLength, MinimumLength = Product.DescriptionMinLength)]
-        public string Description { get; set; }
+        public string Description { get; set; } = null!;
 
         public IFormFile? FrontImage { get; set; }
 

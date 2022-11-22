@@ -2,6 +2,9 @@
 {
     using MimeKit;
 
+    /// <summary>
+    /// Message configuration model
+    /// </summary>
     public class Message
     {
         public Message(IEnumerable<string> to, string subject, string content)
