@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkiShop.Data", "SkiShop.Dat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SkiShop.Core", "SkiShop.Core\SkiShop.Core.csproj", "{498226AB-0C48-4AAA-9FFE-0EE17FDAD7D7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SkiShop.Test", "SkiShop.Test\SkiShop.Test.csproj", "{8963CEC9-DC55-443E-9A93-CF76CFF51447}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{498226AB-0C48-4AAA-9FFE-0EE17FDAD7D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{498226AB-0C48-4AAA-9FFE-0EE17FDAD7D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{498226AB-0C48-4AAA-9FFE-0EE17FDAD7D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8963CEC9-DC55-443E-9A93-CF76CFF51447}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8963CEC9-DC55-443E-9A93-CF76CFF51447}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8963CEC9-DC55-443E-9A93-CF76CFF51447}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8963CEC9-DC55-443E-9A93-CF76CFF51447}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
