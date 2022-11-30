@@ -37,7 +37,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddApplicationServices();
 
-var cloudName = builder.Configuration.GetValue<string>("CloudAccountSettings:ColudName");
+var cloudName = builder.Configuration.GetValue<string>("CloudAccountSettings:CloudName");
 var apiKey = builder.Configuration.GetValue<string>("CloudAccountSettings:ApiKey");
 var apiSecret = builder.Configuration.GetValue<string>("CloudAccountSettings:ApiSecret");
 
@@ -46,8 +46,8 @@ builder.Services.AddSingleton(new Cloudinary(new Account(cloudName, apiKey, apiS
 builder.Services.AddAuthentication()
     .AddFacebook(options =>
     {
-        options.AppId = builder.Configuration.GetValue<string>("ExternalLoginCridentials:FacebookAppId");
-        options.AppSecret = builder.Configuration.GetValue<string>("ExternalLoginCridentials:FacebookAppSecret");
+        options.AppId = builder.Configuration.GetValue<string>("ExternalLoginCredentials:FacebookAppId");
+        options.AppSecret = builder.Configuration.GetValue<string>("ExternalLoginCredentials:FacebookAppSecret");
     })
     .AddTwitter(options =>
     {
@@ -56,8 +56,8 @@ builder.Services.AddAuthentication()
     })
     .AddGoogle(options =>
     {
-        options.ClientId = builder.Configuration.GetValue<string>("ExternalLoginCridentials:GoogleClientId");
-        options.ClientSecret = builder.Configuration.GetValue<string>("ExternalLoginCridentials:GoogleClientSecret");
+        options.ClientId = builder.Configuration.GetValue<string>("ExternalLoginCredentials:GoogleClientId");
+        options.ClientSecret = builder.Configuration.GetValue<string>("ExternalLoginCredentials:GoogleClientSecret");
     });
 
 builder.Services.AddSession(options =>
