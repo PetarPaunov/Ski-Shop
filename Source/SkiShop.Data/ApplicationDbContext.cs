@@ -66,13 +66,13 @@
                 .OnDelete(DeleteBehavior.Restrict);
 
 
-            builder.ApplyConfiguration<Type>(new TypeConfiguration());
-            builder.ApplyConfiguration<Brand>(new BrandConfiguration());
-            builder.ApplyConfiguration<Model>(new ModelConfiguration());
-            builder.ApplyConfiguration<ShoppingCart>(new ShoppingCartConfiguration());
-            builder.ApplyConfiguration<ApplicationUser>(new UserConfiguration());
-            builder.ApplyConfiguration<IdentityRole>(new RoleConfiguration());
-            builder.ApplyConfiguration<IdentityUserRole<string>>(new UserToRoleConfiguration());
+            // builder.ApplyConfiguration<Type>(new TypeConfiguration());
+            // builder.ApplyConfiguration<Brand>(new BrandConfiguration());
+            // builder.ApplyConfiguration<Model>(new ModelConfiguration());
+            // builder.ApplyConfiguration<ShoppingCart>(new ShoppingCartConfiguration());
+            // builder.ApplyConfiguration<ApplicationUser>(new UserConfiguration());
+            // builder.ApplyConfiguration<IdentityRole>(new RoleConfiguration());
+            // builder.ApplyConfiguration<IdentityUserRole<string>>(new UserToRoleConfiguration());
 
 
             base.OnModelCreating(builder);

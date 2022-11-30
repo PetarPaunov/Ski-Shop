@@ -12,6 +12,6 @@
         /// </summary>
         /// <param name="imageFile">Uploaded image</param>
         /// <returns>Image URL</returns>
-        Task<string> UploadeImage(IFormFile imageFile);
+        Task<string> UploadImage(IFormFile imageFile);
     }
 }

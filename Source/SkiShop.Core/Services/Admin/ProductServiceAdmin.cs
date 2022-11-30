@@ -33,7 +33,7 @@
         /// <param name="model">Object with required product data</param>
         public async Task AddNewProductAsync(AddProductViewModel model)
         {
-            var imageUrl = await commonService.UploadeImage(model.FrontImage);
+            var imageUrl = await commonService.UploadImage(model.FrontImage);
 
             var product = new Product()
             {
@@ -53,7 +53,7 @@
         }
 
         /// <summary>
-        /// Gets all product banrds from the database
+        /// Gets all product brands from the database
         /// </summary>
         /// <returns>A collection of brands mapped to a view model</returns>
         public async Task<IEnumerable<BrandViewModel>> GetAllBrandsAsync()
@@ -127,7 +127,7 @@
         /// <summary>
         /// Remove one from the product quantity
         /// </summary>
-        /// <param name="id">Identifire of the product</param>
+        /// <param name="id">Identifier of the product</param>
         public async Task DeleteSingleProductAsync(string id)
         {
             var productGuid = Guid.Parse(id);
@@ -164,7 +164,7 @@
 
             if (model.FrontImage != null)
             {
-                var imageUrl = await commonService.UploadeImage(model.FrontImage);
+                var imageUrl = await commonService.UploadImage(model.FrontImage);
 
                 product.ImageUrl = imageUrl;
             }
@@ -240,7 +240,7 @@
         }
 
         /// <summary>
-        /// Gets all products with (IsDeleted flag = ture) from the database
+        /// Gets all products with (IsDeleted flag = true) from the database
         /// </summary>
         /// <returns>A collection of products mapped to a view model</returns>
         public async Task<IEnumerable<AllProductsAdminViewModel>> GetAllDeletedProductsAsync()

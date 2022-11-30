@@ -22,7 +22,7 @@
         /// </summary>
         /// <param name="imageFile">Uploaded image</param>
         /// <returns>Image URL</returns>
-        public async Task<string> UploadeImage(IFormFile imageFile)
+        public async Task<string> UploadImage(IFormFile imageFile)
         {
             using var stream = imageFile.OpenReadStream();
 
