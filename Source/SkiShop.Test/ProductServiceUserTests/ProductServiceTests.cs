@@ -33,7 +33,7 @@
         }
 
         [Test]
-        public void AddNewComment_Method_Should_Throw_ArgumentNullExeption_If_The_Product_Is_Not_Found()
+        public void AddNewComment_Method_Should_Throw_ArgumentNullException_If_The_Product_Is_Not_Found()
         {
             var service = serviceProvider.GetService<IProductService>();
 
@@ -43,7 +43,7 @@
         }
 
         [Test]
-        public void AddNewComment_Method_Should_Throw_ArgumentNullExeption_If_The_User_Is_Not_Found()
+        public void AddNewComment_Method_Should_Throw_ArgumentNullException_If_The_User_Is_Not_Found()
         {
             var service = serviceProvider.GetService<IProductService>();
 
@@ -53,7 +53,7 @@
         }
 
         [Test]
-        public void AddNewComment_Method_Should_Not_Throw_ArgumentNullExeption_If_Correct_Data_Is_Passed()
+        public void AddNewComment_Method_Should_Not_Throw_ArgumentNullException_If_Correct_Data_Is_Passed()
         {
             var service = serviceProvider.GetService<IProductService>();
 
@@ -72,7 +72,7 @@
         }
 
         [Test]
-        public async Task GetAllProductsAsync_Method_Should_Return_Correct_Data_When_Serach_Term_Is_Passed()
+        public async Task GetAllProductsAsync_Method_Should_Return_Correct_Data_When_Search_Term_Is_Passed()
         {
             var service = serviceProvider.GetService<IProductService>();
 
@@ -108,7 +108,7 @@
         }
 
         [Test]
-        public void GetProductByIdAsync_Method_Should_Throw_ArgumentNullExeption_When_Product_Is_Not_Found()
+        public void GetProductByIdAsync_Method_Should_Throw_ArgumentNullException_When_Product_Is_Not_Found()
         {
             var service = serviceProvider.GetService<IProductService>();
 

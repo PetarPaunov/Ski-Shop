@@ -32,7 +32,7 @@
         }
 
         [Test]
-        public void Throws_ArgumentNullExeption_When_The_Product_Is_Not_Found()
+        public void Throws_ArgumentNullException_When_The_Product_Is_Not_Found()
         {
             var service = serviceProvider.GetService<IShoppingCartService>();
 
@@ -43,7 +43,7 @@
         }
 
         [Test]
-        public void Throws_ArgumentNullExeption_When_The_User_Is_Not_Found()
+        public void Throws_ArgumentNullException_When_The_User_Is_Not_Found()
         {
             var service = serviceProvider.GetService<IShoppingCartService>();
 
@@ -108,7 +108,7 @@
         }
 
         [Test]
-        public void Should_Throw_ArgumentNullExeption_When_The_User_Is_Not_Found_When_Placing_Order()
+        public void Should_Throw_ArgumentNullException_When_The_User_Is_Not_Found_When_Placing_Order()
         {
             var service = serviceProvider.GetService<IShoppingCartService>();
 
@@ -129,7 +129,7 @@
         }
 
         [Test]
-        public void Should_Throw_ArgumentNullExeption_When_The_User_Is_Not_Found_When_Deleting_From_Cart()
+        public void Should_Throw_ArgumentNullException_When_The_User_Is_Not_Found_When_Deleting_From_Cart()
         {
             var service = serviceProvider.GetService<IShoppingCartService>();
 
