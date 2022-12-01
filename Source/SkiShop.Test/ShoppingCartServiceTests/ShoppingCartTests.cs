@@ -1,13 +1,14 @@
 ﻿namespace SkiShop.Test.ShoppingCartServiceTests
 {
+    using Microsoft.Extensions.DependencyInjection;
     using NUnit.Framework;
+    using SkiShop.Core.Contracts.ShoppingCart;
+    using SkiShop.Core.Services.ShoppingCart;
     using SkiShop.Data.Common;
     using SkiShop.Data.Models.Account;
     using SkiShop.Data.Models.Product;
     using SkiShop.Data.Models.ShoppingCart;
-    using SkiShop.Core.Services.ShoppingCart;
-    using SkiShop.Core.Contracts.ShoppingCart;
-    using Microsoft.Extensions.DependencyInjection;
+    using static SkiShop.Core.Constants.ExeptionMessagesConstants;
 
     public class ShoppingCartTests
     {
@@ -39,7 +40,7 @@
             Assert.CatchAsync<ArgumentNullException>(async () 
                 => await service.
                     AddProductInShoppingCartAsync("55861159-5a03-4e86-a6b7-bfa5104f677e", "1", 1)
-                    , "The product was not found in the database");
+                    , ProductNotFound);
         }
 
         [Test]
@@ -50,7 +51,7 @@
             Assert.CatchAsync<ArgumentNullException>(async ()
                 => await service.
                     AddProductInShoppingCartAsync("55861159-5a03-4e86-a6b7-bfa5104f677d", "2", 1)
-                    , "The user was not found in the database");
+                    , UserNotFound);
         }
 
         [Test]
@@ -114,7 +115,7 @@
 
             Assert.CatchAsync<ArgumentNullException>(async () 
                 => await service.PlaceUserOrderAsync("2"),
-                    "The user was not found in the database");
+                    UserNotFound);
         }
 
         [Test]
@@ -135,7 +136,7 @@
 
             Assert.CatchAsync<ArgumentNullException>(async ()
                 => await service.RemoveFromCartAsync("55861159-5a03-4e86-a6b7-bfa5104f677d", "2"),
-                    "The user was not found in the database");
+                    UserNotFound);
         }
 
         [Test]

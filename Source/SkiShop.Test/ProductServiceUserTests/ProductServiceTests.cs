@@ -2,13 +2,12 @@
 {
     using Microsoft.Extensions.DependencyInjection;
     using SkiShop.Core.Contracts.ProductContracts;
-    using SkiShop.Core.Contracts.ShoppingCart;
     using SkiShop.Core.Services.ProductServices;
-    using SkiShop.Core.Services.ShoppingCart;
     using SkiShop.Data.Common;
     using SkiShop.Data.Models.Account;
     using SkiShop.Data.Models.Product;
     using SkiShop.Data.Models.ShoppingCart;
+    using static SkiShop.Core.Constants.ExeptionMessagesConstants;
 
     public class ProductServiceTests
     {
@@ -39,7 +38,7 @@
 
             Assert.CatchAsync<ArgumentNullException>(async ()
                 => await service.AddNewComment("Test Comment", "55861159-5a03-4e86-a6b7-bfa5104f677a", "1"),
-                "The product was not found in the database");
+                ProductNotFound);
         }
 
         [Test]
@@ -49,7 +48,7 @@
 
             Assert.CatchAsync<ArgumentNullException>(async ()
                 => await service.AddNewComment("Test Comment", "55861159-5a03-4e86-a6b7-bfa5104f677d", "2"),
-                "The user was not found in the database");
+                UserNotFound);
         }
 
         [Test]
@@ -114,7 +113,7 @@
 
             Assert.CatchAsync(async ()
                 => await service.GetProductByIdAsync("55861159-5a03-4e86-a6b7-bfa5104f676z"),
-                "The product was not found in the database");
+                ProductNotFound);
         }
 
         [Test]
