@@ -32,7 +32,8 @@
         /// <returns>A collection of users mapped to view model</returns>
         public async Task<IEnumerable<UserViewModel>> GetAllUsersAsync()
         {
-            var dataUsers = await userManager.Users.ToListAsync();
+            var dataUsers = await repository
+                .AllReadonly<ApplicationUser>().ToListAsync();
 
             var users = new List<UserViewModel>();
 
@@ -57,7 +58,8 @@
         /// <returns>A collection of email addresses mapped to view model</returns>
         public async Task<IEnumerable<UserEmailViewModel>> GetAllUserEmailsAsync()
         {
-            var dataUsers = await userManager.Users.ToListAsync();
+            var dataUsers = await repository
+                .AllReadonly<ApplicationUser>().ToListAsync();
 
             var emails = new List<UserEmailViewModel>();
 

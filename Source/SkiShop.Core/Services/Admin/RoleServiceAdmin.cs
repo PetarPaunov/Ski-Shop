@@ -34,7 +34,8 @@
         public async Task CreateRoleAsync(string inputRole)
         {
             var role = new IdentityRole(inputRole);
-            await roleManager.CreateAsync(role);
+            await repository.AddAsync(role);
+            await repository.SaveChangesAsync();
         }
 
         /// <summary>
