@@ -82,11 +82,13 @@
         /// <param name="name">Name of the role</param>
         public async Task DeleteRoleAsync(string name)
         {
-            var role = await roleManager.Roles.FirstOrDefaultAsync(x => x.Name == name);
+            var role = await repository
+                .AllReadonly<IdentityRole>()
+                .FirstOrDefaultAsync(x => x.Name == name);
 
             if (role == null)
             {
-                throw new ArgumentException(RoleNotFound);
+                throw new ArgumentNullException(RoleNotFound);
             }
 
             await roleManager.DeleteAsync(role);
