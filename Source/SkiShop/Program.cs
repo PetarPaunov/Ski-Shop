@@ -4,6 +4,7 @@ using SkiShop.Data.Models.Account;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SkiShop.Core.Models.EmailViewModels;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,10 +50,10 @@ builder.Services.AddAuthentication()
         options.AppId = builder.Configuration.GetValue<string>("ExternalLoginCredentials:FacebookAppId");
         options.AppSecret = builder.Configuration.GetValue<string>("ExternalLoginCredentials:FacebookAppSecret");
     })
-    .AddTwitter(options =>
+    .AddMicrosoftAccount(options =>
     {
-        options.ConsumerKey = "Test";
-        options.ConsumerSecret = "Test";
+        options.ClientId = builder.Configuration.GetValue<string>("ExternalLoginCredentials:MicrosoftClientId");
+        options.ClientSecret = builder.Configuration.GetValue<string>("ExternalLoginCredentials:MicrosoftClientSecret");
     })
     .AddGoogle(options =>
     {
