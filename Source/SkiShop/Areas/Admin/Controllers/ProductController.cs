@@ -129,6 +129,14 @@
         {
             if (!ModelState.IsValid)
             {
+                var types = await productService.GetAllTypesAsync();
+                var models = await productService.GetAllModelsAsync();
+                var brands = await productService.GetAllBrandsAsync();
+
+                ViewBag.Types = types;
+                ViewBag.Models = models;
+                ViewBag.Brands = brands;
+
                 return View(model);
             }
 

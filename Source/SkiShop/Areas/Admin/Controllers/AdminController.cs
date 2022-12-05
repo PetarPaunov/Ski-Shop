@@ -48,7 +48,10 @@
 		{
 			if (!ModelState.IsValid)
 			{
-				return View(model);
+                var roles = await roleServiceAdmin.GetAllRolesAsync();
+                ViewBag.Roles = roles;
+
+                return View(model);
 			}
 
 			await roleServiceAdmin.CreateRoleAsync(model.Name);

@@ -5,12 +5,12 @@
 <div class="d-flex justify-content-center">
 	<h1>Role management</h1>
 </div>
-
+<hr/>
 <div class="d-flex justify-content-center">
 	<form asp-area="Admin" asp-action="AddRole" asp-controller="Admin">
 		<label asp-for="@Model.Name">Add new Role</label>
-
 		<div class="input-group mb-3">
+			<span asp-validation-for="@Model.Name" class="text-danger"></span>
 			<input asp-for="@Model.Name" type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
 			<div class="input-group-append">
 				<button class="btn btn-outline-secondary" type="submit">Submit</button>
@@ -36,6 +36,9 @@
 		</form>
 	</div>
 </div>
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}
 
 
 
