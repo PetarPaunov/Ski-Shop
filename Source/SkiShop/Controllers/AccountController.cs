@@ -137,6 +137,11 @@
         [HttpGet]
         public IActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var model = new RegisterViewModel();
 
             return View(model);
@@ -195,6 +200,11 @@
         [HttpGet]
         public IActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             var model = new LoginViewModel();
 
             return View(model);
