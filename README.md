@@ -90,10 +90,12 @@ Distributed under the MIT License. See [**LICENSE.txt**](LICENSE) for more infor
 
 ## Try it 
 
-You can try the application [here](http://petarpaunov-001-site1.btempurl.com/)
+You can try the application [here](http://petarpaunov-001-site1.btempurl.com/).
 
 Login credentials:
-Email: Test@Test.com
+
+Email: Test@Test.com 
+
 Password: qaz123
 
 
