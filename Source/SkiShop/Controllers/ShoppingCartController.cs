@@ -36,9 +36,9 @@
                 var userId = User.Id();
 
                 await shoppingCartService.AddProductInShoppingCartAsync(productId, userId, quantity);
-                var productsCout = await shoppingCartService.CartProductsCoutAsync(userId);
+                var productsCount = await shoppingCartService.CartProductsCoutAsync(userId);
 
-                HttpContext.Session.SetInt32("ProductsCout", productsCout);
+                HttpContext.Session.SetInt32("ProductsCount", productsCount);
                 return Redirect($"/Product/ShowProduct/{productId}");
             }
             catch (Exception ex)
@@ -55,9 +55,9 @@
                 var userId = User.Id();
 
                 await shoppingCartService.RemoveFromCartAsync(productId, userId);
-                var productsCout = await shoppingCartService.CartProductsCoutAsync(userId);
+                var productsCount = await shoppingCartService.CartProductsCoutAsync(userId);
 
-                HttpContext.Session.SetInt32("ProductsCout", productsCout);
+                HttpContext.Session.SetInt32("ProductsCount", productsCount);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -74,9 +74,9 @@
                 var userId = User.Id();
 
                 await shoppingCartService.PlaceUserOrderAsync(userId);
-                var productsCout = await shoppingCartService.CartProductsCoutAsync(userId);
+                var productsCount = await shoppingCartService.CartProductsCoutAsync(userId);
 
-                HttpContext.Session.SetInt32("ProductsCout", productsCout);
+                HttpContext.Session.SetInt32("ProductsCount", productsCount);
                 TempData[MessageConstant.SuccessMessage] = OrderReceived;
 
                 return RedirectToAction(nameof(Index));

@@ -2,6 +2,7 @@ using SkiShop.Data;
 using CloudinaryDotNet;
 using SkiShop.Data.Models.Account;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SkiShop.Core.Models.EmailViewModels;
 using Microsoft.Extensions.Configuration;
@@ -34,7 +35,10 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "/Account/Login";
 });
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(option =>
+{
+    option.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+});
 
 builder.Services.AddApplicationServices();
 

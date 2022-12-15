@@ -227,8 +227,8 @@
 
                 if (result.Succeeded)
                 {
-                    var productsCout = await shoppingCartService.CartProductsCoutAsync(user.Id);
-                    HttpContext.Session.SetInt32("ProductsCout", productsCout);
+                    var productsCount = await shoppingCartService.CartProductsCoutAsync(user.Id);
+                    HttpContext.Session.SetInt32("ProductsCount", productsCount);
 
                     return RedirectToAction("Index", "Home");
                 }
