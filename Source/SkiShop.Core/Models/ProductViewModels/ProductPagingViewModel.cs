@@ -5,7 +5,7 @@
     /// </summary>
     public class ProductPagingViewModel
     {
-        public int ProductsPerPage { get; set; } = 12;
+        public int ProductsPerPage { get; set; } = 3;
         public int CurrentPage { get; set; } = 1;
         public string? Type { get; set; }
         public string? SearchTerm { get; set; }
